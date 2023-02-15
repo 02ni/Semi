@@ -1,78 +1,171 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="path" value="${ pageContext.request.contextPath }"/>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="${ path }/resources/css/style.css">
-<script src="${ path }/resources/js/jquery-3.6.3.js"></script>
+<title>COMPANDA</title>
+<style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&display=swap');
+    div * {
+        /* border: 2px solid; */
+    }
+
+    
+    /* #content {
+        /* border-top: 2px solid red; */
+    
+
+    
+
+         #navi{
+            list-style-type: none;
+            margin:0;
+            padding:0;
+            height:100%;
+        }
+
+        #navi>li{
+            float:left;
+            width:25%;
+            height:100%;
+            text-align:center;
+            font-size:18px;
+            line-height:35px;
+        }
+
+        #navi a{
+            text-decoration: none;
+            color: black;
+            font-size: 1.5em;
+            font-weight: 900;
+            height: 100%;
+            line-height: 35px;
+        }
+
+        #navi a:hover{
+            color: orangered;
+        }
+
+        #navi>li>ul{
+            list-style-type: none;
+            padding: 0;
+            display: none;
+        }
+
+        #navi>li>a:hover+ul{
+            display: block;
+        }
+
+        #navi>li>ul:hover {
+            display: block;
+        }
+
+        #navi>li>ul a{
+            font-size: 1.4em;
+        }
+
+body{
+   font-family: 'Noto Sans', sans-serif;
+}
+a{   
+   font-size:13px; 
+   color: #999999; 
+   text-decoration: none;
+    letter-spacing: 0.01em;
+}
+a:hover {
+   color: #00FF00; 
+   text-decoration : none;
+   font-size: 13px;
+}
+
+
+
+.common.center{
+   padding-top: 15px;
+    padding-bottom: 15px;
+   border: 1px; 
+   float: left; 
+   width: 47%;
+
+}
+.common.left{
+   padding-top: 35px;
+    padding-bottom: 15px;
+   border: 1px; 
+   float: left; 
+   width: 26%;
+
+}
+.common.right{
+      padding-top: 37px;
+    padding-bottom: 15px;
+   border: 1px; 
+   float: right; 
+   width: 26%;
+}
+#header{
+   max-width: 1400px;
+   margin: auto;
+   text-align: center;
+   position: sticky;
+   top: 0px; /* 도달했을때 고정시킬 위치 */
+   padding: 5px;
+   z-index: 10;
+   
+}
+
+</style>
+
 </head>
 <body>
-	<header>
-		<h1>Hello MVC</h1>
-				
-		<div class="login-container">
-			<c:if test="${ empty loginMember }">		
-				<form id="loginFrm" action="${ path }/login" method="post">
-					<table>
-						<tr>
-							<td>
-								<input type="text" name="userId" id="userId" placeholder="아이디" 
-									value="${ empty cookie.saveId ? '' : cookie.saveId.value}" required>
-									<!-- 쿠키가 있으면 아이디가 유지가 된다. 
-										cookie.saveId에 해당하는게 잇는지 확인 하고 있으면 value 값을 가져온다.
-									-->
-							</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>
-								<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호" required>
-							</td>
-							<td>
-								<input type="submit" value="로그인">						
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<label><input type="checkbox" name="saveId"
-										${ empty cookie.saveId ? "" : "checked" }>아이디 저장</label>
-								<input type="button" value="회원가입" onclick="location.href = '${ path }/member/enroll';"> 
-							</td>
-						</tr>
-					</table>
-				</form>
-			</c:if>
-			
-			<c:if test="${ not empty loginMember }">
-				<table>
-					<tr>
-						<td colspan="2">
-							${ loginMember.name } 님 안녕하세요.
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button onclick="location.href='${ path }/member/myPage'">내 정보</button>
-						</td>
-						<td>
-							<button onclick="location.replace('${ path }/logout')">로그아웃</button>
-						</td>
-					</tr>
-				</table>
-			</c:if>
-			
-			
-		</div>
-		<nav>
-			<ul class="main-nav">
-				<li class="home"><a href="${ path }/">Home</a></li>
-				<li id="board"><a href="${ path }/board/list">게시판</a></li>
-				<li id="admin-member"><a href="${ path }/">회원관리</a></li>
-			</ul>
-		</nav>
-	</header> 
+<div id="header">
+   <div class="companda_header">
+      <div class="common left">
+         <div>
+         </div>
+      </div>
+      <div class="common center">
+         <div class="hcontent">
+            <h1>FITness</h1>
+         </div>
+      </div>
+      <div class="common right">
+         <div class="hcontent">
+            <!--클릭시 페이지 이동하도록 href 설정해주기 -->
+
+                <a href="#">Log In</a>&nbsp;&nbsp;&nbsp;
+                <a href="#">Sign Up</a>&nbsp;&nbsp;&nbsp;     
+
+              
+         </div>
+      </div>
+   </div>
+</div>
+</body>
+</html>
+<br><br><br><br><br><br>
+<hr>
+<div id="navigator">
+    <ul id="navi">
+        <li><a href="#">Gym찾기</a></li>
+        <li>
+            <a href="#">게시판</a>
+            <ul>
+                <li><a href="#">일행구하기</a></li>
+                <li><a href="#">자유게시판</a></li>
+                <li><a href="#">질문하기</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">마이페이지</a>
+            <ul>
+                <li><a href="#">정보수정</a></li>
+                <li><a href="#">장바구니</a></li>
+                <li><a href="#">구매내역</a></li>
+            </ul>
+        </li>
+        <li><a href="#">QnA</a></li> 
+    </ul>
+</div>
