@@ -6,21 +6,12 @@ import static com.kh.mvc.common.jdbc.JDBCTemplate.getConnection;
 import static com.kh.mvc.common.jdbc.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import com.kh.mvc.member.model.dao.MemberDao;
 import com.kh.mvc.member.model.vo.Member;
 
 public class MemberService {
-
-	public Member login(String userId, String userPwd) {
-		Member member = this.findMemberById(userId);
-		
-		if(member == null || !member.getPassword().equals(userPwd)) {
-			return null;
-		}
-
-		return member;
-	}
 
 	// save에 존재하면 납두고, 새로 저장하면 insert 하는 형태로
 	public int save(Member member) {
@@ -63,22 +54,22 @@ public class MemberService {
 //		return member !=null;
 //	}
 	
-	public boolean isDuplicateId(String userId) {
-	
-		return this.findMemberById(userId) != null;
-	}
+//	public boolean isDuplicateId(String userId) {
+//	
+//		return this.findMemberById(userId) != null;
+//	}
 	
 
 	// id 값 받아서 dao에서 조회한 다음에 리턴하도록 만든다.
-	public Member findMemberById(String userId) {
-		Connection connection = getConnection();
-		
-		Member member = new MemberDao().findMemberById(connection, userId);
-		
-		close(connection);
-		
-		return member;
-	}
+//	public Member findMemberById(String userId) {
+//		Connection connection = getConnection();
+//		
+//		Member member = new MemberDao().findMemberById(connection, userId);
+//		
+//		close(connection);
+//		
+//		return member;
+//	}
 
 	// UpdatePasswordServlet()에서 만들었다.
 	public int updatePassword(int no, String userPwd) {
@@ -119,10 +110,16 @@ public class MemberService {
 
 	
 	
+	// 새로짠 로직 
+	public Member login(String userId, String userPwd) {
+		Connection connection = getConnection();
+		Member member = new MemberDao().findById(connection, userId);
 	
-	
-	
-
-
+		if(member == null || !member.getPassword().equals(userPwd)) {
+			return null;
+		} 
+		
+		return member;
+	}
 
 }

@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+#join_wrap {
+    border-top: 2px solid #333;
+    }
+
+    #content, * {
+            text-align: center;
+            box-sizing: border-box;
+            /* border: 1px solid red; */
+            margin-left:auto;
+            margin-right:auto;
+    }
+
+    th {
+    text-align: left;
+    font-size: 12px;
+    } 
+
+    td {
+    text-align: left;
+    }
+
+    td > input {
+    text-align: left;
+    }
+
+    th > input {
+        font-size: small;
+    }
+
+    .field_address input[type="text"]{
+        text-align: left;
+    }
+
+    #content {width: 600px;}
+
+    #join_wrap textarea,
+    #join_wrap input[type="text"],
+    #join_wrap input[type="email"],
+    #join_wrap input[type="password"],
+    #join_wrap input[type="tel"],
+    #join_wrap input[type="button"]
+    {
+    height:44px;padding:0 14px;
+    border:1px solid #ccc;
+    font-size:12px;
+    color:#333;
+    line-height:20px;
+    outline:none;
+    border-radius:4px;
+    vertical-align:top;
+    }
+    
+    #join_wrap input[type="button"] {
+    color: #da4104;
+    background-color: #fff;
+    font-weight: bold;  
+    cursor: pointer;
+    border:1px solid #da4104
+    }
+
+    #btn_join {
+            height: 55px;
+            padding: 10px;
+            box-sizing: border-box;
+            width: 150px;
+            margin-top: 15px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 0;
+            letter-spacing: -0.05em;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            outline: none;
+            margin-left: 5px;
+            background-color: #da4104;
+            color: #fff;
+            font-size: 15px;
+            line-height: 54px;
+        }

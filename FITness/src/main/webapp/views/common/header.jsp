@@ -28,10 +28,35 @@
 	           -->
             </div>
 
+		<c:if test="${ empty loginMember }">
             <div id="header3">
-                <a href="#" class="mainlogin">로그인</a>
-                <a href="#" class="mainlogin">회원가입</a> 
+                <a href="${ path }/member/login" class="mainlogin">로그인</a>
+                <a href="${ path }/member/join" class="mainlogin">회원가입</a> 
             </div>
+			</c:if>
+						<c:if test="${ not empty loginMember }">
+				<table>
+					<tr>
+						<td colspan="2">
+							${ loginMember.name}님 안녕하세요.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button onclick="location.href='${ path }/member/myPage'">내 정보</button>
+						</td>
+						<td>
+							<button onclick="location.replace('${ path }/logout')">로그아웃</button>
+						</td>
+						<td>
+						<c:if test="${ not empty loginMember && loginMember.role.equals('ROLE_ADMIN')}">
+		    				<button>ADMIN</button>
+		    			</c:if>
+						</td>
+					</tr>
+				</table>
+			</c:if>
+			
         </div>
 
         <div id="navigator">
