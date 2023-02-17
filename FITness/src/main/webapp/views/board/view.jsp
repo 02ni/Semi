@@ -9,8 +9,8 @@
 <style>
     section>div#board-write-container{width:600px; margin:0 auto; text-align:center;}
     section>div#board-write-container h2{margin:10px 0;}
-    table#tbl-board{width:500px; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
-    table#tbl-board th {width: 125px; border:1px solid; padding: 5px 0; text-align:center;} 
+    table#tbl-board{width:500px; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both;}
+    table#tbl-board th {width: 125px; border:1px solid; padding: 5px 0; text-align:center; background-color: rgb(181,181,181);} 
     table#tbl-board td {border:1px solid; padding: 5px 0 5px 10px; text-align:left;}
     div#comment-container button#btn-insert{width:60px;height:50px; color:white; background-color:#3300FF;position:relative;top:-20px;}
     

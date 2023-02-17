@@ -12,7 +12,6 @@
 	table#tbl-board tr>th {border: 0.3px solid grey; padding: 5px 0; text-align:center; background-color: rgb(181,181,181);} 
 	table#tbl-board th, table#tbl-board td {border: 0.3px solid grey; padding: 5px 0; text-align:center;} 
 	
-	
 	/*글쓰기버튼*/
 	input#btn-add{float:right; margin: 0 0 15px;}
 	
@@ -28,10 +27,10 @@
 			<li class="notice_select" onclick="location.href='${ path }/notice/list'">
 				<span>공지사항</span>
 			</li>
-			<li class="QnA_select" onclick="location.href='${ path }/qna/list'">
+			<li class="QnA_select active" onclick="location.href='${ path }/qna/list'">
 				<span>Q&A</span>
 			</li>
-			<li class="freeBoard_select active" onclick="location.href='${ path }/board/list'">
+			<li class="freeBoard_select" onclick="location.href='${ path }/board/list'">
 				<span>자유게시판</span>
 			</li>
 			<li class="teamBoard_select" onclick="location.href='${ path }/teamBoard/list'">
@@ -40,6 +39,17 @@
 		</ul>
 	</div>
 	<div class="clear"></div>
+	
+	<div class="find-btn">
+		<ul>
+			<li class="faq_select" onclick="location.href='${ path }/qna/list'">
+				<span>자주묻는질문</span>
+			</li>
+			<li class="counsel_select" onclick="#">
+				<span>1:1 문의</span>
+			</li>
+		</ul>
+	</div>
 	
 	<h2></h2>
 	
@@ -90,33 +100,6 @@
 			</c:if>
 			
 		</table>
-		<div id="pageBar">
-			<!-- 맨 처음으로 -->
-			<button onclick="location.href='${ path }/board/list?page=1'">&lt;&lt;</button>
-
-			<!-- 이전 페이지로 -->
-			<button onclick="location.href='${ path }/board/list?page=${ pageInfo.prevPage }'">&lt;</button>
-
-			<!--  10개 페이지 목록 -->
-			<!--  -->
-			<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-				<c:choose>
-					<c:when test="${ status.current == pageInfo.currentPage }">
-						<button disabled>${ status.current }</button>
-					</c:when>
-					<c:otherwise>
-						<button onclick="location.href='${ path }/board/list?page=${ status.current }'">${ status.current }</button>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-
-
-			<!-- 다음 페이지로 -->
-			<button onclick="location.href='${ path }/board/list?page=${ pageInfo.nextPage }'">&gt;</button>
-
-			<!-- 맨 끝으로 -->
-			<button onclick="location.href='${ path }/board/list?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
-		</div>
 	</div>
 </section>
 

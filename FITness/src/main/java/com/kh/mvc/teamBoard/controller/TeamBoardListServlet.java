@@ -1,4 +1,4 @@
-package com.kh.mvc.board.controller;
+package com.kh.mvc.teamBoard.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,16 +13,16 @@ import com.kh.mvc.board.model.service.BoardService;
 import com.kh.mvc.board.model.vo.Board;
 import com.kh.mvc.common.util.PageInfo;
 
-@WebServlet(name = "boardList", urlPatterns = { "/board/list" })
-public class BoardListServlet extends HttpServlet {
+@WebServlet(name = "TeamBoardList", urlPatterns = { "/teamBoard/list" })
+public class TeamBoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      
-    public BoardListServlet() {
+       
+    public TeamBoardListServlet() {
     }
 
-	@Override
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int page = 0;
+    	int page = 0;
 		int listCount = 0;
 		PageInfo pageInfo = null;
 		List<Board> list = null;
@@ -41,7 +41,7 @@ public class BoardListServlet extends HttpServlet {
 		
 		request.setAttribute("pageInfo", pageInfo);
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("/views/board/list.jsp").forward(request, response);
-	}
+		request.getRequestDispatcher("/views/teamBoard/list.jsp").forward(request, response);
+    }
 
 }

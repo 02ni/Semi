@@ -1,0 +1,78 @@
+@charset "UTF-8";
+@import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css");
+
+body{
+	font-family: "nanumbarungothic";
+	margin: 0px;
+}
+
+.clear{
+	clear: both;
+}
+
+#btn1{
+	margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+}
+
+#btn1 ul{
+	padding-left: 0px;
+}
+
+#btn1 ul li{
+	border: 1px solid #E3E3E3;
+    width: 180px;
+    height: 30px;
+    margin-right: 26px;
+    margin-left: 26px;
+    
+    float: left;
+    list-style: none;
+    text-align: center;
+    display: inline-block;
+    background-color: white;
+    font-size: 18px;
+    padding-top: 14px;
+    color: #E3E3E3;
+
+    cursor: pointer;
+}
+
+#btn1 ul li>span{
+    color: #ABABAB;
+}
+
+#btn1 ul li.active{
+	color: black;
+	background-color: orange;
+}
+
+#btn1 ul li.active>span{
+	text-decoration: none;
+    color: black;
+}
+
+.find-btn ul li{
+	text-align: center;
+	display :inline-block;
+}
+
+.find-btn ul li{
+	border: 1px solid #E3E3E3;
+    width: 180px;
+    height: 30px;
+    margin-right: 26px;
+    margin-left: 26px;
+    
+    float: left;
+    list-style: none;
+    text-align: center;
+    background-color: white;
+    font-size: 18px;
+    padding-top: 14px;
+    color: #E3E3E3;
+    display: inline-block;
+    cursor: pointer;
+}

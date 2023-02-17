@@ -31,10 +31,10 @@
 			<li class="QnA_select" onclick="location.href='${ path }/qna/list'">
 				<span>Q&A</span>
 			</li>
-			<li class="freeBoard_select active" onclick="location.href='${ path }/board/list'">
+			<li class="freeBoard_select" onclick="location.href='${ path }/board/list'">
 				<span>자유게시판</span>
 			</li>
-			<li class="teamBoard_select" onclick="location.href='${ path }/teamBoard/list'">
+			<li class="teamBoard_select active" onclick="location.href='${ path }/teamBoard/list'">
 				<span>일행구하기</span>
 			</li>
 		</ul>
@@ -90,33 +90,6 @@
 			</c:if>
 			
 		</table>
-		<div id="pageBar">
-			<!-- 맨 처음으로 -->
-			<button onclick="location.href='${ path }/board/list?page=1'">&lt;&lt;</button>
-
-			<!-- 이전 페이지로 -->
-			<button onclick="location.href='${ path }/board/list?page=${ pageInfo.prevPage }'">&lt;</button>
-
-			<!--  10개 페이지 목록 -->
-			<!--  -->
-			<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-				<c:choose>
-					<c:when test="${ status.current == pageInfo.currentPage }">
-						<button disabled>${ status.current }</button>
-					</c:when>
-					<c:otherwise>
-						<button onclick="location.href='${ path }/board/list?page=${ status.current }'">${ status.current }</button>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-
-
-			<!-- 다음 페이지로 -->
-			<button onclick="location.href='${ path }/board/list?page=${ pageInfo.nextPage }'">&gt;</button>
-
-			<!-- 맨 끝으로 -->
-			<button onclick="location.href='${ path }/board/list?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
-		</div>
 	</div>
 </section>
 

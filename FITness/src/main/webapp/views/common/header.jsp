@@ -22,28 +22,29 @@
             </div>
 
             <div id="header2" align="center" >
-          <a href="${ path }/"> <h1 class="logo" align="center">FITness(로고 수정중)</h1></a>
-           <!-- 
-           <img src="resources/images/logotext.png" height="100px" align="center">
-           -->
+	          <a href="${ path }/"> <h1 class="logo" align="center">FITness(로고 수정중)</h1></a>
+	           <!-- 
+	           <img src="resources/images/logotext.png" height="100px" align="center">
+	           -->
             </div>
 
             <div id="header3">
                 <a href="#" class="mainlogin">로그인</a>
                 <a href="#" class="mainlogin">회원가입</a> 
             </div>
-
         </div>
+
         <div id="navigator">
             <ul id="navi">
+            		<li><a href="${ path }/">Home</a></li>
 	                <li><a href="#">Gym찾기</a></li>
 	                <li id="board">
-	                    <a href="${ path }/board/list">게시판</a>
+	                    <a href="${ path }/notice/list">게시판</a>
 	                    <ul>
-		                    <li id="board"><a href="${ path }/board/list">공지사항</a></li>
-	                        <li><a href="#">일행구하기</a></li>
-	                        <li><a href="#">자유게시판</a></li>
-	                        <li><a href="#">질문하기</a></li>
+		                    <li id="board"><a href="${ path }/notice/list">공지사항</a></li>
+	                        <li><a href="${ path }/qna/list">Q&A</a></li>
+	                        <li><a href="${ path }/board/list">자유게시판</a></li>
+	                        <li><a href="${ path }/teamBoard/list">일행구하기</a></li>
 	                    </ul>
 	                </li>
 	                <li>
@@ -54,7 +55,7 @@
 	                        <li><a href="#">구매내역</a></li>
 	                    </ul>
 	                </li>
-	                <li><a href="#">QnA</a></li>
+	                
             </ul>
         </div>
         
