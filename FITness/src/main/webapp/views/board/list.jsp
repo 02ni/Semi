@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
-<jsp:include page="/views/common/header.jsp" />
+<jsp:include page="/views/common/header.jsp"/>
 
 <style>
 	section#board-list-container{width:600px; margin:0 auto; text-align:center;}
@@ -16,7 +16,7 @@
 	div#pageBar{margin-top:10px; text-align:center; background-color:rgba(0, 188, 212, 0.3);}
 </style>
 <section id="content">
-	<h2 align="center">게시판 </h2>
+	<h2 align="center">공지사항</h2>
 	<div id="board-list-container">
 		<c:if test="${ not empty loginMember }">
 			<button type="button" onclick="location.href='${path}/board/write'">글쓰기</button>

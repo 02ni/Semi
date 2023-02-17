@@ -1,104 +1,271 @@
 @charset "UTF-8";
+ 
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&display=swap');
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * {
+            font-family: 'GmarketSansMedium';
+        }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+        div {
+            /* border: 2px solid red; */
+            box-sizing: border-box;
+        }
+        .wrap{
+            width:1000px;
+            height:1400px;
+            margin:auto;
+        }
+        .logo {
+            line-height: 2;
+            color: yellowgreen;
+        }
 
-div,session,header,aside, footer{padding:10px;}
+/* 헤더 */
+        #header{
+            height: 10%
+        }
 
-div#container {
-	background-color:#F0F0F0; 
-	width:960px;
-	margin:0 auto;
-}
+        #header1{
+            width: 30%;  
+        }
 
-header{
-	background-color:#00BCd4;
-	height:130px;
-	position:relative;
-	padding:10px 0 0 0;
-}
+        #header2{
+            width: 40%;
+        }
 
-header h1{
-	margin-left:20px;
-}
+        #header3 {
+            padding-top: 37px;
+            padding-bottom: 15px;
+            border: 1px;
+            text-align: right;
+            width: 26%;
+        }
+        #header>div{
+            float: left;
+            height: 100%;
+        }
 
-section#content {
-	background-color:#F5F5F5;
-	margin:0;
-	width:940px;
-	min-height:500px;
-}
+        .mainlogin{  
+        font-size:13px;
+        color: #999999;
+        text-decoration: none;
+        letter-spacing: 0.01em;
+        margin: 5px;
+        line-height: 6;
+        }
 
-footer { 
-	background-color:rgb(128, 0, 64);
-	clear:both;
-	height:75px;
-	text-align:center;
-	padding-top:40px;
-}
+        .mainlogin:hover {
+        color: #00FF00;
+        text-decoration : none;
+        font-size: 13px;
+        }
 
-/* 로그인 폼 */
-header div.login-container {
-	width:250px; 
-	position:absolute; 
-	right: 0px; 
-	top: 10px;
-}
+/* 메뉴바 */
+        #navigator {
+            height: 3%;
+            border-bottom: 1px solid;
+            z-index:999;           
+        }
 
-/* 로그인테이블관련 : 탭순서를 고려해 submit버튼이 2번째행 2번째열에 배치 */
-#loginFrm table { 
-	empty-cells:hide;
-}
+        #navi{
+            list-style-type: none;
+            margin:0;
+            padding:0;
+            height:100%;
+            position: relative;
+            z-index: 9999;
+        }
 
-#loginFrm input[type=submit] {
-	width:60px; 
-	height:50px; 
-	color:white; 
-	background:#3300ff; 
-	position:absolute; 
-	top:10px;
-}
 
-/* 메뉴관련스타일 */
-header nav {
-	background:#5283de; 
-	width:100%; 
-	margin-top:40px;
-}
+        #navi> li{
+            float:left;
+            width:25%;
+            height:100%;
+            text-align:center;
+            font-size:13px;
+            line-height:5px;
+        }
+        
+        #navi> li:hover{
+            background-color: rgba(246, 139, 0, 0.917);
+        }
+        
 
-/* ul태그의 가운데정렬 */
-ul.main-nav {
-	/* width:80%; */
-	display:table;
-	padding:0px;
-	margin:auto;
-}
+        #navi a{
+            text-decoration: none;
+            color: black;
+            font-size: 1.5em;
+            font-weight: 900;
+            height: 100%;
+            line-height: 35px;
+            vertical-align: middle;
+        }
 
-ul.main-nav li { 
-	list-style-type: none; 
-	width: 8em; 
-	height: 2em;
-	float: left; 
-	text-align: center; 
-	font-family: "휴먼모음T", sans-serif; 
-	border-left: 1px #00bcd4 solid;
-	background-color: #5283de; 
-}
+        #navi>li>ul a:hover{
+            color: orangered;
+            
+        }
 
-ul.main-nav li:last-of-type {
-	border-right:1px #00bcd4 solid;
-}
+        #navi>li>ul{
+            list-style-type: none;
+            display: none;
+            background-color: rgb(221, 215, 215, 0.8);
+            padding: 5px 0 0 0 ;
+            margin: 10px 0 0 0 ; 
+        }
 
-ul.main-nav li a {
-	display: block;
-	padding:.5em;
-	text-decoration: none;
-	color: #292929;
-}
+        #navi>li:hover>ul{
+            display: block;
+        }
 
-/* hover시 배경색 변경 */
+        #navi>li>ul>li:hover {
+            display: block;
+            transition: ease 1s;
+        }
 
-ul.main-nav li:hover{
-	background-color: #3300ff;
-}
+        #navi>li>ul a{
+            font-size: 1.4em;
+        }
 
-ul.main-nav li:hover > a{
-	color:#FFF; /* 글자색*/
-}
+/* 본문 */ 
+        #section {
+            height: 70%;
+            font-family: 'GmarketSansMedium';
+            z-index:1;
+        }
+
+        #banner1{
+            background-color: black;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin: 11px 0 80px 0;
+        }
+        #bannerimg1 {
+            display: inline-block;
+            height: 300px;
+            width: 100%;
+        }
+        #banner2{
+            text-align: center;
+            position: relative;
+            margin: 80px 0 20px 0;
+            }
+            
+        #bannerimg2 {
+            display: inline-block;
+            width: 100%;
+        }
+            
+    /* 가이드(공지사항, 개인운동, 그룹운동, 상담문의) 구역 */
+        #contentguide{
+            background-color: rgb(52, 73, 94);
+            margin: 80px 0 80px 0;
+        }
+        #divguide{
+            width:  940px;
+            display: flex;
+            margin: 24px auto;
+            height: 290px;
+        }
+        .guide{
+            border-radius: 55px;
+            width: 25%;
+            height: 90%;
+            margin: 15px;
+            text-align: center;
+        }
+        #guide1{
+            background-color: rgb(243, 156, 18);
+        }
+        #guide2{
+            background-color: rgb(241, 196, 15);
+        }
+        #guide3{
+            background-color: rgb(241, 196, 15);
+        }
+        #guide4{
+            background-color: rgb(243, 156, 18);
+        }
+        .icon{
+            margin: 20px 10px 10px 10px;
+        }
+        .guide  h2 {
+            font-size: 23pt;
+            color: white;
+            margin: 0px;
+        }
+        .guide  h4 {
+            font-size: 15pt;
+            margin: 3px;
+        }
+        .guide  p {
+            font-size: 10pt;
+            font-weight:bold;
+            color: rgb(79, 79, 79);
+        }
+    /* 가이드 버튼 */
+        #contentguide button {
+            background-color: rgb(94, 94, 94);
+            color: white;
+            border-radius: 5px;
+            width: 85px;
+            height: 35px;
+            border: none;
+        }
+        #contentguide button:hover{
+            background-color: white;
+            color: orange;
+        }
+
+    /* 하단 */
+        #footer {
+            height: 15%;
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+            margin-top: 30px;
+            padding-top: 20px;
+        }
+
+        #footer>div {
+            float: left;
+            height: 100%;
+            margin-bottom: 7px;
+        }
+
+        #footer1 {
+            width: 30%;
+        }
+
+        #footer2 {
+            width: 40%;
+            font-size: small;
+            font-weight: bold;
+        }
+
+        #footer3 {
+            width: 30%;
+        }
+
+        #footer4{
+            width: 100%;
+            
+        }
+        #footer2> p {
+            font-weight: bold;
+            text-align: left;
+            font-size: small;
+        }
+
+        #footer3> p { 
+            font-weight: bold;
+            text-align: left;
+        }
