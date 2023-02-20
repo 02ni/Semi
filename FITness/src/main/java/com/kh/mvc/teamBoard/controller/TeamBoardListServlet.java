@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.mvc.board.model.service.BoardService;
-import com.kh.mvc.board.model.vo.Board;
 import com.kh.mvc.common.util.PageInfo;
+import com.kh.mvc.teamBoard.model.service.TeamBoardService;
+import com.kh.mvc.teamBoard.model.vo.TeamBoard;
 
-@WebServlet(name = "TeamBoardList", urlPatterns = { "/teamBoard/list" })
+@WebServlet(name = "teamBoardList", urlPatterns = { "/teamboard/list" })
 public class TeamBoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -25,7 +25,7 @@ public class TeamBoardListServlet extends HttpServlet {
     	int page = 0;
 		int listCount = 0;
 		PageInfo pageInfo = null;
-		List<Board> list = null;
+		List<TeamBoard> list = null;
 		
 		try {
 			page = Integer.parseInt(request.getParameter("page"));
@@ -33,15 +33,16 @@ public class TeamBoardListServlet extends HttpServlet {
 			page = 1;
 		}
 		
-		listCount = new BoardService().getBoardCount();
+		listCount = new TeamBoardService().getBoardCount();
 		pageInfo = new PageInfo(page, 10, listCount, 10);
-		list = new BoardService().getBoardList(pageInfo);
+		
+		list = new TeamBoardService().getBoardList(pageInfo);
 		
 		System.out.println(list);
 		
 		request.setAttribute("pageInfo", pageInfo);
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("/views/teamBoard/list.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/teamboard/list.jsp").forward(request, response);
     }
 
 }

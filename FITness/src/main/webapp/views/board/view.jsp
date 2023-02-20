@@ -6,11 +6,14 @@
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 <jsp:include page="/views/common/header.jsp" />
 
+
+<link rel="stylesheet" type="text/css" href="/css/common/common.css"/>
+
 <style>
     section>div#board-write-container{width:600px; margin:0 auto; text-align:center;}
     section>div#board-write-container h2{margin:10px 0;}
-    table#tbl-board{width:500px; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both;}
-    table#tbl-board th {width: 125px; border:1px solid; padding: 5px 0; text-align:center; background-color: rgb(181,181,181);} 
+    table#tbl-board{width:500px; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
+    table#tbl-board th {width: 125px; border:1px solid; padding: 5px 0; text-align:center;} 
     table#tbl-board td {border:1px solid; padding: 5px 0 5px 10px; text-align:left;}
     div#comment-container button#btn-insert{width:60px;height:50px; color:white; background-color:#3300FF;position:relative;top:-20px;}
     
@@ -27,7 +30,7 @@
 </style>
 <section id="content">   
 	<div id="board-write-container">
-		<h2>게시판</h2>
+		<h2>자유게시판</h2>
 		<table id="tbl-board">
 			<tr>
 				<th>글번호</th>
@@ -52,7 +55,14 @@
 						<span> - </span>
 					</c:if>
 					<c:if test="${ not empty board.originalFileName }">
-						<span> ${ board.originalFileName } </span>
+						<%-- 
+						<a href="javascript:" id="fileDown">
+							<span> ${ board.originalFileName } </span>
+						</a>
+						--%>
+						<a href="${ path }/resources/upload/board/${board.renamedFileName}">
+							<span> ${ board.originalFileName } </span>
+						</a>
 					</c:if>
 				</td>
 			</tr>
@@ -63,39 +73,69 @@
 			<%--글작성자/관리자인경우 수정삭제 가능 --%>
 			<tr>
 				<th colspan="2">
-				<!-- 로그인 되어 있고, 본인 게시글에만 보이도록! loginMember는 세션 영역에 있고, board는 BoardService에 있다. -->
 					<c:if test="${ not empty loginMember && loginMember.id == board.writerId }">
 						<button type="button" onclick="location.href='${ path }/board/update?no=${ board.no }'">수정</button>
-						<button type="button">삭제</button>
+						<button type="button" id="btnDelete">삭제</button>
 					</c:if>
-					<button type="button" onclick="location.href='${path}/board/list'">목록으로</button>
+					<button type="button" onclick="location.href='${ path }/board/list'">목록으로</button>
 				</th>
 			</tr>
 		</table>
+	
+		
+		
+		
 		<div id="comment-container">
 	    	<div class="comment-editor">
 	    		<form action="${ path }/board/reply" method="POST">
-	    			<input type="hidden" name="boardNo" value="">
-	    			<input type="hidden" name="writer" value="">
-					<textarea name="content" cols="55" rows="3"></textarea>
+	    			<input type="hidden" name="boardNo" value="${ board.no }">
+					<textarea name="content" id="replyContent" cols="55" rows="3"></textarea>
 					<button type="submit" id="btn-insert">등록</button>	    			
 	    		</form>
 	    	</div>
-	    </div>
+	    </div>	    
 	    <table id="tbl-comment">
-    	   	<tr class="level1">
-	    		<td>
-	    			<sub class="comment-writer">aa</sub>
-	    			<sub class="comment-date">2021.05.07</sub>
-	    			<br>
-	    			컨텐츠
-	    		</td>
-	    		<td>
-    				<button class="btn-delete">삭제</button>
-	    		</td>
-	    	</tr>
+	    	<c:forEach var="reply" items="${ board.replies }">
+	    	   	<tr class="level1">
+		    		<td>
+		    			<sub class="comment-writer">${ reply.writerId }</sub>
+		    			<sub class="comment-date">${ reply.createDate }</sub>
+		    			<br>
+		    			<span>${ reply.content }</span>
+		    		</td>
+		    		<td>
+		    			<c:if test="${ not empty loginMember && loginMember.id == reply.writerId }">
+		    				<button>삭제</button>
+		    			</c:if>
+		    		</td>
+		    	</tr>
+	    	</c:forEach>
 	    </table>
     </div>
 </section>
 
+<script>
+	$(document).ready(() => {
+		$('#btnDelete').on('click', () => {
+			if(confirm('정말로 게시글을 삭제 하시겠습니까?')) {
+				location.replace('${ path }/board/delete?no=${ board.no }');
+			}
+		});
+		
+		$('#fileDown').on('click', () => {
+			let oname = encodeURIComponent('${ board.originalFileName }');
+			let rname = encodeURIComponent('${ board.renamedFileName }');
+			
+			location.assign('${ path }/board/fileDown?oname=' + oname + '&rname=' + rname);
+		});
+		
+		$('#replyContent').on('click', () => {
+			if(${ empty loginMember}) {
+				alert('로그인 후 이용해 주세요.')	;
+				location.replace('${ path }/member/login');
+				
+			}
+		});
+	});
+</script>
 <jsp:include page="/views/common/footer.jsp" /> 

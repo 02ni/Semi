@@ -22,7 +22,7 @@
             </div>
 
             <div id="header2" align="center" >
-	          <a href="${ path }/"> <h1 class="logo" align="center">FITness(로고 수정중)</h1></a>
+	          <a href="${ path }/"> <h1 class="logo" align="center">FITness(수정중)</h1></a>
 	           <!-- 
 	           <img src="resources/images/logotext.png" height="100px" align="center">
 	           -->

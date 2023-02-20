@@ -23,23 +23,26 @@
 <link rel="stylesheet" href="${ path }/resources/css/board.css">
 
 <section id="content">
-	<div id="btn1">
-		<ul>
-			<li class="notice_select active" onclick="location.href='${ path }/notice/list'">
-				<span>공지사항</span>
-			</li>
-			<li class="QnA_select" onclick="location.href='${ path }/qna/list'">
-				<span>Q&A</span>
-			</li>
-			<li class="freeBoard_select" onclick="location.href='${ path }/board/list'">
-				<span>자유게시판</span>
-			</li>
-			<li class="teamBoard_select" onclick="location.href='${ path }/teamBoard/list'">
-				<span>일행구하기</span>
-			</li>
-		</ul>
-	</div>
+		<div id="btn1">
+			<ul>
+				<li class="notice_select active" onclick="location.href='${ path }/notice/list'">
+					<span>공지사항</span>
+				</li>
+				<li class="faq_select" onclick="location.href='${ path }/faq/list'">
+					<span>FAQ</span>
+				</li>
+				<li class="freeBoard_select" onclick="location.href='${ path }/board/list'">
+					<span>자유게시판</span>
+				</li>
+				<li class="teamBoard_select" onclick="location.href='${ path }/teamboard/list'">
+					<span>1:1문의</span>
+				</li>
+			</ul>
+		</div>
+	
 	<div class="clear"></div>
+	
+	<hr>
 	
 	<h2></h2>
 	

@@ -7,11 +7,13 @@ body{
 }
 
 .clear{
+	margin-top: 20px;
+	margin-bottom: 20px;
 	clear: both;
 }
 
 #btn1{
-	margin-bottom: 0px;
+	margin-bottom: 10px;
     width: 100%;
     text-align: center;
     display: inline-block;
@@ -36,7 +38,6 @@ body{
     font-size: 18px;
     padding-top: 14px;
     color: #E3E3E3;
-
     cursor: pointer;
 }
 

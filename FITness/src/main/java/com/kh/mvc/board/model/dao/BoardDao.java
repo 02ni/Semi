@@ -8,96 +8,80 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.mvc.board.model.vo.Board;
+import com.kh.mvc.board.model.vo.Reply;
 import com.kh.mvc.common.util.PageInfo;
 
-import static com.kh.mvc.common.jdbc.JDBCTemplate.*;
+import static com.kh.mvc.common.jdbc.JDBCTemplate.close;
 
 public class BoardDao {
 
 	public int getBoardCount(Connection connection) {
-		// 1. 정수값 리턴하도록 변수 만들기
 		int count = 0;
-		
-		// 3. 오브젝트의 참조변수 만들기
 		PreparedStatement pstmt = null;
-		
-		// 3. 리절트셋 변수 선언
 		ResultSet rs = null;
-		
-		// 2. 실행 시킬 쿼리문 넣었어 (총 게시글 갯수 쿼리 문)
 		String query = "SELECT COUNT(*) FROM BOARD WHERE STATUS='Y'";
-		// select 구문 리턴하면 뭘 리턴? resultset한다. - 그래서 위에 리절트 셋 변수도 선언
 		
-		
-		// 4. 커넥션으로부터 매개변수인 query 를 가져온다. + 예외처리 구문 실행
 		try {
 			pstmt = connection.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			
-			if (rs.next()) {
-				count = rs.getInt(1);
-			} 
+			if(rs.next()) {
+				count = rs.getInt(1); 
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
-			// 커넥션을 제외한 다른 애들을 클로즈 시켜준다. (역순으로)
 		}
-		// 1. 얻어온 카운트 수를 리턴한다.
+				
 		return count;
 	}
 
 	public List<Board> findAll(Connection connection, PageInfo pageInfo) {
-		// 1. 셀렉해서 조회된 데이터가 없으면, 빈 리스트를 준다. 있으면, arraylist 에 담아서 준다.
 		List<Board> list = new ArrayList<>();
-		
-		// 3. 커넥션 값을 가져올 변수 선언
 		PreparedStatement pstmt = null;
-	
-		// 5. 쿼리문을 실행시킬 ResultSet 참조변수 위에 선언
 		ResultSet rs = null;
-		
-		// 2. 쿼리문 입력
-		String query = "SELECT RNUM, NO, TITLE, ID, CREATE_DATE, ORIGINAL_FILENAME, READCOUNT, STATUS "
+		String query = "SELECT RNUM, NO, TITLE, ID, CREATE_DATE, ORIGINAL_FILENAME, READCOUNT, STATUS, REPLYCOUNT, SECRET_CHECK "
 					 + "FROM ("
 					 +    "SELECT ROWNUM AS RNUM, "
 					 +           "NO, "
-					 + 			"TITLE, "
-					 + 			"ID, "
-					 + 			"CREATE_DATE, "
-					 + 			"ORIGINAL_FILENAME, "
-					 +  			"READCOUNT, "
-					 +     		"STATUS "
+					 + 			 "TITLE, "
+					 + 			 "ID, "
+					 + 			 "CREATE_DATE, "
+					 + 			 "ORIGINAL_FILENAME, "
+					 +  		 "READCOUNT, "
+					 +     		 "STATUS, "
+					 +     		 "REPLYCOUNT, "
+					 +     		 "SECRET_CHECK "
 					 + 	 "FROM ("
 					 + 	    "SELECT B.NO, "
 					 + 			   "B.TITLE, "
-					 +  			   "M.ID, "
+					 +  		   "M.ID, "
 					 + 			   "B.CREATE_DATE, "
 					 + 			   "B.ORIGINAL_FILENAME, "
 					 + 			   "B.READCOUNT, "
-					 + 	   		   "B.STATUS "
+					 + 	   		   "B.STATUS, "
+					 +     		   "B.REPLYCOUNT, "
+					 +     		   "B.SECRET_CHECK "
 					 + 		"FROM BOARD B "
 					 + 		"JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
 					 + 		"WHERE B.STATUS = 'Y' ORDER BY B.NO DESC"
 					 + 	 ")"
 					 + ") WHERE RNUM BETWEEN ? and ?";
 		
-		// 3. 변수 실행
-		// 4. 예외처리
-		// 5. 쿼리문을 실행시킬 ResultSet 참조변수
 		try {
 			pstmt = connection.prepareStatement(query);
-
+			
 			pstmt.setInt(1, pageInfo.getStartList());
 			pstmt.setInt(2, pageInfo.getEndList());
-		
+			
 			rs = pstmt.executeQuery();
 			
-			while (rs.next()) {
+			while(rs.next()) {
 				Board board = new Board();
 				
-				board.setNo(rs.getInt("No"));
+				board.setNo(rs.getInt("NO"));
 				board.setRowNum(rs.getInt("RNUM"));
 				board.setWriterId(rs.getString("ID"));
 				board.setTitle(rs.getString("TITLE"));
@@ -105,10 +89,11 @@ public class BoardDao {
 				board.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
 				board.setReadCount(rs.getInt("READCOUNT"));
 				board.setStatus(rs.getString("STATUS"));
+				board.setReplyCount(rs.getInt("REPLYCOUNT"));
+				board.setSecretCheck(rs.getString("SECRET_CHECK"));
 				
 				list.add(board);
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -120,36 +105,31 @@ public class BoardDao {
 	}
 
 	public Board findBoardByNo(Connection connection, int no) {
-		// 조회하는거 해보자
-		//1. 참조변수 리턴할 수 있도록 선언하자
 		Board board = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// 2. 쿼리문 입력
-		String query = 	"SELECT  B.NO, "
-							  + "B.TITLE, "
-							  + "M.ID, "
-							  + "B.READCOUNT, "
-							  + "B.ORIGINAL_FILENAME, "
-							  + "B.RENAMED_FILENAME, "
-							  + "B.CONTENT, "
-							  + "B.CREATE_DATE, "
-							  + "B.MODIFY_DATE "
-						+ "FROM BOARD B "
-						+ "JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
-						+ "WHERE B.STATUS = 'Y' AND B.NO=?";
+		String query = "SELECT B.NO, "
+							+ "B.TITLE, "
+							+ "M.ID, "
+							+ "B.READCOUNT, "
+							+ "B.ORIGINAL_FILENAME, "
+							+ "B.RENAMED_FILENAME, "
+							+ "B.CONTENT, "
+							+ "B.CREATE_DATE, "
+							+ "B.MODIFY_DATE "
+					  + "FROM BOARD B "
+					  + "JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
+					  + "WHERE B.STATUS = 'Y' AND B.NO=?";
 		
-		// 3. 커넥션 오브젝트로 부터 PreparedStatement를 얻어와보자
+		
 		try {
 			pstmt = connection.prepareStatement(query);
-		
-			// 4. ?값 정리해 주기
+			
 			pstmt.setInt(1, no);
 			
 			rs = pstmt.executeQuery();
 			
-			// 5. if 혹은 while 문을 통해
-			if (rs.next()) {
+			if(rs.next()) {
 				board = new Board();
 				
 				board.setNo(rs.getInt("NO"));
@@ -159,14 +139,14 @@ public class BoardDao {
 				board.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
 				board.setRenamedFileName(rs.getString("RENAMED_FILENAME"));
 				board.setContent(rs.getString("CONTENT"));
+				// 댓글 조회
+				board.setReplies(this.getRepliesByNo(connection, no));				
 				board.setCreateDate(rs.getDate("CREATE_DATE"));
 				board.setModifyDate(rs.getDate("MODIFY_DATE"));
-				
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			// 6. 리소스 받을 수 있도록 클로즈!
 		} finally {
 			close(rs);
 			close(pstmt);
@@ -178,21 +158,18 @@ public class BoardDao {
 	public int insertBoard(Connection connection, Board board) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		
 		String query = "INSERT INTO BOARD VALUES(SEQ_BOARD_NO.NEXTVAL,?,?,?,?,?,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
-
-			// 쿼리문 실행 전 물음표 부분 값 채워 넣기
+			
 			pstmt.setInt(1, board.getWriterNo());
 			pstmt.setString(2, board.getTitle());
 			pstmt.setString(3, board.getContent());
 			pstmt.setString(4, board.getOriginalFileName());
 			pstmt.setString(5, board.getRenamedFileName());
-		
-			result = pstmt.executeUpdate();
 			
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -203,18 +180,39 @@ public class BoardDao {
 	}
 
 	public int updateBoard(Connection connection, Board board) {
-		int result = 0;
+		int result = 0; 
 		PreparedStatement pstmt = null;
-		// 파일 업데이트 시, 파일 구문도 추가해서 수정하는 것으로 
-//		String query = "UPDATE BOARD SET TITLE=?,CONTENT=?,ORIGINAL_FILENAME=?,RENAMED_FILENAME=?,MODIFY_DATE=SYSDATE WHERE NO=?";
-		String query = "UPDATE BOARD SET TITLE=?,CONTENT=?,MODIFY_DATE=SYSDATE WHERE NO=?";
+		String query = "UPDATE BOARD SET TITLE=?,CONTENT=?,ORIGINAL_FILENAME=?,RENAMED_FILENAME=?,MODIFY_DATE=SYSDATE WHERE NO=?";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
-
+			
 			pstmt.setString(1, board.getTitle());
 			pstmt.setString(2, board.getContent());
-			pstmt.setInt(3, board.getNo());
+			pstmt.setString(3, board.getOriginalFileName());
+			pstmt.setString(4, board.getRenamedFileName());
+			pstmt.setInt(5, board.getNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateStatus(Connection connection, int no, String status) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE BOARD SET STATUS=? WHERE NO=?";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setString(1, status);
+			pstmt.setInt(2, no);			
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -226,6 +224,121 @@ public class BoardDao {
 		return result;
 	}
 	
+	public List<Reply> getRepliesByNo(Connection connection, int no) {
+		List<Reply> replies = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = 
+				"SELECT R.NO, "
+					 + "R.BOARD_NO, "
+					 + "R.CONTENT, "
+					 + "M.ID, "
+					 + "R.CREATE_DATE, "
+					 + "R.MODIFY_DATE "
+			  + "FROM REPLY R "
+			  + "JOIN MEMBER M ON(R.WRITER_NO = M.NO) "
+			  + "WHERE R.STATUS='Y' AND BOARD_NO=? "
+			  + "ORDER BY R.NO DESC";		
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Reply reply = new Reply();
+				
+				reply.setNo(rs.getInt("NO"));
+				reply.setBoardNo(rs.getInt("BOARD_NO"));
+				reply.setContent(rs.getString("CONTENT"));
+				reply.setWriterId(rs.getString("ID"));
+				reply.setCreateDate(rs.getDate("CREATE_DATE"));
+				reply.setModifyDate(rs.getDate("MODIFY_DATE"));
+				
+				replies.add(reply);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return replies;
+	}
+
+	public int insertReply(Connection connection, Reply reply) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "INSERT INTO REPLY VALUES(SEQ_REPLY_NO.NEXTVAL, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT)";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setInt(1, reply.getBoardNo());
+			pstmt.setInt(2, reply.getWriterNo());
+			pstmt.setString(3, reply.getContent());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateReadCount(Connection connection, Board board) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE BOARD SET READCOUNT=? WHERE NO=?";		
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			board.setReadCount(board.getReadCount() + 1);
+			
+			pstmt.setInt(1, board.getReadCount());
+			pstmt.setInt(2, board.getNo());
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateReplyCount(Connection connection, Board board) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "SELECT COUNT(NO) "
+					 + "FROM REPLY "
+					 + "WHERE REPLY.BOARD_NO =(SELECT NO FROM BOARD WHERE NO=?)";			 
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			board.setReplyCount(board.getReplyCount());
+			
+			pstmt.setInt(1, board.getReplyCount());
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
 	
 
 }

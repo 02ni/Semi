@@ -36,4 +36,8 @@ public class Board {
 	private Date createDate;
 	
 	private Date modifyDate;
+	
+	private int replyCount;
+	
+	private String secretCheck;     // 비밀글 여부
 }
