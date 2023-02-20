@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 -- WEB 계정 생성
 CREATE USER PHY IDENTIFIED BY PHY;
 GRANT RESOURCE, CONNECT TO PHY;
@@ -192,13 +199,14 @@ COMMIT;
 
 CREATE TABLE GYM (
     NO NUMBER PRIMARY KEY,
-    GYM_NAME VARCHAR2(30) NOT NULL UNIQUE,
-    ADDRESS VARCHAR2(100) NOT NULL,
+    GYM_NAME VARCHAR2(100) NOT NULL UNIQUE,
+    ADDRESS VARCHAR2(200) NOT NULL,
     GYM_PHONE VARCHAR2(30) NOT NULL,
     CONTENT VARCHAR2(1000),
     TIME VARCHAR2(200) NOT NULL,
-    IMG VARCHAR2(500) DEFAULT 'defaultimg.png',
-    THUMB VARCHAR2(500) DEFAULT 'defaultthumb.png',
+    IMG VARCHAR2(500) DEFAULT 'defaultimg.jpg' NOT NULL,
+    THUMB VARCHAR2(500) DEFAULT 'defaultthumb.jpg' NOT NULL,
+    CATE VARCHAR2(100) NOT NULL,
     STATUS VARCHAR2(1) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N')),
     CEO_PHONE VARCHAR2(30) NOT NULL,
     CEO_EMAIL VARCHAR2(100) NOT NULL
@@ -212,12 +220,17 @@ COMMENT ON COLUMN GYM.CONTENT IS '센터소개';
 COMMENT ON COLUMN GYM.TIME IS '운영시간';
 COMMENT ON COLUMN GYM.IMG IS '센터상세이미지';
 COMMENT ON COLUMN GYM.THUMB IS '센터섬네일이미지';
+COMMENT ON COLUMN GYM.CATE IS '카테고리';
 COMMENT ON COLUMN GYM.STATUS IS '판매여부';
 COMMENT ON COLUMN GYM.CEO_PHONE IS '대표전화번호';
 COMMENT ON COLUMN GYM.CEO_EMAIL IS '대표이메일';
 
-CREATE SEQUENCE SEQ_GYM;
 
+-- 데이터에 & 넣을 수 있게 설정하는 구문 (세션마다)
+SET DEFINE OFF;
+
+
+-- GYM 테이블 초기셋팅
 INSERT INTO GYM (
     NO, 
     GYM_NAME, 
@@ -227,24 +240,62 @@ INSERT INTO GYM (
     TIME, 
     IMG, 
     THUMB,
+    CATE,
     STATUS,
     CEO_PHONE, 
     CEO_EMAIL
 ) VALUES(
-    SEQ_GYM.NEXTVAL, 
+    1, 
     '선릉 코어짐', 
-    '서울특별시 강남구 테헤란로48길 10 우정에쉐르2 지하 1층', 
-    '0502-1191-0113', 
+    '서울특별시 강남구 테헤란로48길 10 우정에쉐르2 지하 1층0502-1191-0113', 
+    '0001-0000-0001', 
     'CORE GYM 고객 캐어 중심 휘트니스 핵심가치!', 
     '[평 일] 06:00 ~ 23:00', 
+    'gymimg1.jpg',
+    'thumb_gymimg1.jpg',
+    '헬스,G.X',
     DEFAULT,
-    DEFAULT,
-    DEFAULT,
-    '010-000-0000', 
+    '010-001-1234', 
     'test1@semi.com'
 );
 
+CREATE SEQUENCE SEQ_GYM
+       INCREMENT BY  1
+       START WITH 41;
+       
 COMMIT;
+
+
+-- 추가 INSERT 추후사용
+--INSERT INTO GYM (
+--    NO, 
+--    GYM_NAME, 
+--    ADDRESS, 
+--    GYM_PHONE,
+--    CONTENT, 
+--    TIME, 
+--    IMG, 
+--    THUMB,
+--    CATE,
+--    STATUS,
+--    CEO_PHONE, 
+--    CEO_EMAIL
+--) VALUES(
+--    SEQ_GYM.NEXTVAL, 
+--    '서초 웰스필라테스', 
+--    '서울특별시 서초구 양재대로2길 116-6 서초프라자 5층', 
+--    '0001-1111-0042', 
+--    '양재천 VIEW 필라테스!', 
+--    '[평 일] 10:00 ~ 22:00', 
+--    DEFAULT,
+--    DEFAULT,
+--    '필라테스',
+--    DEFAULT,
+--    '010-111-0042', 
+--    'test41@semi.com'
+--);
+--
+--COMMIT;
 
 
 ---------------------센터 좋아요 테이블 ----------------
@@ -268,54 +319,6 @@ INSERT INTO LOVE (NO, GYM_NO, MEMBER_NO)
             VALUES(SEQ_LOVE.NEXTVAL, 1, 2);
 
 COMMIT;
-
-----------------------카테고리 테이블 ----------------
-
-CREATE TABLE CATE (
-    NO NUMBER PRIMARY KEY,
-    NAME VARCHAR2(30) NOT NULL
-);
-
-COMMENT ON COLUMN CATE.NO IS '카테고리번호';
-COMMENT ON COLUMN CATE.NAME IS '카테고리이름';
-
-CREATE SEQUENCE SEQ_CATE;
-
-INSERT INTO CATE (NO, NAME) VALUES(SEQ_CATE.NEXTVAL,'헬스');
-INSERT INTO CATE (NO, NAME) VALUES(SEQ_CATE.NEXTVAL,'PT');
-INSERT INTO CATE (NO, NAME) VALUES(SEQ_CATE.NEXTVAL,'G.X');
-INSERT INTO CATE (NO, NAME) VALUES(SEQ_CATE.NEXTVAL,'스피닝');
-INSERT INTO CATE (NO, NAME) VALUES(SEQ_CATE.NEXTVAL,'크로스핏');
-INSERT INTO CATE (NO, NAME) VALUES(SEQ_CATE.NEXTVAL,'골프');
-INSERT INTO CATE (NO, NAME) VALUES(SEQ_CATE.NEXTVAL,'수영');
-INSERT INTO CATE (NO, NAME) VALUES(SEQ_CATE.NEXTVAL,'요가');
-INSERT INTO CATE (NO, NAME) VALUES(SEQ_CATE.NEXTVAL,'필라테스');
-
-COMMIT;
-
----------------------센터별 카테고리 테이블 ----------------
------------------(CATE, GYM 테이블 생성 필수)--------
-
-CREATE TABLE GYMCATE (
-    NO NUMBER PRIMARY KEY,
-    GYM_NO NUMBER,
-    CATE_NO NUMBER,
-    FOREIGN KEY (GYM_NO) REFERENCES GYM,
-    FOREIGN KEY (CATE_NO) REFERENCES CATE
-);
-
-COMMENT ON COLUMN GYMCATE.NO IS '센터별카테고리번호';
-COMMENT ON COLUMN GYMCATE.GYM_NO IS '센터번호';
-COMMENT ON COLUMN GYMCATE.CATE_NO IS '카테고리번호';
-
-CREATE SEQUENCE SEQ_GYMCATE;
-
-INSERT INTO GYMCATE (NO, GYM_NO, CATE_NO) VALUES(SEQ_GYMCATE.NEXTVAL, 1, 1);
-INSERT INTO GYMCATE (NO, GYM_NO, CATE_NO) VALUES(SEQ_GYMCATE.NEXTVAL, 1, 3);
-
-COMMIT;
-
-
 
 ----------------------리뷰  테이블 ----------------
 -----------------(MEMBER, GYM 테이블 생성 필수)--------
@@ -370,7 +373,3 @@ INSERT INTO REVIEWLIKE (NO, REV_NO, MEMBER_NO)
             VALUES(SEQ_REVIEWLIKE.NEXTVAL, 1, 2);
 
 COMMIT;
-
---------------------------------------------------------------------
-
-
