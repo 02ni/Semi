@@ -34,7 +34,7 @@
 				<li class="freeBoard_select" onclick="location.href='${ path }/board/list'">
 					<span>자유게시판</span>
 				</li>
-				<li class="teamBoard_select" onclick="location.href='${ path }/teamboard/list'">
+				<li class="qna_select" onclick="location.href='${ path }/qna/list'">
 					<span>1:1문의</span>
 				</li>
 			</ul>

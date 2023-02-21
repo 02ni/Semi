@@ -71,8 +71,6 @@
 <link rel="stylesheet" href="${ path }/resources/css/board.css">
 
 <section id="content">
-	<div class="clear"></div>
-	
 		<div id="btn1">
 			<ul>
 				<li class="notice_select" onclick="location.href='${ path }/notice/list'">
@@ -84,13 +82,16 @@
 				<li class="freeBoard_select active" onclick="location.href='${ path }/board/list'">
 					<span>자유게시판</span>
 				</li>
-				<li class="teamBoard_select" onclick="location.href='${ path }/teamboard/list'">
+				<li class="qna_select" onclick="location.href='${ path }/qna/list'">
 					<span>1:1문의</span>
 				</li>
 			</ul>
 		</div>
+		
+	<div class="clear"></div>
 	
 	<hr>
+	
 	
 	<h2></h2>
 	
@@ -122,8 +123,7 @@
 						<td>
 							<a href="${ path }/board/view?no=${ board.no }">
 								${ board.title }
-							<a> 
-							<span>[${ board.replyCount }]</span>
+							<span>[${ board.replyCount }]</span></a> 
 						</td>
 						<td>${ board.writerId }</td>
 						<td>${ board.createDate }</td>
@@ -139,7 +139,6 @@
 					</tr>
 				</c:forEach>
 			</c:if>
-			
 		</table>
 		
 		
@@ -173,6 +172,7 @@
 				 </ul>
 			</nav>
 		</div>
+	</div>
 		
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

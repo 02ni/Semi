@@ -13,6 +13,7 @@ body{
 }
 
 #btn1{
+	margin-top: 20px;
 	margin-bottom: 10px;
     width: 100%;
     text-align: center;
@@ -21,6 +22,11 @@ body{
 
 #btn1 ul{
 	padding-left: 0px;
+}
+
+#btn1 ul li>span{
+    color: #ABABAB;
+    display: inline-block;
 }
 
 #btn1 ul li{
@@ -41,9 +47,6 @@ body{
     cursor: pointer;
 }
 
-#btn1 ul li>span{
-    color: #ABABAB;
-}
 
 #btn1 ul li.active{
 	color: black;

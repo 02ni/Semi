@@ -5,59 +5,56 @@
 
 <jsp:include page="/views/common/header.jsp" />
 
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ path }/resources/css/layout.css" rel="stylesheet">
+ 
+<script src="js/jquery-3.6.0.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- 서머노트 스타일 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <!-- 서머노트를 위해 추가해야할 부분 -->
+  <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
+  <!--  -->
+
 <style>
-	div#board-write-container
-	{
-		width:600px;
-		margin:0 auto;
-		text-align:center;
-	}
-	
-	div#board-write-container h2
-	{
-		margin:10px 0;
-	}
-	
-	table#tbl-board
-	{
-		width:500px;
-		margin:0 auto;
-		border:1px solid black;
-		border-collapse:collapse;
-	}
-	
-	table#tbl-board th
-	{
-		width:125px;
-		border:1px solid;
-		padding:5px 0;
-		text-align:center;
-	}
-	
-	table#tbl-board td
-	{
-		border:1px solid;
-		padding:5px 0 5px 10px;
-		text-align:left;
-	}
+    h3 { text-align: center; }
 </style>
+
+
 <section id="content">
-	<div id='board-write-container'>
-		<h2>게시판 작성</h2>
-			<div class="form-check form-check-inline mt-3">
-    			<input class="form-check-input" type="checkbox" name="secret" id="secret">
-    			<label class="form-check-label">비밀글 설정</label>
-			</div>
-		
-		<form action="${ path }/board/write" method="POST"  enctype="multipart/form-data">
+    <div class="formBox">
+	
+	<h1></h1>
+	
+        <h3>자유게시판</h3>
+        <form action="${ path }/board/write" method="POST"  enctype="multipart/form-data">
 			<table id='tbl-board'>
+			    <colgroup>
+                    <col style="width:150px">
+                    <col style="width:850px">
+                </colgroup>
 				<tr>
 					<th>제목</th>
 					<td><input type="text" name="title" id="title"></td>
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td><input type="text" name="writer" value="${ loginMember.id }" readonly></td>
+					<td>${ loginMember.id }</td>
 				</tr>
 				<tr>
 					<th>첨부파일</th>
@@ -65,17 +62,24 @@
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><textarea name="content" cols="50" rows="15" ></textarea></td>
+					 <td>
+					 <textarea name="content" id="summernote" cols="40" rows="15"></textarea>
+					</td>
 				</tr>
-				<tr>
-					<th colspan="2">
-						<input type="submit" value="등록">
-						<input type="reset" value="취소">
-					</th>
-				</tr>
-			</table>
-		</form>
-	</div>
+            </table>
+            <div class="btns">
+                <input type="submit" value="등록" id="join">
+                <input type="reset" value="취소" id="cancel">
+            </div>
+        </form>
+        </div>
 </section>
+   
+<script>
+$('#summernote').summernote({
+	  height: 450,
+	  lang: "ko-KR"
+	});
+</script>
 
 <jsp:include page="/views/common/footer.jsp" /> 

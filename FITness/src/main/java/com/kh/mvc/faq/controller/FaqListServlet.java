@@ -13,7 +13,7 @@ import com.kh.mvc.board.model.service.BoardService;
 import com.kh.mvc.board.model.vo.Board;
 import com.kh.mvc.common.util.PageInfo;
 
-@WebServlet(name = "QnaList", urlPatterns = { "/faq/list" })
+@WebServlet(name = "FaqList", urlPatterns = { "/faq/list" })
 public class FaqListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

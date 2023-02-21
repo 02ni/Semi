@@ -22,19 +22,20 @@
             </div>
 
             <div id="header2" align="center" >
-	          <a href="${ path }/"> <h1 class="logo" align="center">FITness(수정중)</h1></a>
-	           <!-- 
-	           <img src="resources/images/logotext.png" height="100px" align="center">
-	           -->
+	          <%-- <a href="${ path }/"> <h1 class="logo" align="center">FITness(로고 수정중)</h1></a> --%>
+	           
+	          <a href="${ path }/"><img src="${ path }/resources/images/logotext.png" height="100px" align="center"></a>
+	          
             </div>
 
 		<c:if test="${ empty loginMember }">
             <div id="header3">
                 <a href="${ path }/member/login" class="mainlogin">로그인</a>
                 <a href="${ path }/member/join" class="mainlogin">회원가입</a> 
-            </div>
-			</c:if>
-						<c:if test="${ not empty loginMember }">
+            </div>	
+		</c:if>
+		
+		<c:if test="${ not empty loginMember }">
 				<table>
 					<tr>
 						<td colspan="2">
@@ -56,20 +57,19 @@
 					</tr>
 				</table>
 			</c:if>
-			
-        </div>
+      </div>
 
         <div id="navigator">
             <ul id="navi">
             		<li><a href="${ path }/">Home</a></li>
-	                <li><a href="#">Gym찾기</a></li>
+	                <li><a href="${ path }/gym/list">Gym찾기</a></li>
 	                <li id="board">
 	                    <a href="${ path }/notice/list">게시판</a>
 	                    <ul>
 		                    <li id="board"><a href="${ path }/notice/list">공지사항</a></li>
-	                        <li><a href="${ path }/qna/list">Q&A</a></li>
+	                        <li><a href="${ path }/faq/list">FAQ</a></li>
 	                        <li><a href="${ path }/board/list">자유게시판</a></li>
-	                        <li><a href="${ path }/teamBoard/list">일행구하기</a></li>
+	                        <li><a href="${ path }/qna/list">1:1 문의</a></li>
 	                    </ul>
 	                </li>
 	                <li>

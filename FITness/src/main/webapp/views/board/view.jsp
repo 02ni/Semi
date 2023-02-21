@@ -6,32 +6,43 @@
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 <jsp:include page="/views/common/header.jsp" />
 
-
-<link rel="stylesheet" type="text/css" href="/css/common/common.css"/>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ path }/resources/css/layout.css" rel="stylesheet">
+ 
+<script src="js/jquery-3.6.0.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <style>
-    section>div#board-write-container{width:600px; margin:0 auto; text-align:center;}
-    section>div#board-write-container h2{margin:10px 0;}
-    table#tbl-board{width:500px; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
-    table#tbl-board th {width: 125px; border:1px solid; padding: 5px 0; text-align:center;} 
-    table#tbl-board td {border:1px solid; padding: 5px 0 5px 10px; text-align:left;}
-    div#comment-container button#btn-insert{width:60px;height:50px; color:white; background-color:#3300FF;position:relative;top:-20px;}
+    h3 { text-align: center; }
+    table#tbl-board{width:800px; margin:0 auto; border-collapse:collapse; clear:both; } 
+    table#comment-container{width:800px; margin:0 auto; border-collapse:collapse; clear:both; } 
+    table#tbl-board{width:800px; margin:0 auto; border-collapse:collapse; clear:both; } 
+    div.se{width:800px; margin:0 auto; border-collapse:collapse; clear:both; } 
     
-    /*댓글테이블*/
-    table#tbl-comment{width:580px; margin:0 auto; border-collapse:collapse; clear:both; } 
-    table#tbl-comment tr td{border-bottom:1px solid; border-top:1px solid; padding:5px; text-align:left; line-height:120%;}
-    table#tbl-comment tr td:first-of-type{padding: 5px 5px 5px 50px;}
-    table#tbl-comment tr td:last-of-type {text-align:right; width: 100px;}
+        /*댓글테이블*/
+    table#tbl-comment{width:800px; margin:0 auto; border-collapse:collapse; clear:both; } 
     table#tbl-comment button.btn-delete{display:none;}
     table#tbl-comment tr:hover {background:lightgray;}
     table#tbl-comment tr:hover button.btn-delete{display:inline;}
+    table#tbl-comment tr td:last-of-type {text-align:right; width: 100px;}
     table#tbl-comment sub.comment-writer {color:navy; font-size:14px}
-    table#tbl-comment sub.comment-date {color:tomato; font-size:10px}
 </style>
+
+
 <section id="content">   
 	<div id="board-write-container">
-		<h2>자유게시판</h2>
-		<table id="tbl-board">
+		<h3>자유게시판</h3>
+		<table id="tbl-board" class="se">
+			<colgroup>
+                    <col style="width:150px">
+                    <col style="width:850px">
+            </colgroup>
 			<tr>
 				<th>글번호</th>
 				<td>${ board.no }</td>
@@ -55,11 +66,6 @@
 						<span> - </span>
 					</c:if>
 					<c:if test="${ not empty board.originalFileName }">
-						<%-- 
-						<a href="javascript:" id="fileDown">
-							<span> ${ board.originalFileName } </span>
-						</a>
-						--%>
 						<a href="${ path }/resources/upload/board/${board.renamedFileName}">
 							<span> ${ board.originalFileName } </span>
 						</a>
@@ -70,31 +76,35 @@
 				<th>내 용</th>
 				<td>${ board.content }</td>
 			</tr>
-			<%--글작성자/관리자인경우 수정삭제 가능 --%>
+		</table>
+		
+		<h2></h2>
+		
+			<div class="se">
 			<tr>
-				<th colspan="2">
+				<th colspan="10">
 					<c:if test="${ not empty loginMember && loginMember.id == board.writerId }">
-						<button type="button" onclick="location.href='${ path }/board/update?no=${ board.no }'">수정</button>
-						<button type="button" id="btnDelete">삭제</button>
+						<input type="submit"  value="수정" onclick="location.href='${ path }/board/update?no=${ board.no }'">
+						<input type="submit"  value="삭제" id="btnDelete">
 					</c:if>
-					<button type="button" onclick="location.href='${ path }/board/list'">목록으로</button>
+					<input type="submit"  value="목록으로" onclick="location.href='${ path }/board/list'">
 				</th>
 			</tr>
-		</table>
+			</div>
 	
+		<h2></h2>
 		
-		
-		
-		<div id="comment-container">
+		<div id="comment-container" class="se">
 	    	<div class="comment-editor">
 	    		<form action="${ path }/board/reply" method="POST">
 	    			<input type="hidden" name="boardNo" value="${ board.no }">
-					<textarea name="content" id="replyContent" cols="55" rows="3"></textarea>
-					<button type="submit" id="btn-insert">등록</button>	    			
+					<textarea name="content" id="replyContent" cols="75" rows="3"></textarea>
+					<input type="submit"  value="등록" id="btn-insert">	    			
 	    		</form>
 	    	</div>
-	    </div>	    
-	    <table id="tbl-comment">
+	    </div>	
+	        
+	    <table id="tbl-comment" class="se">
 	    	<c:forEach var="reply" items="${ board.replies }">
 	    	   	<tr class="level1">
 		    		<td>
@@ -105,8 +115,9 @@
 		    		</td>
 		    		<td>
 		    			<c:if test="${ not empty loginMember && loginMember.id == reply.writerId }">
-		    				<button>삭제</button>
+		    				<input type="submit"  value="삭제">
 		    			</c:if>
+		    			<input type="submit"  value="답글">
 		    		</td>
 		    	</tr>
 	    	</c:forEach>

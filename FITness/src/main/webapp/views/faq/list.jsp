@@ -6,17 +6,32 @@
 <jsp:include page="/views/common/header.jsp"/>
 
 <style>
-	section#board-list-container{width:600px; margin:0 auto; text-align:center;}
-	section#board-list-container h2{margin:10px 0;}
-	table#tbl-board{width:100%; margin:0 auto; border: 1px black; border-collapse:collapse; clear:both;}
-	table#tbl-board tr>th {border: 0.3px solid grey; padding: 5px 0; text-align:center; background-color: rgb(181,181,181);} 
-	table#tbl-board th, table#tbl-board td {border: 0.3px solid grey; padding: 5px 0; text-align:center;} 
-	
-	/*글쓰기버튼*/
-	input#btn-add{float:right; margin: 0 0 15px;}
-	
-	/*페이지바*/
-	div#pageBar{margin-top:10px; text-align:center; background-color:rgba(246, 139, 0, 0.917);}
+  .answer {
+    display: none;
+    padding-bottom: 30px;
+  }
+  #faq-title {
+    font-size: 25px;
+  }
+  .faq-content {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .question {
+    font-size: 19px;
+    padding: 30px 0;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+  }
+  .question:hover {
+    color: #2962ff;
+  }
+  [id$="-toggle"] {
+    margin-right: 15px;
+  }
 </style>
 
 <link rel="stylesheet" href="${ path }/resources/css/board.css">
@@ -33,7 +48,7 @@
 				<li class="freeBoard_select" onclick="location.href='${ path }/board/list'">
 					<span>자유게시판</span>
 				</li>
-				<li class="teamBoard_select" onclick="location.href='${ path }/teamboard/list'">
+				<li class="qna_select" onclick="location.href='${ path }/qna/list'">
 					<span>1:1문의</span>
 				</li>
 			</ul>
@@ -46,52 +61,43 @@
 	<h2></h2>
 	
 	<div id="board-list-container">
-		<c:if test="${ not empty loginMember }">
-			<button type="button" onclick="location.href='${path}/board/write'">글쓰기</button>
-		</c:if>
+		
+		<span id="faq-title">자주 묻는 질문(FAQ)</span>
+		<div class="faq-content">
+			<button class="question" id="que-1"><span id="que-1-toggle">▶</span><span>'HTML'이란 무엇인가요?</span></button>
+			<div class="answer" id="ans-1">하이퍼텍스트 마크업 언어(HyperText Markup Language)입니다.</div>
+		</div>
+		
+		<div class="faq-content">
+			<button class="question" id="que-2"><span id="que-2-toggle">▶</span><span>'CSS'란 무엇인가요?</span></button>
+			<div class="answer" id="ans-2">캐스케이딩 스타일 시트(Cascading Style Sheets)입니다.</div>
+		</div>
+		
+		<div class="faq-content">
+		<button class="question" id="que-3"><span id="que-3-toggle">▶</span><span>'JavaScript'란 무엇인가요?</span></button>
+			<div class="answer" id="ans-3">자바스크립트는 객체(Object)를 기초로 하는 스크립트 프로그래밍 언어입니다.</div>
+		</div>
 
-		<table id="tbl-board">
-			<tr>
-				<th>번호</th>
-				<th width = 60%>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>첨부파일</th>
-				<th>조회수</th>
-			</tr>
-			<c:if test="${ empty list }">
-				<tr>
-					<td colspan="6"> 
-						조회된 게시글이 없습니다.
-					</td>
-				</tr>	
-			</c:if>
-			<c:if test="${ not empty list }">
-				<c:forEach var="board" items="${ list }">
-					<tr>
-						<td>${ board.rowNum }</td>
-						<!-- 식별자 역할을 하는 boardno 값을 불러오도록 -->
-						<td>
-							<a href="${ path }/board/view?no=${ board.no }">
-								${ board.title }
-							</a>
-						</td>
-						<td>${ board.writerId }</td>
-						<td>${ board.createDate }</td>
-						<td>
-							<c:if test="${ empty board.originalFileName }">
-								<span> - </span>
-							</c:if>
-							<c:if test="${ not empty board.originalFileName }">
-								<img width="20px" src="${ path }/resources/images/file.png">
-							</c:if>
-						</td>
-						<td>${ board.readCount }</td>
-					</tr>
-				</c:forEach>
-			</c:if>
-			
-		</table>
+		<script>
+		  const items = document.querySelectorAll('.question');
+		
+		  function openCloseAnswer() {
+		    const answerId = this.id.replace('que', 'ans');
+		
+		    if(document.getElementById(answerId).style.display === 'block') {
+		      document.getElementById(answerId).style.display = 'none';
+		      document.getElementById(this.id + '-toggle').textContent = '▶';
+		    } else {
+		      document.getElementById(answerId).style.display = 'block';
+		      document.getElementById(this.id + '-toggle').textContent = '▼';
+		    }
+		  }
+		
+		  items.forEach(item => item.addEventListener('click', openCloseAnswer));
+		</script>
+		
+		
+		
 	</div>
 </section>
 

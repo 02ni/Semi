@@ -18,8 +18,7 @@
             box-sizing: border-box;
         }
         .wrap{
-            width:1000px;
-            height:1400px;
+           	width:1000px;
             margin:auto;
         }
         .logo {
@@ -29,7 +28,7 @@
 
 /* 헤더 */
         #header{
-            height: 10%
+            height: 140px;
         }
 
         #header1{
@@ -69,7 +68,7 @@
 
 /* 메뉴바 */
         #navigator {
-            height: 3%;
+            height: 41px;
             border-bottom: 1px solid;
             z-index:999;           
         }
@@ -228,7 +227,6 @@
 
     /* 하단 */
         #footer {
-            height: 15%;
             border-top: 1px solid;
             border-bottom: 1px solid;
             margin-top: 30px;
