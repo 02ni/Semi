@@ -91,7 +91,7 @@ INSERT INTO MEMBER (
 
 COMMIT;
 
---------------- Board 관련 테이블 ---------------
+--------------- 1. Board 관련 테이블 ---------------
 
 CREATE TABLE BOARD (   
     NO NUMBER,
@@ -170,7 +170,7 @@ COMMENT ON COLUMN "REPLY"."MODIFY_DATE" IS '댓글수정날짜';
 COMMIT;
 
 
---------------- Notice 관련 테이블 ---------------
+--------------- 2. Notice 관련 테이블 ---------------
 
 CREATE TABLE NOTICE (   
     NO NUMBER,
@@ -209,7 +209,7 @@ INSERT INTO NOTICE VALUES(SEQ_NOTICE_NO.NEXTVAL, 1, '게시글 1',  '이 게시�
 COMMIT;
 
 
----------------------- 1:1 문의게시판 (Qna 테이블) ----------------
+---------------------- 3. 1:1 문의게시판 (Qna 테이블) ----------------
 
 CREATE TABLE QNABOARD (   
     NO NUMBER,
@@ -261,6 +261,30 @@ EXCEPTION
     WHEN OTHERS THEN ROLLBACK;
 END;
 
+
+---------------------- 4. FAQ 테이블 (자주묻는질문) ----------------
+
+CREATE TABLE FAQ (   
+    NO NUMBER,
+    WRITER_NO NUMBER, 
+    TITLE VARCHAR2(50) NOT NULL, 
+    CONTENT VARCHAR2(2000) NOT NULL,
+    STATUS VARCHAR2(1) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N')),
+    CONSTRAINT PK_FAQ_NO PRIMARY KEY(NO),
+    CONSTRAINT FK_FAQ_WRITER FOREIGN KEY(WRITER_NO) REFERENCES MEMBER(NO) ON DELETE SET NULL
+);
+
+
+COMMENT ON COLUMN FAQ.NO IS '게시글번호';
+COMMENT ON COLUMN FAQ.WRITER_NO IS '게시글작성자';
+COMMENT ON COLUMN FAQ.TITLE IS '게시글제목';
+COMMENT ON COLUMN FAQ.CONTENT IS '게시글내용';
+COMMENT ON COLUMN FAQ.STATUS IS '상태값(Y/N)';
+
+
+CREATE SEQUENCE SEQ_FAQ_NO;
+
+COMMIT;
 
 
 
