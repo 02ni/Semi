@@ -338,7 +338,77 @@ public class QnaDao {
 		return result;
 	}
 
+	public List<QnaBoard> findAllByNo(Connection connection, PageInfo pageInfo, int no) {
+		List<QnaBoard> list = new ArrayList<>();
+	      
+	      PreparedStatement pstmt = null;
 
+	      ResultSet rs = null;
+	     
+	      
+	      String query = "SELECT RNUM, NO, TITLE, ID, CREATE_DATE, ORIGINAL_FILENAME, READCOUNT, STATUS, REPLYCOUNT, SECRET_CHECK  "
+	             + "FROM ("
+	             +    "SELECT ROWNUM AS RNUM, "
+	             +          "NO, "
+	             +          "TITLE, "
+	             +          "ID, "
+	             +          "CREATE_DATE, "
+	             +          "ORIGINAL_FILENAME, "
+	             +           "READCOUNT, "
+	             +           "STATUS, "
+				 +     		 "REPLYCOUNT, "
+				 +     		 "SECRET_CHECK "
+	             +     "FROM ("
+	             +        "SELECT B.NO, "
+	             +             "B.TITLE, "
+	             +             "M.ID, "
+	             +             "B.CREATE_DATE, "
+	             +             "B.ORIGINAL_FILENAME, "
+	             +             "B.READCOUNT, "
+	             +             "B.STATUS, "
+				 +     		   "B.REPLYCOUNT, "
+				 +     		   "B.SECRET_CHECK "
+	             +       "FROM QNABOARD B "
+	             +       "JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
+	             +       "WHERE B.STATUS = 'Y' AND M.NO = ? ORDER BY B.NO DESC"
+	             +     ")"
+	             + ") WHERE RNUM BETWEEN ? and ?";
+	      
+	      try {
+	         pstmt = connection.prepareStatement(query);
+
+	         pstmt.setInt(1, no);
+	         pstmt.setInt(2, pageInfo.getStartList());
+	         pstmt.setInt(3, pageInfo.getEndList());
+	      
+	         rs = pstmt.executeQuery();
+	         
+	         while (rs.next()) {
+	        	 QnaBoard board = new QnaBoard();
+	            
+	            board.setNo(rs.getInt("NO"));
+	            board.setRowNum(rs.getInt("RNUM"));
+	            board.setWriterId(rs.getString("ID"));
+	            board.setTitle(rs.getString("TITLE"));
+	            board.setCreateDate(rs.getDate("CREATE_DATE"));
+	            board.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
+	            board.setReadCount(rs.getInt("READCOUNT"));
+	            board.setStatus(rs.getString("STATUS"));
+				board.setReplyCount(rs.getInt("REPLYCOUNT"));
+				board.setSecretCheck(rs.getString("SECRET_CHECK"));
+	            
+	            list.add(board);
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	   
+	      return list;
+	   }
 	
 
 }

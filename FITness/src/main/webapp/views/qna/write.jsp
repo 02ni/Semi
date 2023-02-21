@@ -33,10 +33,11 @@
 
 <section id="content">
 	<div id='board-write-container'>
-		<h2>게시판 작성</h2>
+		<h2>1:1 문의</h2>
 			<div class="form-check form-check-inline mt-3">
-    			<input class="form-check-input" type="checkbox" name="secret" id="secret">
-    			<label class="form-check-label">비밀글 설정</label>
+    			
+
+    			
 			</div>
 		
 		<form action="${ path }/qna/write" method="POST" enctype="multipart/form-data">

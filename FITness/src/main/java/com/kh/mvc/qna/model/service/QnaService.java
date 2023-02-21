@@ -139,4 +139,16 @@ public class QnaService {
 		return qnaboard;
 	}
 
+	public List<QnaBoard> getBoardList(PageInfo pageInfo, int no) {
+		List<QnaBoard> list = null;
+	      Connection connection = getConnection();
+	      
+	      list = new QnaDao().findAllByNo(connection, pageInfo, no);
+	      
+	      close(connection);
+	      
+	      return list;
+		
+	}
+
 }

@@ -23,11 +23,15 @@ public class QnaListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int no = Integer.parseInt(request.getParameter("no"));
+		
 		int page = 0;
 		int listCount = 0;
 		PageInfo pageInfo = null;
 		List<QnaBoard> list = null;
 		
+		System.out.println(no);
+	
 		try {
 			page = Integer.parseInt(request.getParameter("page"));
 		} catch (NumberFormatException e) {
@@ -36,7 +40,8 @@ public class QnaListServlet extends HttpServlet {
 		
 		listCount = new QnaService().getBoardCount();
 		pageInfo = new PageInfo(page, 10, listCount, 10);
-		list = new QnaService().getBoardList(pageInfo);
+		
+		list = new QnaService().getBoardList(pageInfo, no);
 		
 		System.out.println(list);
 		

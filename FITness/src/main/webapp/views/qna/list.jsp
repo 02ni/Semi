@@ -82,7 +82,7 @@
 				<li class="freeBoard_select" onclick="location.href='${ path }/board/list'">
 					<span>자유게시판</span>
 				</li>
-				<li class="qna_select active" onclick="location.href='${ path }/qna/list'">
+				<li class="qna_select active" onclick="location.href='${ path }/qna/list?no=${ loginMember.no }'">
 					<span>1:1문의</span>
 				</li>
 			</ul>
@@ -98,6 +98,10 @@
 	<div id="board-list-container">
 		<c:if test="${ not empty loginMember }">
 			<button id="btn-add" type="button" onclick="location.href='${path}/qna/write'">글쓰기</button>
+		</c:if>
+		
+		<c:if test="${ not empty loginMember && loginMember.id == qa.writerId}">
+	    	<button id="btn-add" type="button" onclick="location.href='${path}/qna/list'">1:1 문의하기</button>
 		</c:if>
 
 		<table id="tbl-board" class="table table-hover table-striped text-center">
