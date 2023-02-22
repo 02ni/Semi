@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kh.mvc.qna.model.service.QnaService;
 import com.kh.mvc.qna.model.vo.QnaBoard;
 import com.kh.mvc.common.util.PageInfo;
+import com.kh.mvc.member.model.vo.Member;
 
 
 @WebServlet(name = "qnaList", urlPatterns = { "/qna/list" })
@@ -23,7 +25,8 @@ public class QnaListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int no = Integer.parseInt(request.getParameter("no"));
+		
+		int no = request.getParameter("no").equals("") ? 1 : Integer.parseInt(request.getParameter("no"));
 		
 		int page = 0;
 		int listCount = 0;
@@ -31,23 +34,32 @@ public class QnaListServlet extends HttpServlet {
 		List<QnaBoard> list = null;
 		
 		System.out.println(no);
+		
+		HttpSession session = request.getSession(false);
+		Member loginMember = (session == null) ? null : (Member) session.getAttribute("loginMember");
 	
-		try {
-			page = Integer.parseInt(request.getParameter("page"));
-		} catch (NumberFormatException e) {
-			page = 1;
+		if(loginMember != null) {
+			try {
+				page = Integer.parseInt(request.getParameter("page"));
+			} catch (NumberFormatException e) {
+				page = 1;
+			}
+			
+			listCount = new QnaService().getBoardCount();
+			pageInfo = new PageInfo(page, 10, listCount, 10);
+			
+			list = new QnaService().getBoardList(pageInfo, no);
+			
+			System.out.println(list);
+			
+			request.setAttribute("pageInfo", pageInfo);
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("/views/qna/list.jsp").forward(request, response);
+		} else {
+			request.setAttribute("msg", "로그인 후 작성해 주세요.");
+			request.setAttribute("location", "/member/login");			
+			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		}
-		
-		listCount = new QnaService().getBoardCount();
-		pageInfo = new PageInfo(page, 10, listCount, 10);
-		
-		list = new QnaService().getBoardList(pageInfo, no);
-		
-		System.out.println(list);
-		
-		request.setAttribute("pageInfo", pageInfo);
-		request.setAttribute("list", list);
-		request.getRequestDispatcher("/views/qna/list.jsp").forward(request, response);
 	}
 
 }

@@ -99,7 +99,60 @@ public class BoardService {
 		
 		return result;
 	}
+	
+	/*
+	 * 댓글 삭제(구현 보류)
+	public int deleteReply(int boardNo) {
+		int result = 0;
+		Connection connection = getConnection();
+		
+		result = new BoardDao().updateReplyStatus(connection, boardNo, "N");
+		
+		if(result > 0) {
+			commit(connection);
+		} else {
+			rollback(connection);
+		}
+		
+		close(connection);
+		
+		return result;
+	}
+	*/
+	
 
+	public Board getBoardReplyByNo(int no, boolean hasRead) {
+		Board board = null;
+		Connection connection = getConnection();
+		
+		board = new BoardDao().findBoardByNo(connection, no);
+		
+		if(board != null && !hasRead) {
+			int result = new BoardDao().updateReplyCount(connection, board);
+			
+			if(result > 0) {
+				commit(connection);
+			} else {
+				rollback(connection);
+			}
+		}
+				
+		close(connection);
+		
+		return board;
+	}
+
+	public Reply readReply(int no) {
+		Reply reply = null;
+		Connection connection = getConnection();
+		
+		reply = new BoardDao().readReplyBoard(connection, no);
+		
+		close(connection);
+		
+		return reply;
+	}
+	
 	public int saveReply(Reply reply) {
 		int result = 0;
 		Connection connection = getConnection();
@@ -117,26 +170,26 @@ public class BoardService {
 		return result;
 	}
 
-	public Board getBoardReplyByNo(int no, boolean hasRead) {
-		Board board = null;
+	public int updateReply(Reply reply) {
+		int result = 0;
 		Connection connection = getConnection();
 		
-		board = new BoardDao().findBoardByNo(connection, no);
+		result = new BoardDao().updateReply(connection, reply);
 		
-		// 게시글 조회 수 증가 로직
-		if(board != null && !hasRead) {
-			int result = new BoardDao().updateReplyCount(connection, board);
-			
-			if(result > 0) {
-				commit(connection);
-			} else {
-				rollback(connection);
-			}
+		if(result > 0) {
+			commit(connection);
+		} else {
+			rollback(connection);
 		}
-				
+		
 		close(connection);
 		
-		return board;
+		return result;
+		
+		
 	}
+
+
+
 
 }

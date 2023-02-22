@@ -224,6 +224,29 @@ public class BoardDao {
 		return result;
 	}
 	
+	public int updateReadCount(Connection connection, Board board) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE BOARD SET READCOUNT=? WHERE NO=?";		
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			board.setReadCount(board.getReadCount() + 1);
+			
+			pstmt.setInt(1, board.getReadCount());
+			pstmt.setInt(2, board.getNo());
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 	public List<Reply> getRepliesByNo(Connection connection, int no) {
 		List<Reply> replies = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -291,19 +314,20 @@ public class BoardDao {
 		return result;
 	}
 
-	public int updateReadCount(Connection connection, Board board) {
+
+	/*
+	 * 댓글 삭제(구현 보류)
+	public int updateReplyStatus(Connection connection, int boardNo, String string) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "UPDATE BOARD SET READCOUNT=? WHERE NO=?";		
+		String query = "UPDATE REPLY SET STATUS=? WHERE NO=?";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
 			
-			board.setReadCount(board.getReadCount() + 1);
+			pstmt.setString(1, status);
+			pstmt.setInt(2, no);			
 			
-			pstmt.setInt(1, board.getReadCount());
-			pstmt.setInt(2, board.getNo());
-
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -313,6 +337,7 @@ public class BoardDao {
 		
 		return result;
 	}
+	*/
 
 	public int updateReplyCount(Connection connection, Board board) {
 		int result = 0;
@@ -338,7 +363,65 @@ public class BoardDao {
 		return result;
 	}
 
+	
+	// 댓글 내용 가져오기
+	public Reply readReplyBoard(Connection connection, int no) {
+		Reply reply = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String query = "SELECT CONTENT, BOARD_NO FROM REPLY WHERE NO = ?";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				reply = new Reply();
+				
+				reply.setNo(no);
+				reply.setContent(rs.getString("CONTENT"));
+				reply.setBoardNo(rs.getInt("BOARD_NO"));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return reply;
+	}
 
+	public int updateReply(Connection connection, Reply reply) {
+		int result = 0; 
+		PreparedStatement pstmt = null;
+		String query = "UPDATE REPLY SET CONTENT=? WHERE NO = ?";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setString(1, reply.getContent());
+			pstmt.setInt(2, reply.getNo());
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println("용" + result);
+			System.out.println(reply);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+		
+		
+	}
+	
 	
 
 }

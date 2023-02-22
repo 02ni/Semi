@@ -69,7 +69,7 @@
 		                    <li id="board"><a href="${ path }/notice/list">공지사항</a></li>
 	                        <li><a href="${ path }/faq/list">FAQ</a></li>
 	                        <li><a href="${ path }/board/list">자유게시판</a></li>
-	                        <li><a href="${ path }/qna/list">1:1 문의</a></li>
+	                        <li><a href="${ path }/qna/list?no=${ loginMember.no }">1:1 문의</a></li>
 	                    </ul>
 	                </li>
 	                <li>

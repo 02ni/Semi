@@ -51,26 +51,10 @@
 </style>
 
 
-<!-- 
-<style>
-	section#board-list-container{width:600px; margin:0 auto; text-align:center;}
-	section#board-list-container h2{margin:10px 0;}
-	table#tbl-board{width:100%; margin:0 auto; border: 1px black; border-collapse:collapse; clear:both;}
-	table#tbl-board tr>th {border: 0.3px solid grey; padding: 5px 0; text-align:center; background-color: rgb(181,181,181);} 
-	table#tbl-board th, table#tbl-board td {border: 0.3px solid grey; padding: 5px 0; text-align:center;} 
-	
-	
-	/*글쓰기버튼*/
-	input#btn-add{float:right; margin: 0 0 15px;}
-	
-	/*페이지바*/
-	
-</style>
- -->
-
 <link rel="stylesheet" href="${ path }/resources/css/board.css">
 
-<section id="content">
+
+<section id="boardnav">
 		<div id="btn1">
 			<ul>
 				<li class="notice_select" onclick="location.href='${ path }/notice/list'">
@@ -82,12 +66,14 @@
 				<li class="freeBoard_select active" onclick="location.href='${ path }/board/list'">
 					<span>자유게시판</span>
 				</li>
-				<li class="qna_select" onclick="location.href='${ path }/qna/list'">
+				<li class="qna_select" onclick="location.href='${ path }/qna/list?no=${ loginMember.no }'">
 					<span>1:1문의</span>
 				</li>
 			</ul>
 		</div>
+</section>
 		
+<section id="content">
 	<div class="clear"></div>
 	
 	<hr>

@@ -91,6 +91,8 @@
 				</th>
 			</tr>
 			</div>
+			
+			
 	
 		<h2></h2>
 		
@@ -106,6 +108,7 @@
 	        
 	    <table id="tbl-comment" class="se">
 	    	<c:forEach var="reply" items="${ board.replies }">
+	    
 	    	   	<tr class="level1">
 		    		<td>
 		    			<sub class="comment-writer">${ reply.writerId }</sub>
@@ -115,9 +118,19 @@
 		    		</td>
 		    		<td>
 		    			<c:if test="${ not empty loginMember && loginMember.id == reply.writerId }">
-		    				<input type="submit"  value="삭제">
+			    			<!-- 
+			    			<input type="submit" name="replyUpdate" value="수정" id="btnReplyUpdate">
+		    				 -->
+		    				
+		    				<button type="button" onclick="javascrit:window.open('${ path }/board/replyupdate?no=${ reply.no }','popup_1','width=500px,height=400px,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,left=300px,top=100px')">
+		    				수정</button>
 		    			</c:if>
-		    			<input type="submit"  value="답글">
+		    			<c:if test="${ not empty loginMember && loginMember.id == reply.writerId }">
+		    				<input type="submit"  value="삭제" id="btnReplyDelete">
+		    			</c:if>
+		    			<c:if test="${ not empty loginMember && loginMember.id == board.writerId }">
+		    				<input type="submit"  value="답글" id="btnAgainReply">
+		    			</c:if>
 		    		</td>
 		    	</tr>
 	    	</c:forEach>
@@ -133,6 +146,25 @@
 			}
 		});
 		
+		$('#btnReplyDelete').on('click', () => {
+			if(confirm('정말로 댓글을 삭제 하시겠습니까?')) {
+				location.replace('${ path }/board/replydelete');
+			}
+		});
+		
+		
+		
+		<%--$('#btnReplyUpdate').on('click', () => {			
+			
+				let url = '${ path }/board/replyupdate?no=${ board.no }';	
+				let status = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes";	
+				
+				open(url,"replyUpdate",status);	
+			}
+		});
+		--%>
+		
+		
 		$('#fileDown').on('click', () => {
 			let oname = encodeURIComponent('${ board.originalFileName }');
 			let rname = encodeURIComponent('${ board.renamedFileName }');
@@ -144,9 +176,12 @@
 			if(${ empty loginMember}) {
 				alert('로그인 후 이용해 주세요.')	;
 				location.replace('${ path }/member/login');
-				
 			}
 		});
+		
+        
 	});
+		
 </script>
+
 <jsp:include page="/views/common/footer.jsp" /> 

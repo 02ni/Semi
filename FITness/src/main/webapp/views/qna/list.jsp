@@ -50,24 +50,6 @@
 	
 </style>
 
-
-<!-- 
-<style>
-	section#board-list-container{width:600px; margin:0 auto; text-align:center;}
-	section#board-list-container h2{margin:10px 0;}
-	table#tbl-board{width:100%; margin:0 auto; border: 1px black; border-collapse:collapse; clear:both;}
-	table#tbl-board tr>th {border: 0.3px solid grey; padding: 5px 0; text-align:center; background-color: rgb(181,181,181);} 
-	table#tbl-board th, table#tbl-board td {border: 0.3px solid grey; padding: 5px 0; text-align:center;} 
-	
-	
-	/*글쓰기버튼*/
-	input#btn-add{float:right; margin: 0 0 15px;}
-	
-	/*페이지바*/
-	
-</style>
- -->
-
 <link rel="stylesheet" href="${ path }/resources/css/board.css">
 
 <section id="content">
@@ -111,12 +93,12 @@
 				<th>작성자</th>
 				<th>작성일</th>
 				<th>첨부파일</th>
-				<th>조회수</th>
+				<th>관리자 답변</th>
 			</tr>
 			<c:if test="${ empty list }">
 				<tr>
 					<td colspan="6"> 
-						조회된 게시글이 없습니다.
+						작성한 1:1 문의 게시글이 없습니다.
 					</td>
 				</tr>	
 			</c:if>
@@ -126,8 +108,7 @@
 						<td>${ qnaboard.rowNum }</td>
 						<td>
 							<a href="${ path }/qna/view?no=${ qnaboard.no }">
-								${ qnaboard.title }
-							<span>[${ qnaboard.replyCount }]</span></a> 
+								${ qnaboard.title }</a> 
 						</td>
 						<td>${ qnaboard.writerId }</td>
 						<td>${ qnaboard.createDate }</td>
@@ -139,7 +120,7 @@
 								<img width="20px" src="${ path }/resources/images/file.png">
 							</c:if>
 						</td>
-						<td>${ qnaboard.readCount }</td>
+						<td>${ qnaboard.status }</td>
 					</tr>
 				</c:forEach>
 			</c:if>

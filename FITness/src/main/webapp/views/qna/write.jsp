@@ -58,13 +58,13 @@
 					<th>내용</th>
 					<td><textarea name="content" cols="50" rows="15" class="summernote"></textarea></td>
 				</tr>
+			</table>
 				<tr>
 					<th colspan="2">
 						<input type="submit" value="등록">
 						<input type="reset" value="취소">
 					</th>
 				</tr>
-			</table>
 		</form>
 	</div>
 </section>
