@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>비밀번호변경</title>
+<title>댓글 변경</title>
 <style>
     div#updatePassword-container{
         background:lightgrey;
@@ -48,7 +48,18 @@
 		</form>
 	</div>
 	<script>
-	
+	$(document).ready(() => {
+		$('#replyContent').on('click', () => {
+			if(${ empty loginMember}) {
+				alert('로그인 후 이용해 주세요.')	;
+				location.replace('${ path }/member/login');
+			}
+		});
+	});
+		
 	</script>
 </body>
 </html>
+
+
+

@@ -11,7 +11,7 @@ import java.util.List;
 import com.kh.mvc.common.jdbc.JDBCTemplate;
 import com.kh.mvc.common.util.PageInfo;
 import com.kh.mvc.notice.model.dao.NoticeDao;
-import com.kh.mvc.notice.model.vo.NoticeBoard;
+import com.kh.mvc.notice.model.vo.Notice;
 
 public class NoticeService {
 
@@ -26,8 +26,8 @@ public class NoticeService {
 		return count;
 	}
 
-	public List<NoticeBoard> getBoardList(PageInfo pageInfo) {
-		List<NoticeBoard> list = null;
+	public List<Notice> getBoardList(PageInfo pageInfo) {
+		List<Notice> list = null;
 		Connection connection = getConnection();
 		
 		list = new NoticeDao().findAll(connection, pageInfo);
@@ -37,8 +37,8 @@ public class NoticeService {
 		return list;
 	}
 
-	public NoticeBoard getBoardByNo(int no, boolean hasRead) {
-		NoticeBoard NoticeBoard = null;
+	public Notice getBoardByNo(int no, boolean hasRead) {
+		Notice NoticeBoard = null;
 		Connection connection = getConnection();
 		
 		NoticeBoard = new NoticeDao().findBoardByNo(connection, no);
@@ -59,7 +59,7 @@ public class NoticeService {
 		return NoticeBoard;
 	}
 
-	public int save(NoticeBoard NoticeBoard) {
+	public int save(Notice NoticeBoard) {
 		int result = 0;
 		Connection connection = getConnection();
 		
@@ -99,8 +99,8 @@ public class NoticeService {
 		return result;
 	}
 
-	public NoticeBoard getBoardReplyByNo(int no, boolean hasRead) {
-		NoticeBoard NoticeBoard = null;
+	public Notice getBoardReplyByNo(int no, boolean hasRead) {
+		Notice NoticeBoard = null;
 		Connection connection = getConnection();
 		
 		NoticeBoard = new NoticeDao().findBoardByNo(connection, no);
@@ -119,18 +119,6 @@ public class NoticeService {
 		close(connection);
 		
 		return NoticeBoard;
-	}
-
-	public List<NoticeBoard> getBoardList(PageInfo pageInfo, int no) {
-		List<NoticeBoard> list = null;
-	      Connection connection = getConnection();
-	      
-	      list = new NoticeDao().findAllByNo(connection, pageInfo, no);
-	      
-	      close(connection);
-	      
-	      return list;
-		
 	}
 
 }

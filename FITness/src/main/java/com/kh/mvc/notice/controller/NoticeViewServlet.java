@@ -1,4 +1,4 @@
-package com.kh.mvc.qna.controller;
+package com.kh.mvc.notice.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,24 +8,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.mvc.qna.model.service.QnaService;
-import com.kh.mvc.qna.model.vo.QnaBoard;
+import com.kh.mvc.notice.model.service.NoticeService;
+import com.kh.mvc.notice.model.vo.Notice;
 
-@WebServlet(name = "qnaView", urlPatterns = { "/qna/view" })
-public class QnaViewServlet extends HttpServlet {
+@WebServlet(name = "noticeView", urlPatterns = { "/notice/view" })
+public class NoticeViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public QnaViewServlet() {
+    public NoticeViewServlet() {
     }
 
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	QnaBoard qnaboard = null;
+    	Notice notice = null;
     	int no = Integer.parseInt(request.getParameter("no"));
     	
-    	System.out.println("게시글 번호 : " + no);
+    	System.out.println("ddddd : " + no);
     	
-    	// 1. 쿠키에 게시글을 조회한 이력이 있는지 확인
     	Cookie[] cookies = request.getCookies();
     	String boardHistory = "";
     	boolean hasRead = false;
@@ -44,7 +43,6 @@ public class QnaViewServlet extends HttpServlet {
 			}
     	}
     	
-    	// 2. 읽지 않은 게시글이면 쿠키에 기록
     	if(!hasRead) {
     		Cookie cookie = new Cookie("boardHistory", boardHistory + "|" + no + "|");
     		
@@ -52,11 +50,11 @@ public class QnaViewServlet extends HttpServlet {
     		response.addCookie(cookie);
     	}
     	
-    	qnaboard = new QnaService().getBoardByNo(no, hasRead);
+    	notice = new NoticeService().getBoardByNo(no, hasRead);
 
-    	System.out.println(qnaboard);
+    	System.out.println(notice);
     	
-    	request.setAttribute("qnaboard", qnaboard);
-    	request.getRequestDispatcher("/views/qna/view.jsp").forward(request, response);
+    	request.setAttribute("notice", notice);
+    	request.getRequestDispatcher("/views/notice/view.jsp").forward(request, response);
 	}
 }

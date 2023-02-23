@@ -25,13 +25,13 @@ public class QnaListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		int no = request.getParameter("no").equals("") ? 1 : Integer.parseInt(request.getParameter("no"));
-		
 		int page = 0;
 		int listCount = 0;
 		PageInfo pageInfo = null;
 		List<QnaBoard> list = null;
+		
+		int no = 0;
+		
 		
 		System.out.println(no);
 		
@@ -40,6 +40,7 @@ public class QnaListServlet extends HttpServlet {
 	
 		if(loginMember != null) {
 			try {
+				no=Integer.parseInt(request.getParameter("no"));
 				page = Integer.parseInt(request.getParameter("page"));
 			} catch (NumberFormatException e) {
 				page = 1;
@@ -50,9 +51,9 @@ public class QnaListServlet extends HttpServlet {
 			
 			list = new QnaService().getBoardList(pageInfo, no);
 			
-			System.out.println(list);
+			System.out.println("용" + list);
 			
-			request.setAttribute("pageInfo", pageInfo);
+			request.setAttribute("pageInfo요", pageInfo);
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("/views/qna/list.jsp").forward(request, response);
 		} else {

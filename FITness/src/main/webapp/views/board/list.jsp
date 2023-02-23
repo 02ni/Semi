@@ -36,18 +36,6 @@
   		text-decoration: underline;
 	}
 	
-    div #btn-add {
-         height: 30px;
-         padding: 10px;
-         box-sizing: border-box;
-         width: 100px;
-         background-color: yellow;
-         font-weight: bold;
-         border: none;
-         border-radius: 5px;
-         cursor: pointer;
-     }
-	
 </style>
 
 

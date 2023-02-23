@@ -125,12 +125,18 @@
 		    				<button type="button" onclick="javascrit:window.open('${ path }/board/replyupdate?no=${ reply.no }','popup_1','width=500px,height=400px,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,left=300px,top=100px')">
 		    				수정</button>
 		    			</c:if>
-		    			<c:if test="${ not empty loginMember && loginMember.id == reply.writerId }">
-		    				<input type="submit"  value="삭제" id="btnReplyDelete">
-		    			</c:if>
+		    			<form action="${ path }/board/replydelete" method="POST">
+		    			<input type="hidden" name="replyNo" value="${ reply.no }">
+		    			<input type="hidden" name="boardNo" value="${ board.no }">
+			    			<c:if test="${ not empty loginMember && loginMember.id == reply.writerId }">
+			    				<input type="submit"  value="삭제" id="btnReplyDelete">
+			    			</c:if>
+		    			</form>
+		    			<!-- 
 		    			<c:if test="${ not empty loginMember && loginMember.id == board.writerId }">
 		    				<input type="submit"  value="답글" id="btnAgainReply">
 		    			</c:if>
+		    			 -->
 		    		</td>
 		    	</tr>
 	    	</c:forEach>

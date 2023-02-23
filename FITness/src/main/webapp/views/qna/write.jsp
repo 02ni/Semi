@@ -29,22 +29,19 @@
   <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
   <script src="${pageContext.request.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
-  <!--  -->
+
 
 <section id="content">
-	<div id='board-write-container'>
-		<h2>1:1 문의</h2>
-			<div class="form-check form-check-inline mt-3">
-    			
-
-    			
-			</div>
+	<div class="formBox">
+	<h1></h1>
+	
+        <h3>1:1 문의</h3>
 		
 		<form action="${ path }/qna/write" method="POST" enctype="multipart/form-data">
 			<table id='tbl-board'>
 				<tr>
 					<th>제목</th>
-					<td><input type="text" name="title" id="title"></td>
+					<td><input type="text" name="title" id="title" style="width:780px;"></td>
 				</tr>
 				<tr>
 					<th>작성자</th>
@@ -69,6 +66,7 @@
 	</div>
 </section>
 
+<!-- 서머노트용 스크립트 -->
 <script>
 $('.summernote').summernote({
 	  height: 150,

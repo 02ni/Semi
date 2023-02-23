@@ -315,30 +315,6 @@ public class BoardDao {
 	}
 
 
-	/*
-	 * 댓글 삭제(구현 보류)
-	public int updateReplyStatus(Connection connection, int boardNo, String string) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String query = "UPDATE REPLY SET STATUS=? WHERE NO=?";
-		
-		try {
-			pstmt = connection.prepareStatement(query);
-			
-			pstmt.setString(1, status);
-			pstmt.setInt(2, no);			
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
-	*/
-
 	public int updateReplyCount(Connection connection, Board board) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -418,10 +394,27 @@ public class BoardDao {
 		}
 		return result;
 		
-		
-		
 	}
-	
+
+	public int deleteReply(Connection connection, Reply reply) {
+        int result = 0; 
+        PreparedStatement pstmt = null;
+        String query = "UPDATE REPLY SET STATUS='N' WHERE NO =?";
+        
+        try {
+           pstmt = connection.prepareStatement(query);
+           
+           pstmt.setInt(1, reply.getNo());
+           
+           result = pstmt.executeUpdate();
+           
+        } catch (SQLException e) {
+           e.printStackTrace();
+        } finally {
+           close(pstmt);
+        }
+        return result;
+	}
 	
 
 }

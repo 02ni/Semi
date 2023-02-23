@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.mvc.common.util.PageInfo;
-import com.kh.mvc.notice.model.vo.NoticeBoard;
+import com.kh.mvc.notice.model.vo.Notice;
 
 import static com.kh.mvc.common.jdbc.JDBCTemplate.close;
 
@@ -18,7 +18,7 @@ public class NoticeDao {
 		int count = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "SELECT COUNT(*) FROM NoticeBoard WHERE STATUS='Y'";
+		String query = "SELECT COUNT(*) FROM NOTICE WHERE STATUS='Y'";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
@@ -37,8 +37,8 @@ public class NoticeDao {
 		return count;
 	}
 
-	public List<NoticeBoard> findAll(Connection connection, PageInfo pageInfo) {
-		List<NoticeBoard> list = new ArrayList<>();
+	public List<Notice> findAll(Connection connection, PageInfo pageInfo) {
+		List<Notice> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String query = "SELECT RNUM, NO, TITLE, ID, CREATE_DATE, ORIGINAL_FILENAME, READCOUNT, STATUS, REPLYCOUNT, SECRET_CHECK "
@@ -63,7 +63,7 @@ public class NoticeDao {
 					 + 	   		   "B.STATUS, "
 					 +     		   "B.REPLYCOUNT, "
 					 +     		   "B.SECRET_CHECK "
-					 + 		"FROM NoticeBoard B "
+					 + 		"FROM NOTICE B "
 					 + 		"JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
 					 + 		"WHERE B.STATUS = 'Y' ORDER BY B.NO DESC"
 					 + 	 ")"
@@ -78,20 +78,20 @@ public class NoticeDao {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				NoticeBoard NoticeBoard = new NoticeBoard();
+				Notice notice = new Notice();
 				
-				NoticeBoard.setNo(rs.getInt("NO"));
-				NoticeBoard.setRowNum(rs.getInt("RNUM"));
-				NoticeBoard.setWriterId(rs.getString("ID"));
-				NoticeBoard.setTitle(rs.getString("TITLE"));
-				NoticeBoard.setCreateDate(rs.getDate("CREATE_DATE"));
-				NoticeBoard.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
-				NoticeBoard.setReadCount(rs.getInt("READCOUNT"));
-				NoticeBoard.setStatus(rs.getString("STATUS"));
-				NoticeBoard.setReplyCount(rs.getInt("REPLYCOUNT"));
-				NoticeBoard.setSecretCheck(rs.getString("SECRET_CHECK"));
+				notice.setNo(rs.getInt("NO"));
+				notice.setRowNum(rs.getInt("RNUM"));
+				notice.setWriterId(rs.getString("ID"));
+				notice.setTitle(rs.getString("TITLE"));
+				notice.setCreateDate(rs.getDate("CREATE_DATE"));
+				notice.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
+				notice.setReadCount(rs.getInt("READCOUNT"));
+				notice.setStatus(rs.getString("STATUS"));
+				notice.setReplyCount(rs.getInt("REPLYCOUNT"));
+				notice.setSecretCheck(rs.getString("SECRET_CHECK"));
 				
-				list.add(NoticeBoard);
+				list.add(notice);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -103,8 +103,8 @@ public class NoticeDao {
 		return list;
 	}
 
-	public NoticeBoard findBoardByNo(Connection connection, int no) {
-		NoticeBoard NoticeBoard = null;
+	public Notice findBoardByNo(Connection connection, int no) {
+		Notice notice = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String query = "SELECT B.NO, "
@@ -116,10 +116,9 @@ public class NoticeDao {
 							+ "B.CONTENT, "
 							+ "B.CREATE_DATE, "
 							+ "B.MODIFY_DATE "
-					  + "FROM NoticeBoard B "
+					  + "FROM NOTICE B "
 					  + "JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
 					  + "WHERE B.STATUS = 'Y' AND B.NO=?";
-		
 		
 		try {
 			pstmt = connection.prepareStatement(query);
@@ -129,15 +128,15 @@ public class NoticeDao {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				NoticeBoard = new NoticeBoard();
+				notice = new Notice();
 				
-				NoticeBoard.setNo(rs.getInt("NO"));
-				NoticeBoard.setTitle(rs.getString("TITLE"));
-				NoticeBoard.setWriterId(rs.getString("ID"));
-				NoticeBoard.setReadCount(rs.getInt("READCOUNT"));
-				NoticeBoard.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
-				NoticeBoard.setRenamedFileName(rs.getString("RENAMED_FILENAME"));
-				NoticeBoard.setContent(rs.getString("CONTENT"));
+				notice.setNo(rs.getInt("NO"));
+				notice.setTitle(rs.getString("TITLE"));
+				notice.setWriterId(rs.getString("ID"));
+				notice.setReadCount(rs.getInt("READCOUNT"));
+				notice.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
+				notice.setRenamedFileName(rs.getString("RENAMED_FILENAME"));
+				notice.setContent(rs.getString("CONTENT"));
 			}
 			
 		} catch (SQLException e) {
@@ -147,22 +146,22 @@ public class NoticeDao {
 			close(pstmt);
 		}
 		
-		return NoticeBoard;
+		return notice;
 	}
 
-	public int insertBoard(Connection connection, NoticeBoard NoticeBoard) {
+	public int insertBoard(Connection connection, Notice notice) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "INSERT INTO NoticeBoard VALUES(SEQ_NoticeBoard_NO.NEXTVAL,?,?,?,?,?,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+		String query = "INSERT INTO NOTICE VALUES(SEQ_NOTICE_NO.NEXTVAL,?,?,?,?,?,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
 			
-			pstmt.setInt(1, NoticeBoard.getWriterNo());
-			pstmt.setString(2, NoticeBoard.getTitle());
-			pstmt.setString(3, NoticeBoard.getContent());
-			pstmt.setString(4, NoticeBoard.getOriginalFileName());
-			pstmt.setString(5, NoticeBoard.getRenamedFileName());
+			pstmt.setInt(1, notice.getWriterNo());
+			pstmt.setString(2, notice.getTitle());
+			pstmt.setString(3, notice.getContent());
+			pstmt.setString(4, notice.getOriginalFileName());
+			pstmt.setString(5, notice.getRenamedFileName());
 
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -174,19 +173,19 @@ public class NoticeDao {
 		return result;
 	}
 
-	public int updateBoard(Connection connection, NoticeBoard NoticeBoard) {
+	public int updateBoard(Connection connection, Notice notice) {
 		int result = 0; 
 		PreparedStatement pstmt = null;
-		String query = "UPDATE NoticeBoard SET TITLE=?,CONTENT=?,ORIGINAL_FILENAME=?,RENAMED_FILENAME=?,MODIFY_DATE=SYSDATE WHERE NO=?";
+		String query = "UPDATE NOTICE SET TITLE=?,CONTENT=?,ORIGINAL_FILENAME=?,RENAMED_FILENAME=?,MODIFY_DATE=SYSDATE WHERE NO=?";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
 			
-			pstmt.setString(1, NoticeBoard.getTitle());
-			pstmt.setString(2, NoticeBoard.getContent());
-			pstmt.setString(3, NoticeBoard.getOriginalFileName());
-			pstmt.setString(4, NoticeBoard.getRenamedFileName());
-			pstmt.setInt(5, NoticeBoard.getNo());
+			pstmt.setString(1, notice.getTitle());
+			pstmt.setString(2, notice.getContent());
+			pstmt.setString(3, notice.getOriginalFileName());
+			pstmt.setString(4, notice.getRenamedFileName());
+			pstmt.setInt(5, notice.getNo());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -201,7 +200,7 @@ public class NoticeDao {
 	public int updateStatus(Connection connection, int no, String status) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "UPDATE NoticeBoard SET STATUS=? WHERE NO=?";
+		String query = "UPDATE NOTICE SET STATUS=? WHERE NO=?";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
@@ -220,18 +219,18 @@ public class NoticeDao {
 	}
 	
 
-	public int updateReadCount(Connection connection, NoticeBoard NoticeBoard) {
+	public int updateReadCount(Connection connection, Notice notice) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "UPDATE NoticeBoard SET READCOUNT=? WHERE NO=?";		
+		String query = "UPDATE NOTICE SET READCOUNT=? WHERE NO=?";		
 		
 		try {
 			pstmt = connection.prepareStatement(query);
 			
-			NoticeBoard.setReadCount(NoticeBoard.getReadCount() + 1);
+			notice.setReadCount(notice.getReadCount() + 1);
 			
-			pstmt.setInt(1, NoticeBoard.getReadCount());
-			pstmt.setInt(2, NoticeBoard.getNo());
+			pstmt.setInt(1, notice.getReadCount());
+			pstmt.setInt(2, notice.getNo());
 
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -243,19 +242,19 @@ public class NoticeDao {
 		return result;
 	}
 
-	public int updateReplyCount(Connection connection, NoticeBoard NoticeBoard) {
+	public int updateReplyCount(Connection connection, Notice notice) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
 		String query = "SELECT COUNT(NO) "
 					 + "FROM REPLY "
-					 + "WHERE REPLY.NoticeBoard_NO =(SELECT NO FROM NoticeBoard WHERE NO=?)";			 
+					 + "WHERE REPLY.NOTICE_NO =(SELECT NO FROM NOTICE WHERE NO=?)";			 
 		
 		try {
 			pstmt = connection.prepareStatement(query);
-			NoticeBoard.setReplyCount(NoticeBoard.getReplyCount());
+			notice.setReplyCount(notice.getReplyCount());
 			
-			pstmt.setInt(1, NoticeBoard.getReplyCount());
+			pstmt.setInt(1, notice.getReplyCount());
 
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -266,78 +265,5 @@ public class NoticeDao {
 		
 		return result;
 	}
-
-	public List<NoticeBoard> findAllByNo(Connection connection, PageInfo pageInfo, int no) {
-		List<NoticeBoard> list = new ArrayList<>();
-	      
-	      PreparedStatement pstmt = null;
-
-	      ResultSet rs = null;
-	     
-	      
-	      String query = "SELECT RNUM, NO, TITLE, ID, CREATE_DATE, ORIGINAL_FILENAME, READCOUNT, STATUS, REPLYCOUNT, SECRET_CHECK  "
-	             + "FROM ("
-	             +    "SELECT ROWNUM AS RNUM, "
-	             +          "NO, "
-	             +          "TITLE, "
-	             +          "ID, "
-	             +          "CREATE_DATE, "
-	             +          "ORIGINAL_FILENAME, "
-	             +           "READCOUNT, "
-	             +           "STATUS, "
-				 +     		 "REPLYCOUNT, "
-				 +     		 "SECRET_CHECK "
-	             +     "FROM ("
-	             +        "SELECT B.NO, "
-	             +             "B.TITLE, "
-	             +             "M.ID, "
-	             +             "B.CREATE_DATE, "
-	             +             "B.ORIGINAL_FILENAME, "
-	             +             "B.READCOUNT, "
-	             +             "B.STATUS, "
-				 +     		   "B.REPLYCOUNT, "
-				 +     		   "B.SECRET_CHECK "
-	             +       "FROM NoticeBoard B "
-	             +       "JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
-	             +       "WHERE B.STATUS = 'Y' AND M.NO = ? ORDER BY B.NO DESC"
-	             +     ")"
-	             + ") WHERE RNUM BETWEEN ? and ?";
-	      
-	      try {
-	         pstmt = connection.prepareStatement(query);
-
-	         pstmt.setInt(1, no);
-	         pstmt.setInt(2, pageInfo.getStartList());
-	         pstmt.setInt(3, pageInfo.getEndList());
-	      
-	         rs = pstmt.executeQuery();
-	         
-	         while (rs.next()) {
-	        	 NoticeBoard board = new NoticeBoard();
-	            
-	            board.setNo(rs.getInt("NO"));
-	            board.setRowNum(rs.getInt("RNUM"));
-	            board.setWriterId(rs.getString("ID"));
-	            board.setTitle(rs.getString("TITLE"));
-	            board.setCreateDate(rs.getDate("CREATE_DATE"));
-	            board.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
-	            board.setReadCount(rs.getInt("READCOUNT"));
-	            board.setStatus(rs.getString("STATUS"));
-				board.setReplyCount(rs.getInt("REPLYCOUNT"));
-				board.setSecretCheck(rs.getString("SECRET_CHECK"));
-	            
-	            list.add(board);
-	         }
-	         
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      } finally {
-	         close(rs);
-	         close(pstmt);
-	      }
-	   
-	      return list;
-	   }
-	
 
 }

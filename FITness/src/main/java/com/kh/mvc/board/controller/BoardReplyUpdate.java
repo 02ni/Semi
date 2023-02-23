@@ -13,48 +13,57 @@ import com.kh.mvc.board.model.vo.Board;
 import com.kh.mvc.board.model.vo.Reply;
 import com.kh.mvc.member.model.vo.Member;
 
-import com.kh.mvc.common.util.FileRename;
-import com.oreilly.servlet.MultipartRequest;
-
-@WebServlet(name = "boardReplyDelete", urlPatterns = { "/board/replydelete" })
-public class BoardReplyDeleteServlet extends HttpServlet {
+@WebServlet(name = "replyUpdate", urlPatterns = { "/board/replyupdate" })
+public class BoardReplyUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    public BoardReplyDeleteServlet() {
+       
+    public BoardReplyUpdate() {
     }
-    
+
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
- 
-    //댓글 삭제
+    	Reply reply = null;
+    	int no = Integer.parseInt(request.getParameter("no"));
+    	
+    	reply = new BoardService().readReply(no);
+		
+		request.setAttribute("reply", reply);
+		request.getRequestDispatcher("/views/board/reply.jsp").forward(request, response);
+    }
+
     @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	int result = 0;
+    	
     	HttpSession session = request.getSession(false);
 		Member loginMember = (session == null) ? null : (Member) session.getAttribute("loginMember");
     	
-		int result = 0;
-		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
+		int no = Integer.parseInt(request.getParameter("replyNo"));
     	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		String content = request.getParameter("content");
 		
     	Reply reply = new Reply();
-    	
-    	System.out.println("dyddd" + reply);
 		
-    	reply.setNo(replyNo);
+    	reply.setNo(no);
 		reply.setBoardNo(boardNo);
+		reply.setContent(content);
 		reply.setWriterNo(loginMember.getNo());
 		
-		result = new BoardService().deleteReply(reply);
+		result = new BoardService().updateReply(reply);
 		
 		if(result > 0) {
-			request.setAttribute("msg", "댓글이 삭제되었습니다.");
+			request.setAttribute("msg", "댓글 등록 성공");
+			request.setAttribute("script", "self.close()");
 			request.setAttribute("location", "/board/view?no=" + boardNo);
+			//request.setAttribute("script", "window.opener.location.reload()");
+			request.setAttribute("script", "self.close()");
+	        
 		} else {
-			request.setAttribute("msg", "댓글 삭제 실패");
+			request.setAttribute("msg", "댓글 등록 실패");
 			request.setAttribute("location", "/board/view?no=" + boardNo);
 		}
-	      request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+			
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
 
 }

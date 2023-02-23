@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.mvc.notice.model.service.NoticeService;
-import com.kh.mvc.notice.model.vo.NoticeBoard;
+import com.kh.mvc.notice.model.vo.Notice;
 import com.kh.mvc.common.util.PageInfo;
 
 @WebServlet(name = "noticeList", urlPatterns = { "/notice/list" })
@@ -25,7 +25,7 @@ public class NoticeListServlet extends HttpServlet {
     	int page = 0;
 		int listCount = 0;
 		PageInfo pageInfo = null;
-		List<NoticeBoard> list = null;
+		List<Notice> list = null;
 		
 		try {
 			page = Integer.parseInt(request.getParameter("page"));

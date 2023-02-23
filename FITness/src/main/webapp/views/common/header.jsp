@@ -69,7 +69,12 @@
 		                    <li id="board"><a href="${ path }/notice/list">공지사항</a></li>
 	                        <li><a href="${ path }/faq/list">FAQ</a></li>
 	                        <li><a href="${ path }/board/list">자유게시판</a></li>
+	                  		<c:if test="${ not empty loginMember }">
 	                        <li><a href="${ path }/qna/list?no=${ loginMember.no }">1:1 문의</a></li>
+	                  		</c:if>
+	                  		<c:if test="${ empty loginMember }">
+	                        <li><a id="onebtn">1:1 문의</a></li>
+	                  		</c:if>
 	                    </ul>
 	                </li>
 	                <li>
@@ -83,4 +88,13 @@
 	                
             </ul>
         </div>
+        
+        <script>
+        $('#onebtn').on('click', () => {
+            if(${ empty loginMember}) {
+				alert('로그인 후 이용해 주세요.')	;
+				location.replace('${ path }/member/login');
+            }
+         });
+        </script>
         

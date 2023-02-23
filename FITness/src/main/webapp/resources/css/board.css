@@ -12,15 +12,37 @@ body{
 	clear: both;
 }
 
-boardnav {
-	height: 200px;
+#btn1{
+	margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
 }
 
+#btn1 ul{
+	padding-left: 0px;
+}
 
+#btn1 ul li{
+	border: 1px solid #E3E3E3;
+    width: 180px;
+    height: 30px;
+    margin-right: 26px;
+    margin-left: 26px;
+    
+    float: left;
+    list-style: none;
+    text-align: center;
+    display: inline-block;
+    background-color: white;
+    font-size: 18px;
+    padding-top: 14px;
+    color: #E3E3E3;
+    cursor: pointer;
+}
 
 #btn1 ul li>span{
     color: #ABABAB;
-    display: inline-block;
 }
 
 #btn1 ul li.active{

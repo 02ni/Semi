@@ -100,25 +100,7 @@ public class BoardService {
 		return result;
 	}
 	
-	/*
-	 * 댓글 삭제(구현 보류)
-	public int deleteReply(int boardNo) {
-		int result = 0;
-		Connection connection = getConnection();
-		
-		result = new BoardDao().updateReplyStatus(connection, boardNo, "N");
-		
-		if(result > 0) {
-			commit(connection);
-		} else {
-			rollback(connection);
-		}
-		
-		close(connection);
-		
-		return result;
-	}
-	*/
+
 	
 
 	public Board getBoardReplyByNo(int no, boolean hasRead) {
@@ -188,8 +170,23 @@ public class BoardService {
 		
 		
 	}
-
-
+	
+	public int deleteReply(Reply reply) {
+		int result = 0;
+		Connection connection = getConnection();
+		
+		result = new BoardDao().deleteReply(connection, reply);
+		
+		if(result > 0) {
+			commit(connection);
+		} else {
+			rollback(connection);
+		}
+		
+		close(connection);
+		
+		return result;
+	}
 
 
 }

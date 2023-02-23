@@ -29,11 +29,6 @@
   <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
   <script src="${pageContext.request.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
-  <!--  -->
-
-<style>
-    h3 { text-align: center; }
-</style>
 
 
 <section id="content">
@@ -41,16 +36,16 @@
 	
 	<h1></h1>
 	
-        <h3>자유게시판</h3>
-        <form action="${ path }/board/write" method="POST"  enctype="multipart/form-data">
+        <h3>공지사항</h3>
+		<form action="${ path }/notice/write" method="POST" enctype="multipart/form-data">
 			<table id='tbl-board'>
-			    <colgroup>
+				<colgroup>
                     <col style="width:150px">
                     <col style="width:850px">
                 </colgroup>
 				<tr>
 					<th>제목</th>
-					<td><input type="text" name="title" id="title" style="width:780px;"> </td>
+					<td><input type="text" name="title" id="title" style="width:780px;"></td>
 				</tr>
 				<tr>
 					<th>작성자</th>
@@ -62,49 +57,23 @@
 				</tr>
 				<tr>
 					<th>내용</th>
-					 <td>
-					 <!--<input name="content" type="text" class="tf_comm" id="summernote" name="ord_receiver_memo" style="width: 50rem;" maxlength="46"> -->
-					 <textarea name="content" id="summernote" cols="40" rows="15"></textarea> -->
-					</td>
+					<td><textarea name="content" cols="50" rows="15" class="summernote"></textarea></td>
 				</tr>
-            </table>
+			</table>
             <div class="btns">
                 <input type="submit" value="등록" id="join">
                 <input type="reset" value="취소" id="cancel">
             </div>
-        </form>
-        </div>
+		</form>
+	</div>
 </section>
-   
+
+<!-- 서머노트용 스크립트 -->
 <script>
-$('#summernote').summernote({
-	  height: 450,
+$('.summernote').summernote({
+	  height: 150,
 	  lang: "ko-KR"
 	});
-	
-$(function(){
-	$('textarea.content').keyup(function(){
-	bytesHandler(this);
-	});
-	});
-
-	function getTextLength(str) {
-	var len = 0;
-
-	for (var i = 0; i < str.length; i++) {
-	if (escape(str.charAt(i)).length == 6) {
-	len++;
-	}
-	len++;
-	}
-	return len;
-	}
-
-	function bytesHandler(obj){
-	var text = $(obj).val();
-	$('p.bytes').text(getTextLength(text));
-	}
-
 </script>
 
 <jsp:include page="/views/common/footer.jsp" /> 

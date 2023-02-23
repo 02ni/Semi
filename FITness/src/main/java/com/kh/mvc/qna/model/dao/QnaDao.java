@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.mvc.qna.model.vo.QnaBoard;
-import com.kh.mvc.qna.model.vo.QnaReply;
 import com.kh.mvc.common.util.PageInfo;
 
 import static com.kh.mvc.common.jdbc.JDBCTemplate.close;
@@ -139,8 +138,6 @@ public class QnaDao {
 				qnaboard.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
 				qnaboard.setRenamedFileName(rs.getString("RENAMED_FILENAME"));
 				qnaboard.setContent(rs.getString("CONTENT"));
-				// 댓글 조회
-				qnaboard.setReplies(this.getRepliesByNo(connection, no));				
 				qnaboard.setCreateDate(rs.getDate("CREATE_DATE"));
 				qnaboard.setModifyDate(rs.getDate("MODIFY_DATE"));
 			}
@@ -206,7 +203,8 @@ public class QnaDao {
 	public int updateStatus(Connection connection, int no, String status) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "UPDATE QNABOARD SET STATUS=? WHERE NO=?";
+		String query = "UPDA"
+				+ "TE QNABOARD SET STATUS=? WHERE NO=?";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
@@ -224,72 +222,7 @@ public class QnaDao {
 		return result;
 	}
 	
-	public List<QnaReply> getRepliesByNo(Connection connection, int no) {
-		List<QnaReply> replies = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String query = 
-				"SELECT R.NO, "
-					 + "R.BOARD_NO, "
-					 + "R.CONTENT, "
-					 + "M.ID, "
-					 + "R.CREATE_DATE, "
-					 + "R.MODIFY_DATE "
-			  + "FROM REPLY R "
-			  + "JOIN MEMBER M ON(R.WRITER_NO = M.NO) "
-			  + "WHERE R.STATUS='Y' AND QNABOARD_NO=? "
-			  + "ORDER BY R.NO DESC";		
-		
-		try {
-			pstmt = connection.prepareStatement(query);
-			
-			pstmt.setInt(1, no);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				QnaReply qnareply = new QnaReply();
-				
-				qnareply.setNo(rs.getInt("NO"));
-				qnareply.setBoardNo(rs.getInt("BOARD_NO"));
-				qnareply.setContent(rs.getString("CONTENT"));
-				qnareply.setWriterId(rs.getString("ID"));
-				qnareply.setCreateDate(rs.getDate("CREATE_DATE"));
-				qnareply.setModifyDate(rs.getDate("MODIFY_DATE"));
-				
-				replies.add(qnareply);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rs);
-			close(pstmt);
-		}
-		
-		return replies;
-	}
 
-	public int insertReply(Connection connection, QnaReply reply) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String query = "INSERT INTO REPLY VALUES(SEQ_REPLY_NO.NEXTVAL, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT)";
-		
-		try {
-			pstmt = connection.prepareStatement(query);
-			
-			pstmt.setInt(1, reply.getBoardNo());
-			pstmt.setInt(2, reply.getWriterNo());
-			pstmt.setString(3, reply.getContent());
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
 
 	public int updateReadCount(Connection connection, QnaBoard qnaboard) {
 		int result = 0;
@@ -313,31 +246,7 @@ public class QnaDao {
 		
 		return result;
 	}
-
-	public int updateReplyCount(Connection connection, QnaBoard qnaboard) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		
-		String query = "SELECT COUNT(NO) "
-					 + "FROM REPLY "
-					 + "WHERE REPLY.QNABOARD_NO =(SELECT NO FROM QNABOARD WHERE NO=?)";			 
-		
-		try {
-			pstmt = connection.prepareStatement(query);
-			qnaboard.setReplyCount(qnaboard.getReplyCount());
-			
-			pstmt.setInt(1, qnaboard.getReplyCount());
-
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
-
+	
 	public List<QnaBoard> findAllByNo(Connection connection, PageInfo pageInfo, int no) {
 		List<QnaBoard> list = new ArrayList<>();
 	      
@@ -384,20 +293,20 @@ public class QnaDao {
 	         rs = pstmt.executeQuery();
 	         
 	         while (rs.next()) {
-	        	 QnaBoard board = new QnaBoard();
+	        	QnaBoard qnaboard = new QnaBoard();
 	            
-	            board.setNo(rs.getInt("NO"));
-	            board.setRowNum(rs.getInt("RNUM"));
-	            board.setWriterId(rs.getString("ID"));
-	            board.setTitle(rs.getString("TITLE"));
-	            board.setCreateDate(rs.getDate("CREATE_DATE"));
-	            board.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
-	            board.setReadCount(rs.getInt("READCOUNT"));
-	            board.setStatus(rs.getString("STATUS"));
-				board.setReplyCount(rs.getInt("REPLYCOUNT"));
-				board.setSecretCheck(rs.getString("SECRET_CHECK"));
+	            qnaboard.setNo(rs.getInt("NO"));
+	            qnaboard.setRowNum(rs.getInt("RNUM"));
+	            qnaboard.setWriterId(rs.getString("ID"));
+	            qnaboard.setTitle(rs.getString("TITLE"));
+	            qnaboard.setCreateDate(rs.getDate("CREATE_DATE"));
+	            qnaboard.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
+	            qnaboard.setReadCount(rs.getInt("READCOUNT"));
+	            qnaboard.setStatus(rs.getString("STATUS"));
+				qnaboard.setReplyCount(rs.getInt("REPLYCOUNT"));
+				qnaboard.setSecretCheck(rs.getString("SECRET_CHECK"));
 	            
-	            list.add(board);
+	            list.add(qnaboard);
 	         }
 	         
 	      } catch (SQLException e) {

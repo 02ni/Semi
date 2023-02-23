@@ -25,7 +25,7 @@
     table#tbl-board{width:800px; margin:0 auto; border-collapse:collapse; clear:both; } 
     div.se{width:800px; margin:0 auto; border-collapse:collapse; clear:both; } 
     
-    /*댓글테이블*/
+        /*댓글테이블*/
     table#tbl-comment{width:800px; margin:0 auto; border-collapse:collapse; clear:both; } 
     table#tbl-comment button.btn-delete{display:none;}
     table#tbl-comment tr:hover {background:lightgray;}
@@ -37,7 +37,7 @@
 
 <section id="content">   
 	<div id="board-write-container">
-		<h3>1:1 문의</h3>
+		<h3>공지사항</h3>
 		<table id="tbl-board" class="se">
 			<colgroup>
                     <col style="width:150px">
@@ -45,36 +45,36 @@
             </colgroup>
 			<tr>
 				<th>글번호</th>
-				<td>${ qnaboard.no }</td>
+				<td>${ notice.no }</td>
 			</tr>
 			<tr>
 				<th>제 목</th>
-				<td>${ qnaboard.title }</td>
+				<td>${ notice.title }</td>
 			</tr>
 			<tr>
 				<th>작성자</th>
-				<td>${ qnaboard.writerId }</td>
+				<td>${ notice.writerId }</td>
 			</tr>
 			<tr>
 				<th>조회수</th>
-				<td>${ qnaboard.readCount }</td>
+				<td>${ notice.readCount }</td>
 			</tr>
 			<tr>
 				<th>첨부파일</th>
 				<td>
-					<c:if test="${ empty qnaboard.originalFileName }">
+					<c:if test="${ empty notice.originalFileName }">
 						<span> - </span>
 					</c:if>
-					<c:if test="${ not empty qnaboard.originalFileName }">
-						<a href="${ path }/resources/upload/qna/${qnaboard.renamedFileName}">
-							<span> ${ qnaboard.originalFileName } </span>
+					<c:if test="${ not empty notice.originalFileName }">
+						<a href="${ path }/resources/upload/notice/${board.renamedFileName}">
+							<span> ${ notice.originalFileName } </span>
 						</a>
 					</c:if>
 				</td>
 			</tr>
 			<tr>
 				<th>내 용</th>
-				<td>${ qnaboard.content }</td>
+				<td>${ notice.content }</td>
 			</tr>
 		</table>
 		
@@ -83,14 +83,16 @@
 			<div class="se">
 			<tr>
 				<th colspan="10">
-					<c:if test="${ not empty loginMember && loginMember.id == qnaboard.writerId }">
-						<input type="submit"  value="수정" onclick="location.href='${ path }/qna/update?no=${ qnaboard.no }'">
+					<c:if test="${ not empty loginMember && loginMember.id == board.writerId }">
+						<input type="submit"  value="수정" onclick="location.href='${ path }/notice/update?no=${ notice.no }'">
 						<input type="submit"  value="삭제" id="btnDelete">
 					</c:if>
-					<input type="submit"  value="목록으로" onclick="location.href='${ path }/qna/list'">
+					<input type="submit"  value="목록으로" onclick="location.href='${ path }/notice/list'">
 				</th>
 			</tr>
 			</div>
+			
+			
 	
 		<h2></h2>
 		
@@ -101,24 +103,28 @@
 	$(document).ready(() => {
 		$('#btnDelete').on('click', () => {
 			if(confirm('정말로 게시글을 삭제 하시겠습니까?')) {
-				location.replace('${ path }/board/delete?no=${ qnaboard.no }');
+				location.replace('${ path }/notice/delete?no=${ board.no }');
 			}
 		});
 		
+		
 		$('#fileDown').on('click', () => {
-			let oname = encodeURIComponent('${ qnaboard.originalFileName }');
-			let rname = encodeURIComponent('${ qnaboard.renamedFileName }');
+			let oname = encodeURIComponent('${ board.originalFileName }');
+			let rname = encodeURIComponent('${ board.renamedFileName }');
 			
-			location.assign('${ path }/qna/fileDown?oname=' + oname + '&rname=' + rname);
+			location.assign('${ path }/notice/fileDown?oname=' + oname + '&rname=' + rname);
 		});
 		
 		$('#replyContent').on('click', () => {
 			if(${ empty loginMember}) {
 				alert('로그인 후 이용해 주세요.')	;
 				location.replace('${ path }/member/login');
-				
 			}
 		});
+		
+        
 	});
+		
 </script>
+
 <jsp:include page="/views/common/footer.jsp" /> 

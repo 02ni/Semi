@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticeBoard {
+public class Notice {
 	private int no;
 	
 	private int rowNum;
