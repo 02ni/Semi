@@ -83,7 +83,7 @@
 			<div class="se">
 			<tr>
 				<th colspan="10">
-					<c:if test="${ not empty loginMember && loginMember.id == board.writerId }">
+					<c:if test="${ not empty loginMember && loginMember.role.equals('ROLE_ADMIN') }">
 						<input type="submit"  value="수정" onclick="location.href='${ path }/notice/update?no=${ notice.no }'">
 						<input type="submit"  value="삭제" id="btnDelete">
 					</c:if>
@@ -91,7 +91,6 @@
 				</th>
 			</tr>
 			</div>
-			
 			
 	
 		<h2></h2>
@@ -103,7 +102,7 @@
 	$(document).ready(() => {
 		$('#btnDelete').on('click', () => {
 			if(confirm('정말로 게시글을 삭제 하시겠습니까?')) {
-				location.replace('${ path }/notice/delete?no=${ board.no }');
+				location.replace('${ path }/notice/delete?no=${ notice.no }');
 			}
 		});
 		

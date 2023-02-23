@@ -29,10 +29,10 @@ public class NoticeUpdateServlet extends HttpServlet {
 		Member loginMember = (session == null) ? null : (Member) session.getAttribute("loginMember");
 		
 		if(loginMember != null) {
-			Notice board = new NoticeService().getBoardByNo(Integer.parseInt(request.getParameter("no")), true);
+			Notice notice = new NoticeService().getBoardByNo(Integer.parseInt(request.getParameter("no")), true);
 			
-			if(board != null && loginMember.getId().equals(board.getWriterId())) {
-				request.setAttribute("board", board);
+			if(notice != null && loginMember.getId().equals(notice.getWriterId())) {
+				request.setAttribute("board", notice);
 				request.getRequestDispatcher("/views/notice/update.jsp").forward(request, response);
 			} else {
 				request.setAttribute("msg", "잘못된 접근입니다.");
@@ -66,35 +66,35 @@ public class NoticeUpdateServlet extends HttpServlet {
 //	    	MultipartRequest mr = new MultipartRequest(request, path, maxSize, encoding, new DefaultFileRenamePolicy());
 	    	MultipartRequest mr = new MultipartRequest(request, path, maxSize, encoding, new FileRename());
 	    	
-			Notice board = new NoticeService().getBoardByNo(Integer.parseInt(mr.getParameter("no")), true);
+			Notice noitce = new NoticeService().getBoardByNo(Integer.parseInt(mr.getParameter("no")), true);
 			
-			if(board != null && loginMember.getId().equals(board.getWriterId())) {
-	    		board.setTitle(mr.getParameter("title"));
-	    		board.setContent(mr.getParameter("content"));
+			if(noitce != null && loginMember.getId().equals(noitce.getWriterId())) {
+	    		noitce.setTitle(mr.getParameter("title"));
+	    		noitce.setContent(mr.getParameter("content"));
 	    		
 	    		String originalFileName = mr.getOriginalFileName("upfile");
 	    		String filesystemName = mr.getFilesystemName("upfile");
 	    		
 	    		if(originalFileName != null && filesystemName != null) {
 	    			// 기존에 업로드된 파일 삭제
-	    			File file = new File(path + "/" + board.getRenamedFileName());
+	    			File file = new File(path + "/" + noitce.getRenamedFileName());
 	    			
 	    			if(file.exists()) {
 	    				file.delete();
 	    			}
 	    			
-	    			board.setOriginalFileName(originalFileName);
-	    			board.setRenamedFileName(filesystemName);
+	    			noitce.setOriginalFileName(originalFileName);
+	    			noitce.setRenamedFileName(filesystemName);
 	    		}
 	    		
-	    		int result = new NoticeService().save(board);
+	    		int result = new NoticeService().save(noitce);
 	    		
 	    		if(result > 0) {
 	    			request.setAttribute("msg", "게시글 수정 성공");
-	    			request.setAttribute("location", "/notice/view?no=" + board.getNo());
+	    			request.setAttribute("location", "/notice/view?no=" + noitce.getNo());
 	    		} else {
 	    			request.setAttribute("msg", "게시글 수정 실패");
-	    			request.setAttribute("location", "/notice/update?no=" + board.getNo());	    			
+	    			request.setAttribute("location", "/notice/update?no=" + noitce.getNo());	    			
 	    		}
 	    	} else {
 				request.setAttribute("msg", "잘못된 접근입니다.");

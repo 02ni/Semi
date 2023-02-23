@@ -144,7 +144,7 @@
 							</c:when>
 							<c:otherwise>
 								<li class="page-item">
-									<a class="page-link" href='${ path }/board/list?page=${ status.current }'>${ status.current }</a>
+									<a class="page-link" href='${ path }/notice/list?page=${ status.current }'>${ status.current }</a>
 								</li>
 							</c:otherwise>
 						</c:choose>
@@ -152,7 +152,7 @@
 					
 					
     				<li class="page-item">
-      					<a class="page-link" href='${ path }/board/list?page=${ pageInfo.nextPage }'>next</a>
+      					<a class="page-link" href='${ path }/notice/list?page=${ pageInfo.nextPage }'>next</a>
 				    </li>
 				 </ul>
 			</nav>

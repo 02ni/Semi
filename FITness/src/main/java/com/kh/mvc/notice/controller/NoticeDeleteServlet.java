@@ -29,7 +29,7 @@ public class NoticeDeleteServlet extends HttpServlet {
 		Member loginMember = (session == null) ? null : (Member) session.getAttribute("loginMember");
 		
 		if(loginMember != null) {
-			Notice board = new NoticeService().getBoardByNo(Integer.parseInt(request.getParameter("no")), true);
+			Notice notice = new NoticeService().getBoardByNo(Integer.parseInt(request.getParameter("no")), true);
 			
 			if(result > 0) {
 				request.setAttribute("msg", "게시글 삭제 성공");
