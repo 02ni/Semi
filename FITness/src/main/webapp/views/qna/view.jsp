@@ -94,6 +94,59 @@
 	
 		<h2></h2>
 		
+		
+		<c:if test="${ not empty loginMember && loginMember.role.equals('ROLE_ADMIN')}">
+			<div id="comment-container" class="se">
+		    	<div class="comment-editor">
+		    		<form action="${ path }/admin/qnareply" method="POST">
+		    			<input type="hidden" name="qnaboardNo" value="${ qnaboard.no }">
+						<textarea name="content" id="replyContent" cols="75" rows="3"></textarea>
+						<input type="submit"  value="등록" id="btn-insert">	    			
+		    		</form>
+		    	</div>
+		    </div>	
+		</c:if>
+		
+		
+		
+		<table id="tbl-comment" class="se">
+	    	<c:forEach var="reply" items="${ board.replies }">
+	    
+	    	   	<tr class="level1">
+		    		<td>
+		    			<sub class="comment-writer">${ reply.writerId }</sub>
+		    			<sub class="comment-date">${ reply.createDate }</sub>
+		    			<br>
+		    			<span>${ reply.content }</span>
+		    		</td>
+		    		<td>
+		    	
+		    			<c:if test="${ not empty loginMember && loginMember.id == reply.writerId }">
+			    			<!-- 
+			    			<input type="submit" name="replyUpdate" value="수정" id="btnReplyUpdate">
+
+		    				 -->
+		    				
+		    				<button type="button" onclick="javascrit:window.open('${ path }/board/replyupdate?no=${ reply.no }','popup_1','width=500px,height=400px,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,left=300px,top=100px')">
+		    				수정</button>
+		    			</c:if>
+		    			<form action="${ path }/board/replydelete" method="POST">
+		    			<input type="hidden" name="replyNo" value="${ reply.no }">
+		    			<input type="hidden" name="boardNo" value="${ board.no }">
+			    			<c:if test="${ not empty loginMember && loginMember.id == reply.writerId }">
+			    				<input type="submit"  value="삭제" id="btnReplyDelete">
+			    			</c:if>
+		    			</form>
+		    			<!-- 
+		    			<c:if test="${ not empty loginMember && loginMember.id == board.writerId }">
+		    				<input type="submit"  value="답글" id="btnAgainReply">
+		    			</c:if>
+		    			 -->
+		    		</td>
+		    	</tr>
+	    	</c:forEach>
+	    </table>
+		
     </div>
 </section>
 

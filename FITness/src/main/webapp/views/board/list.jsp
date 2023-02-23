@@ -96,8 +96,7 @@
 						<td>${ board.rowNum }</td>
 						<td>
 							<a href="${ path }/board/view?no=${ board.no }">
-								${ board.title }
-							<span>[${ board.replyCount }]</span></a> 
+								${ board.title }</a> 
 						</td>
 						<td>${ board.writerId }</td>
 						<td>${ board.createDate }</td>

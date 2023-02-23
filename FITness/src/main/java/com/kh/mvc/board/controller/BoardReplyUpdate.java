@@ -57,6 +57,7 @@ public class BoardReplyUpdate extends HttpServlet {
 			request.setAttribute("location", "/board/view?no=" + boardNo);
 			//request.setAttribute("script", "window.opener.location.reload()");
 			request.setAttribute("script", "self.close()");
+			//response.sendRedirect(request.getContextPath() + "/board/view?no=" + boardNo);
 	        
 		} else {
 			request.setAttribute("msg", "댓글 등록 실패");

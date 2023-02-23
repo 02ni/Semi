@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.kh.mvc.qna.model.dao.QnaDao;
 import com.kh.mvc.qna.model.vo.QnaBoard;
+import com.kh.mvc.qna.model.vo.QnaReply;
 import com.kh.mvc.common.jdbc.JDBCTemplate;
 import com.kh.mvc.common.util.PageInfo;
 
@@ -109,6 +110,23 @@ public class QnaService {
 	      
 	      return list;
 		
+	}
+	
+	public int saveReply(QnaReply reply) {
+		int result = 0;
+		Connection connection = getConnection();
+		
+		result = new QnaDao().insertReply(connection, reply);
+		
+		if(result > 0) {
+			commit(connection);
+		} else {
+			rollback(connection);
+		}
+		
+		close(connection);
+		
+		return result;
 	}
 
 

@@ -62,9 +62,10 @@
 				</tr>
 				<tr>
 					<th>내용</th>
-					 <td>
+					 
+					<td>	 
 					 <!--<input name="content" type="text" class="tf_comm" id="summernote" name="ord_receiver_memo" style="width: 50rem;" maxlength="46"> -->
-					 <textarea name="content" id="summernote" cols="40" rows="15"></textarea> -->
+					 <textarea name="content" id="summernote" cols="40" rows="15" maxlength="2000"></textarea>
 					</td>
 				</tr>
             </table>
@@ -82,28 +83,6 @@ $('#summernote').summernote({
 	  lang: "ko-KR"
 	});
 	
-$(function(){
-	$('textarea.content').keyup(function(){
-	bytesHandler(this);
-	});
-	});
-
-	function getTextLength(str) {
-	var len = 0;
-
-	for (var i = 0; i < str.length; i++) {
-	if (escape(str.charAt(i)).length == 6) {
-	len++;
-	}
-	len++;
-	}
-	return len;
-	}
-
-	function bytesHandler(obj){
-	var text = $(obj).val();
-	$('p.bytes').text(getTextLength(text));
-	}
 
 </script>
 

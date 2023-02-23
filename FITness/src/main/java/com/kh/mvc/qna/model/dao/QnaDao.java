@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.mvc.qna.model.vo.QnaBoard;
+import com.kh.mvc.qna.model.vo.QnaReply;
 import com.kh.mvc.common.util.PageInfo;
 
 import static com.kh.mvc.common.jdbc.JDBCTemplate.close;
@@ -102,6 +103,52 @@ public class QnaDao {
 		
 		return list;
 	}
+	
+	public List<QnaReply> getRepliesByNo(Connection connection, int no) {
+		List<QnaReply> replies = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = 
+				"SELECT R.NO, "
+					 + "R.BOARD_NO, "
+					 + "R.CONTENT, "
+					 + "M.ID, "
+					 + "R.CREATE_DATE, "
+					 + "R.MODIFY_DATE "
+			  + "FROM QNAREPLY R "
+			  + "JOIN MEMBER M ON(R.WRITER_NO = M.NO) "
+			  + "WHERE R.STATUS='Y' AND QNABOARD_NO=? "
+			  + "ORDER BY R.NO DESC";		
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				QnaReply qnareply = new QnaReply();
+				
+				qnareply.setNo(rs.getInt("NO"));
+				qnareply.setBoardNo(rs.getInt("BOARD_NO"));
+				qnareply.setContent(rs.getString("CONTENT"));
+				qnareply.setWriterId(rs.getString("ID"));
+				qnareply.setCreateDate(rs.getDate("CREATE_DATE"));
+				qnareply.setModifyDate(rs.getDate("MODIFY_DATE"));
+				
+				replies.add(qnareply);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return replies;
+	}	
+	
 
 	public QnaBoard findBoardByNo(Connection connection, int no) {
 		QnaBoard qnaboard = null;
@@ -138,6 +185,8 @@ public class QnaDao {
 				qnaboard.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
 				qnaboard.setRenamedFileName(rs.getString("RENAMED_FILENAME"));
 				qnaboard.setContent(rs.getString("CONTENT"));
+				// 댓글 조회
+				qnaboard.setReplies(this.getRepliesByNo(connection, no));				
 				qnaboard.setCreateDate(rs.getDate("CREATE_DATE"));
 				qnaboard.setModifyDate(rs.getDate("MODIFY_DATE"));
 			}
@@ -318,6 +367,28 @@ public class QnaDao {
 	   
 	      return list;
 	   }
+
+	public int insertReply(Connection connection, QnaReply reply) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "INSERT INTO QNAREPLY VALUES(SEQ_REPLY_NO.NEXTVAL, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT)";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setInt(1, reply.getBoardNo());
+			pstmt.setInt(2, reply.getWriterNo());
+			pstmt.setString(3, reply.getContent());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 
 }

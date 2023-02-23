@@ -120,7 +120,14 @@
 								<img width="20px" src="${ path }/resources/images/file.png">
 							</c:if>
 						</td>
-						<td>${ qnaboard.status }</td>
+						<td>
+							<c:if test="${ qnaboard.secretCheck =='Y'}">
+								<button>답변 전</button>
+							</c:if>
+							<c:if test="${ qnaboard.secretCheck =='N'}">
+								<button>답변 완료</button>
+							</c:if>
+						</td>
 					</tr>
 				</c:forEach>
 			</c:if>

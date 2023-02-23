@@ -100,8 +100,15 @@
 	    	<div class="comment-editor">
 	    		<form action="${ path }/board/reply" method="POST">
 	    			<input type="hidden" name="boardNo" value="${ board.no }">
-					<textarea name="content" id="replyContent" cols="75" rows="3"></textarea>
-					<input type="submit"  value="등록" id="btn-insert">	    			
+					
+				<div>
+					<textarea style="height:60px; resize: none;" maxlength="200" name="content" id="replyContent" cols="75" rows="3" placeholder="텍스트를 입력하세요."></textarea>
+					<input type="submit"  value="등록" id="btn-insert">
+				    <p><span id="counter">0</span>/<span id="maxLength">200자</span></p>
+				</div>	  
+				
+				
+				  			
 	    		</form>
 	    	</div>
 	    </div>	
@@ -125,6 +132,10 @@
 		    				<button type="button" onclick="javascrit:window.open('${ path }/board/replyupdate?no=${ reply.no }','popup_1','width=500px,height=400px,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,left=300px,top=100px')">
 		    				수정</button>
 		    			</c:if>
+		    			
+
+		    			
+		    			
 		    			<form action="${ path }/board/replydelete" method="POST">
 		    			<input type="hidden" name="replyNo" value="${ reply.no }">
 		    			<input type="hidden" name="boardNo" value="${ board.no }">
@@ -184,8 +195,26 @@
 				location.replace('${ path }/member/login');
 			}
 		});
+	
 		
-        
+		
+	    $('#replyContent').on('keyup', (event) => {
+	        let target = $(event.target);
+	        let currentLength = target.val().length;
+	        let maxlength = parseInt($('#maxLength').text());
+
+	        console.log(currentLength);
+	        console.log(maxlength);
+
+	        if(currentLength > maxlength){
+	            target.val(target.val().substr(0, maxlength));
+	        }else {
+	            $('#counter').text(currentLength);
+	       }
+
+	    });
+		
+		
 	});
 		
 </script>

@@ -31,7 +31,7 @@ public class QnaBoard {
 	
 	private String status;
 	
-	//private List<QnaReply> replies;
+	private List<QnaReply> replies;
 	
 	private Date createDate;
 	
