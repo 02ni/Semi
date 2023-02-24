@@ -4,13 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import static com.kh.mvc.common.jdbc.JDBCTemplate.close;import static com.kh.mvc.common.jdbc.JDBCTemplate.commit;
+import static com.kh.mvc.common.jdbc.JDBCTemplate.close;
+import static com.kh.mvc.common.jdbc.JDBCTemplate.commit;
 import static com.kh.mvc.common.jdbc.JDBCTemplate.rollback;
+import static com.kh.mvc.common.jdbc.JDBCTemplate.getConnection;
 
+import com.kh.mvc.board.model.vo.Board;
+import com.kh.mvc.common.util.PageInfo;
 import com.kh.mvc.member.model.vo.Member;
 
 public class MemberDao {
+	
 
 	// 새로 짠 로직
 	public Member findById(Connection connection, String  userId) {
@@ -92,57 +99,117 @@ public class MemberDao {
 		return result;
 	}
 
-	public int updateMember(Connection connection, Member member) {
-		int result = 0;
+
+
+	
+
+
+	// 아이디 찾기 ( 폰번호로 ) 
+	public String findIdbyPhone(String phone) {
+		String id = null;
+		Connection connection = getConnection();
 		PreparedStatement pstmt = null;
-		String query = "UPDATE MEMBER SET NAME=?,PHONE=?,EMAIL=?,ADDRESS=?,HOBBY=?,MODIFY_DATE=SYSDATE WHERE NO=?";
+		String query = "SELECT ID FROM MEMBER WHERE PHONE =? ";
+		ResultSet rs = null;
 		
-		// 참조 변수 위에 선언
 		try {
 			pstmt = connection.prepareStatement(query);
 			
-			pstmt.setString(1, member.getName());
-			pstmt.setString(2, member.getPhone());
-			pstmt.setString(3, member.getEmail());
-			pstmt.setString(4, member.getAddress());
-			pstmt.setString(5, member.getHobby());
-			pstmt.setInt(6, member.getNo());
+			pstmt.setString(1, phone);
 			
-			// 리저트 변수에 담아서 리턴될 수 있도록
-			result = pstmt.executeUpdate();
-
+			rs = pstmt.executeQuery();
+		
+			while(rs.next()) {
+				id = rs.getString("ID");
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			close(rs);
 			close(pstmt);
 		}
-		
-		return result;
+				
+		return id;
 	}
 
-	// memberService에서 불러온 메소드
-	public int updateMemberPassword(Connection connection, int no, String userPwd) {
-		int result = 0;
+	// 비밀번호 찾기 (id로)
+	public String findPwdbyId(String id) {
+		String password = null;
+		Connection connection = getConnection();
 		PreparedStatement pstmt = null;
-		String query = "UPDATE MEMBER SET PASSWORD=? WHERE NO=?";
+		String query = "SELECT PASSWORD FROM MEMBER WHERE ID = ? ";
+		ResultSet rs = null;
 		
 		try {
 			pstmt = connection.prepareStatement(query);
 			
-			// 쿼리문으로 불러온 ? 에 대한 값을 넣자
-			pstmt.setString(1, userPwd);
-			pstmt.setInt(2, no);
+			pstmt.setString(1, id);
 			
-			result = pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
+		
+			while(rs.next()) {
+				password = rs.getString("PASSWORD");
+			}
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
+			close(rs);
 			close(pstmt);
 		}
 		
-		return result;
+		return password;
 	}
+
+
+
+	public Board findMemberBoardById(Connection connection, int no) {
+		
+		Board board = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM BOARD B JOIN MEMBER M ON(B.WRITER_NO = M.NO) WHERE M.NO = ? ";
+
+		try {
+			pstmt = connection.prepareStatement(query);
+				
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				board = new Board();
+				
+				board.setNo(rs.getInt("NO"));
+				board.setWriterNo(rs.getInt("WRITER_NO"));
+				board.setTitle(rs.getString("TITLE"));
+				board.setContent(rs.getString("CONTENT"));
+				board.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
+				board.setRenamedFileName(rs.getString("RENAMED_FILENAME"));
+				board.setReadCount(rs.getInt("READCOUNT"));
+				board.setStatus(rs.getString("STATUS"));
+				board.setCreateDate(rs.getDate("CREATE_DATE"));
+				board.setModifyDate(rs.getDate("MODIFY_DATE"));
+				board.setWriterId(rs.getString("ID"));
+				
+				System.out.println(board);
+			
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// 6. 리소스 받을 수 있도록 클로즈!
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return board;
+	}
+
 
 	public int updateMemberStatus(Connection connection, int no, String status) {
 		int result = 0;
@@ -151,22 +218,88 @@ public class MemberDao {
 		
 		try {
 			pstmt = connection.prepareStatement(query);
-		
-			// 첫번째는 매개값으로 넘어온 값으로
+			
 			pstmt.setString(1, status);
 			pstmt.setInt(2, no);
-		
-			result = pstmt.executeUpdate();
 			
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
-
+		
 		return result;
 	}
 
 	
 	
-}
+
+
+	
+
+//	public Member findId(Connection connection, String phone) {
+//		Member member = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String query = "SELECT ID FROM MEMBER WHERE PHONE = ? ";
+//		
+//		try {
+//			pstmt = connection.prepareStatement(query);
+//			rs = pstmt.executeQuery();
+//			
+//			if (rs.next()) {
+//				member = rs.getString(1);
+//			} 
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close(rs);
+//			close(pstmt);
+//		
+//		}
+//		
+//		return member;	
+//		
+//	}
+
+
+//	public int getMemberBoardCount(Connection connection) {
+//		int count = 0;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		
+//		String query = "SELECT COUNT(*) FROM BOARD WHERE WRITER_ID = ?;";
+//
+//		try {
+//			pstmt = connection.prepareStatement(query);
+//			
+//			pstmt.setString(1, writerId);
+//			rs = pstmt.executeQuery();
+//			
+//			if (rs.next()) {
+//				count = rs.getInt(1);
+//			} 
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close(rs);
+//			close(pstmt);
+//			// 커넥션을 제외한 다른 애들을 클로즈 시켜준다. (역순으로)
+//		}
+//		// 1. 얻어온 카운트 수를 리턴한다.
+//		return count;
+//	}
+	}
+	
+
+
+	
+	
+	
+	
+
+	
+
+	
+	

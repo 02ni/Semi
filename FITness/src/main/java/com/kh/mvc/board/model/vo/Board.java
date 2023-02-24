@@ -39,5 +39,7 @@ public class Board {
 	
 	private int replyCount;
 	
+	private String writerName;
+	
 	private String secretCheck;     // 비밀글 여부
 }

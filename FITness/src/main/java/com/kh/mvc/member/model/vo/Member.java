@@ -26,11 +26,17 @@ public class Member {
 	
 	private String address;
 	
-	private String hobby;
-	
 	private String status;
 	
 	private Date enrollDate;
 
 	private Date modifyDate;
+	
+	private int count;
+	
+	private int replyCount;
+	
+	private int rowNum;
+	
+	private String gymName;
 }

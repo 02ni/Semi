@@ -26,6 +26,9 @@ public class MemberJoinServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
 		int result = 0;
 		Member member = new Member();		
 		
@@ -34,8 +37,16 @@ public class MemberJoinServlet extends HttpServlet {
 		member.setName(request.getParameter("userName"));
 		member.setPhone(request.getParameter("phone"));
 		member.setEmail(request.getParameter("email"));
-		member.setAddress(request.getParameter("address"));
+		String adress = request.getParameter("address");
+		String adress2 = request.getParameter("addressdetail");
 		
+		member.setAddress(adress + " " + adress2);
+		
+		
+		
+		
+		
+		System.out.println(member);
 		result = new MemberService().save(member);
 		
 		if(result > 0) {
@@ -46,7 +57,7 @@ public class MemberJoinServlet extends HttpServlet {
 			request.setAttribute("location", "/member/join");
 		}
 		
-		
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}
 

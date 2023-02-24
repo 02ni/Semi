@@ -7,39 +7,44 @@ import static com.kh.mvc.common.jdbc.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import com.kh.mvc.board.model.dao.BoardDao;
+import com.kh.mvc.board.model.vo.Board;
+import com.kh.mvc.common.util.PageInfo;
 import com.kh.mvc.member.model.dao.MemberDao;
 import com.kh.mvc.member.model.vo.Member;
 
 public class MemberService {
 
-	// save에 존재하면 납두고, 새로 저장하면 insert 하는 형태로
+	
+	
 	public int save(Member member) {
 		int result = 0;
 		Connection connection = getConnection();
 		
-		// 멤버의 no가 0보다 크면, update (update 서블릿 참고)
-		if(member.getNo() > 0) {
-			// update 작업
-			result = new MemberDao().updateMember(connection, member);
-		} else {
-			// insert 작업
-			result = new MemberDao().insertMember(connection, member);
-		}
+	
+		result = new MemberDao().insertMember(connection, member);
+		
+		return result;
+		
+	}
 		
 		
 		//서비스에서 커넥션 만들고 커밋 or 롤백 (커넥션 객체로 커밋 롤백 제어)
-		if(result > 0) {
-			commit(connection);
-		} else {
-			rollback(connection);
-		}
-		
-		close(connection);
+//		if(result > 0) {
+//			commit(connection);
+//		} else {
+//			rollback(connection);
+//		}
+//		
+//		close(connection);
 		
 		// 정수 값 리턴한다.
-		return result;
-	}
+//		return result;
+//	}
 
 //	public boolean isDuplicateId(String userId) {
 //		Connection connection = getConnection();
@@ -71,26 +76,26 @@ public class MemberService {
 //		return member;
 //	}
 
-	// UpdatePasswordServlet()에서 만들었다.
-	public int updatePassword(int no, String userPwd) {
-		int result = 0;
-		
-		// 겟 커넥션 메소드(DB를)로 커넥션을 가져온다.
-		Connection connection = getConnection();
-		result = new MemberDao().updateMemberPassword(connection, no, userPwd);
-		
-		if(result > 0) {
-			commit(connection);
-		} else {
-			rollback(connection);
-		}
-		
-		close(connection);
-		
-		return result;
-	}
-
-	// DeleteServlet()에서 만들었다.
+//	// UpdatePasswordServlet()에서 만들었다.
+//	public int updatePassword(int no, String userPwd) {
+//		int result = 0;
+//		
+//		// 겟 커넥션 메소드(DB를)로 커넥션을 가져온다.
+//		Connection connection = getConnection();
+//		result = new MemberDao().updateMemberPassword(connection, no, userPwd);
+//		
+//		if(result > 0) {
+//			commit(connection);
+//		} else {
+//			rollback(connection);
+//		}
+//		
+//		close(connection);
+//		
+//		return result;
+//	}
+//
+//	// DeleteServlet()에서 만들었다.
 	public int delete(int no) {
 		int result = 0;
 		Connection connection = getConnection();
@@ -121,5 +126,72 @@ public class MemberService {
 		
 		return member;
 	}
+
+
+	
+// 아이디 중복 검사
+	// 이제 서블릿에서 파라미터로 받아온 userId값을 dao를 통해 db에 조회 해본다. 
+	// 만약 존재하면 true, 존재하지 않으면 false를 리턴받는다.
+	public boolean isCheckedId(String userId) {
+		Connection connection = getConnection();
+		
+		// 이미 만들어 놓은 아이디를 가지고 db조회하는 메소드를 가져온다.
+		// member 오브젝트가 존재하면 이미 회원이 있다는 말임! 
+		Member member = new MemberDao().findById(connection, userId);
+		
+		close(connection);
+		// member가 null이 아니면 true
+		return member != null;
+	}
+
+
+
+
+	public String findIdbyPhone(String phone) {
+		
+		return new MemberDao().findIdbyPhone(phone);
+	}
+
+
+	public String findPwdbyId(String id) {
+		return new MemberDao().findPwdbyId(id);
+	}
+
+
+
+
+
+	public Board getMemberBoardById(int no) {
+
+				Board board = null;
+				
+			
+				Connection connection = getConnection();
+				
+		
+				board = new MemberDao().findMemberBoardById(connection, no);
+				
+				close(connection);
+				
+				return board;
+				
+			}
+
+
+
+
+
+
+
+//	public int getMemberBoardCount() {
+//		int count = 0;
+//		Connection connection = getConnection();
+//
+//		count = new MemberDao().getMemberBoardCount(connection);
+//		
+//		close(connection);
+//		
+//		return count;
+//	}
 
 }

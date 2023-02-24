@@ -81,10 +81,10 @@
                                 </div>
                                 </div>
                             </form>
-                          <button id="login_join" ><a href="${ path }/member/join">회원 가입 </a> </button>
+                          <button id="login_join" ><a href="${ path }/member/joinagree">회원 가입 </a> </button>
                 
                         </div>
                     </div>
             </div>
- </div>
+        </div>
 <jsp:include page="/views/common/footer.jsp" /> 

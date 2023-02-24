@@ -51,8 +51,8 @@
 						</td>
 						<td>
 						<c:if test="${ not empty loginMember && loginMember.role.equals('ROLE_ADMIN')}">
-		    				<button>ADMIN</button>
-		    			</c:if>
+                    		<button onclick="location.href='${ path }/admin/memberlist'">ADMIN</button>
+                   		</c:if>
 						</td>
 					</tr>
 				</table>
