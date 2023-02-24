@@ -36,30 +36,101 @@
   		text-decoration: underline;
 	}
 	
+	/*글쓰기 버튼*/
+	    div #btn-add {
+         height: 30px;
+         padding: 10px;
+         box-sizing: border-box;
+         width: 100px;
+         background-color: yellow;
+         font-weight: bold;
+         border: none;
+         border-radius: 5px;
+         cursor: pointer;
+     }
+	
+	/*바*/
+        #contentguide{
+            background-color: white;
+            margin: 10px 0 30px 0;
+        }
+        #divboardguide{
+            width:  940px;
+            display: flex;
+            margin: 5px auto;
+            height: 70px;
+        }
+        .boardguide{
+            border-radius: 3px;
+            width: 30%;
+            height: 60px;  
+            text-align : center;
+            padding : 20px 0;
+            
+            margin: 15px;
+            text-align: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid #E3E3E3;
+        	font-size: 18px;
+        }
+        
+        .boardguide:active{
+			color: black;
+			background-color: orange;
+		}
+		
+		.boardguide.color{
+			color: black;
+			background-color: orange;
+		}
+		
+        #boardguide1{
+        }
+        #boardguide2{
+        }
+        #boardguide3{
+        
+        }
+        #boardguide4{
+        }
+        .icon{
+            margin: 20px 10px 10px 10px;
+        }
+        .boardguide  p {
+            font-size: 10pt;
+            font-weight:bold;
+            color: rgb(79, 79, 79);
+        }
+        
+	
+	
+	
 </style>
-
 
 <link rel="stylesheet" href="${ path }/resources/css/board.css">
 
+            <section id="contentguide">
+                <div id="divboardguide">
 
-<section id="boardnav">
-		<div id="btn1">
-			<ul>
-				<li class="notice_select" onclick="location.href='${ path }/notice/list'">
-					<span>공지사항</span>
-				</li>
-				<li class="faq_select" onclick="location.href='${ path }/faq/list'">
-					<span>FAQ</span>
-				</li>
-				<li class="freeBoard_select active" onclick="location.href='${ path }/board/list'">
-					<span>자유게시판</span>
-				</li>
-				<li class="qna_select" onclick="location.href='${ path }/qna/list?no=${ loginMember.no }'">
-					<span>1:1문의</span>
-				</li>
-			</ul>
-		</div>
-</section>
+                    <div class="boardguide" id="boardguide1" onclick="location.href='${ path }/notice/list'">
+                        공지사항
+                    </div>
+                            
+                    <div class="boardguide" id="boardguide2"  onclick="location.href='${ path }/faq/list'">
+                        자주묻는질문
+                    </div>
+
+                    <div class="boardguide color" id="boardguide3" onclick="location.href='${ path }/board/list'">
+                        자유게시판
+                    </div>
+
+                    <div class="boardguide" id="boardguide4" onclick="location.href='${ path }/qna/list?no=${ loginMember.no }'">
+                        1:1 문의
+                    </div>
+                </div>
+            </section>
+
 		
 <section id="content">
 	<div class="clear"></div>
@@ -115,6 +186,9 @@
 		</table>
 		
 		
+		
+		
+		
 		<div id="pageBar">
 			<nav aria-label="...">
   				<ul class="pagination justify-content-center">
@@ -144,6 +218,28 @@
 				    </li>
 				 </ul>
 			</nav>
+		</div>
+	</div>
+	
+	<br><br>
+	
+	<div align="right" class="container">
+		<div class="row">
+			<form method="post" name="search" action="searchbbs.jsp">
+				<table class="pull-right">
+					<tr>
+						<td><select class="form-control" name="searchField">
+								<option value="0">선택▼</option>
+								<option value="bbsTitle">제목</option>
+								<option value="userID">작성자</option>
+						</select></td>
+						<td><input type="text" class="form-control"
+							placeholder="검색어 입력" name="searchText" maxlength="100"></td>
+						<td><button type="submit" class="btn btn-success">검색</button></td>
+					</tr>
+
+				</table>
+			</form>
 		</div>
 	</div>
 		
