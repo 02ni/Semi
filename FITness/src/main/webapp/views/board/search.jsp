@@ -185,38 +185,6 @@
 			</c:if>
 		</table>
 		
-		
-		
-		<div id="pageBar">
-			<nav aria-label="...">
-  				<ul class="pagination justify-content-center">
-    				<li class="page-item">
-      					<a class="page-link" href='${ path }/board/list?page=${ pageInfo.prevPage }'>previous</a>
-   					 </li>
-   					 
-   					 <!--  10개 페이지 목록 -->
-					<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-						<c:choose>
-							<c:when test="${ status.current == pageInfo.currentPage }">
-								<li class="page-item active" aria-current="page">
-									<a class="page-link">${ status.current }</a>
-								</li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item">
-									<a class="page-link" href='${ path }/board/list?page=${ status.current }'>${ status.current }</a>
-								</li>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-					
-					
-    				<li class="page-item">
-      					<a class="page-link" href='${ path }/board/list?page=${ pageInfo.nextPage }'>next</a>
-				    </li>
-				 </ul>
-			</nav>
-		</div>
 	</div>
 	
 	<br><br>

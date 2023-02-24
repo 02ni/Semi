@@ -168,7 +168,6 @@ public class BoardService {
 		
 		return result;
 		
-		
 	}
 	
 	public int deleteReply(Reply reply) {
@@ -182,10 +181,34 @@ public class BoardService {
 		} else {
 			rollback(connection);
 		}
-		
 		close(connection);
 		
 		return result;
+	}
+
+	
+	
+	public List<Board> search(PageInfo pageInfo, String searchField, String searchText) {
+		List<Board> list = null;
+		Connection connection = getConnection();
+		
+		list = new BoardDao().getSearch(connection, pageInfo, searchField, searchText);
+		
+		close(connection);
+		
+		return list;
+		
+	}
+
+	public int getBoardsearchCount() {
+		int seachCount = 0;
+		Connection connection = getConnection();
+		
+		seachCount = new BoardDao().getBoardSearchCount(connection);
+		
+		close(connection);
+		
+		return seachCount;
 	}
 
 

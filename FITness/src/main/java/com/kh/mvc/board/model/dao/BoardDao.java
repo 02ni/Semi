@@ -93,6 +93,7 @@ public class BoardDao {
 				board.setSecretCheck(rs.getString("SECRET_CHECK"));
 				
 				list.add(board);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -103,6 +104,85 @@ public class BoardDao {
 		
 		return list;
 	}
+	
+	public List<Board> getSearch(Connection connection, PageInfo pageInfo, String searchField, String searchText) {
+		List<Board> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		
+		String query = "SELECT ROWNUM AS RNUM, "
+				+ "NO, "
+				+ "TITLE, "
+				+ "ID, "
+				+ "CREATE_DATE, "
+				+ "ORIGINAL_FILENAME, "
+				+ "READCOUNT, "
+				+ "STATUS, "
+				+ "REPLYCOUNT, "
+				+ "SECRET_CHECK "
+				+ "FROM ( "
+				+ "SELECT B.NO, "
+				+ "B.TITLE, "
+				+ "M.ID, "
+				+ "B.CREATE_DATE, "
+				+ "B.ORIGINAL_FILENAME, "
+				+ "B.READCOUNT, "
+				+ "B.STATUS, "
+				+ "B.REPLYCOUNT, "
+				+ "B.SECRET_CHECK "
+				+ "FROM BOARD B "
+				+ "JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
+				+ "WHERE B.STATUS = 'Y' ORDER BY B.NO DESC "
+				+ ") WHERE TITLE LIKE ?"		
+				+ ")"
+				+ ") WHERE RNUM BETWEEN ? and ?";
+
+		
+		try {
+			pstmt = connection.prepareStatement(query);			
+			
+		//		pstmt.setString(1, searchField);
+				pstmt.setString(1, "%"+ searchText +"%");
+				pstmt.setInt(2, pageInfo.getStartList());
+				pstmt.setInt(3, pageInfo.getEndList());
+				
+				System.out.println(searchField);
+				System.out.println(searchText);
+				
+				System.out.println("용용용");
+
+				rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				Board board = new Board();
+				
+				board.setNo(rs.getInt("NO"));
+				board.setRowNum(rs.getInt("RNUM"));
+				board.setWriterId(rs.getString("ID"));
+				board.setTitle(rs.getString("TITLE"));
+				board.setCreateDate(rs.getDate("CREATE_DATE"));
+				board.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
+				board.setReadCount(rs.getInt("READCOUNT"));
+				board.setStatus(rs.getString("STATUS"));
+				board.setReplyCount(rs.getInt("REPLYCOUNT"));
+				board.setSecretCheck(rs.getString("SECRET_CHECK"));
+				
+				list.add(board);
+				
+				System.out.println("다오" + board);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	
 
 	public Board findBoardByNo(Connection connection, int no) {
 		Board board = null;
@@ -415,6 +495,30 @@ public class BoardDao {
         }
         return result;
 	}
+
+	public int getBoardSearchCount(Connection connection) {
+		int searchCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "SELECT COUNT(*) FROM BOARD WHERE STATUS='Y'";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				searchCount = rs.getInt(1); 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+				
+		return searchCount;
+	}
+
 	
 
 }
