@@ -13,18 +13,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Gym{
-   private int no;
-   private String gymName;
-   private String address;
-   private String gymPhone;
-   private String content;
-   private String time;
-   private String img;
-   private String thumb;
-   private String category;
-   private String status;
-   private String ceoPhone;
-   private String ceoEmail;
-   private String price3;
-//   private List<Voucher> vouchers;
+	private int no;
+	private String gymName;
+	private String address;
+	private String gymPhone;
+	private String content;
+	private String time;
+	private String img;
+	private String thumb;
+	private String category;
+	private String status;
+	private String ceoPhone;
+	private String ceoEmail;
+	private int price;
+	private int grade;
+	private List<Voucher> vouchers;
+	private List<Review> reviews;
+
 }
+
