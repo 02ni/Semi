@@ -1,0 +1,477 @@
+@charset "UTF-8";
+
+#cal{
+            background-color :white;
+            height: auto;
+            width: 400px;
+            margin: 0px;
+            padding: 20px;
+            margin: 0 auto;
+            border-radius:5px;
+            box-shadow:0px 40px 30px -20px rgba(0.3,0.3,0.3,0.3);
+        }
+        td {
+            width: 50px;
+            height: 10px;
+        }
+
+        .Calendar {
+            text-align: center;
+        }
+
+        .Calendar>thead>tr:first-child>td {
+            font-family: 'Questrial', sans-serif;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .Calendar>thead>tr:first-child>td {
+            font-family: 'Questrial', sans-serif;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .Calendar>thead>tr:last-child>td {
+            font-family: 'Questrial', sans-serif;
+            font-weight: 600;     
+        }
+
+        .Calendar>tbody>tr>td>p {
+            font-family: 'Montserrat', sans-serif;
+            height: 45px;
+            width: 45px;
+            border-radius: 45px;
+            transition-duration: .2s;
+            line-height: 45px;
+            margin: 2.5px;
+            display: block;
+            text-align: center;
+        }        
+
+        .pastDay {
+            color: lightgray;
+        }
+
+        .today {
+            background-color: #F5D042;            
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .futureDay {
+            background-color: #FFFFFF;
+            cursor: pointer;
+        }
+        .futureDay:hover{
+            background:#eee;
+        }
+
+        .futureDay.choiceDay,
+        .today.choiceDay {
+            /* background: #0A174E; */
+            background-color: coral;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+
+
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&display=swap');
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        /* div {
+            border: 2px solid ;
+        } */
+        * {
+            font-family: 'GmarketSansMedium';
+        }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+        div {
+            /* border: 2px solid red; */
+            box-sizing: border-box;
+        }
+        .wrap{
+            width:1000px;
+            height:1400px;
+            margin:auto;
+        }
+        .logo {
+            line-height: 2;
+            color: rgb(125, 205, 50);
+        }
+
+/* 헤더 */
+        #header{
+            height: 10%
+        }
+
+        #header1{
+            width: 30%;  
+        }
+
+        #header2{
+            width: 40%;
+        }
+
+        #header3 {
+            padding-top: 37px;
+            padding-bottom: 15px;
+            border: 1px;
+            text-align: right;
+            width: 30%;
+        }
+        #header>div{
+            float: left;
+            height: 100%;
+        }
+
+        .mainlogin{  
+        font-size:13px;
+        color: #999999;
+        text-decoration: none;
+        letter-spacing: 0.01em;
+        margin: 5px;
+        line-height: 6;
+        }
+
+        .mainlogin:hover {
+        color: #00FF00;
+        text-decoration : none;
+        font-size: 13px;
+        }
+
+/* 메뉴바 */
+        #navigator {
+            height: 5%;
+            border-top: 1px solid;
+            z-index:999;
+        }
+
+        #navi{
+            list-style-type: none;
+            margin:0;
+            padding:0;
+            height:100%;
+            position: relative;
+            z-index: 9999;
+        }
+
+
+        #navi> li{
+            float:left;
+            width:25%;
+            height:54%;
+            text-align:center;
+            font-size:13px;
+            line-height:35px;
+        }
+        #navi> li:hover{
+            background-color: rgba(246, 139, 0, 0.917);
+        }
+        
+
+        #navi a{
+            text-decoration: none;
+            color: black;
+            font-size: 1.5em;
+            font-weight: 900;
+            height: 100%;
+            line-height: 35px;
+            
+        }
+
+        #navi>li>ul a:hover{
+            color: orangered;
+            
+        }
+
+        #navi>li>ul{
+            list-style-type: none;
+            padding: 0;
+            display: none;
+            background-color: rgb(221, 215, 215, 0.7);
+        }
+
+        #navi>li:hover>ul{
+            display: block;
+            
+        }
+
+        #navi>li>ul>li:hover {
+            display: block;
+            transition: ease 1s;
+        }
+
+        #navi>li>ul a{
+            font-size: 1.4em;
+        }
+
+/* 본문 */ 
+        #section {
+            height: 100%;
+            font-family: 'GmarketSansMedium';
+            z-index:1;
+        }
+
+        #section1-1 {
+            width: 50%;
+            
+        }
+
+        #section1-2 {
+            width: 50%;
+        }
+
+        #section1-2>ul>li {
+            list-style: none;
+            font-size: 152%;
+            font-weight: bolder;
+            margin-bottom: 20px;
+
+        }
+
+        #section1>div{
+            float: left;
+            height: 30%;
+        }
+
+        #option{
+            font-size: large;
+            font-weight: bolder;
+            font-family: 'GmarketSansMedium';
+            color: rgba(246, 139, 0, 0.917);
+        }
+
+        #option>ul>p{
+            color: #00FF00;
+        }
+
+        #section2>div{
+            /* float: left; */
+            height: 30%;
+        }
+
+        #section2>h3 {
+            font-size: 20px;
+        }
+
+        #section3 {
+            /* height: 1000px; */
+        }
+        #section3>div{
+            /* float: left; */
+            height: 20%;
+
+        }
+
+        #voucher {
+            width: 80ch;
+            margin: auto;
+        }
+        
+        
+        #m1{
+            width: 20ch;
+            height: 5ch;
+            text-align: center;
+            font-size: large;
+
+        }
+        #m2{
+            width: 20ch;
+            height: 5ch;
+            text-align: center;
+            font-size: large;
+
+        }
+        #m3{
+            width: 20ch;
+            height: 5ch;text-align: center;
+            font-size: large;
+
+        }
+        #m4{
+            width: 20ch;
+            height: 5ch;
+            text-align: center;
+            font-size: large;
+        }
+
+        #month1 {
+            width: 20ch;
+            height: 5ch;
+            background-color: coral;
+            border-radius: 10px;
+            font-size: large;
+            cursor: pointer;
+            color:white;
+            border: none;
+            text-align: center;
+            padding: 50px;
+        }
+        
+
+
+        #month2 {
+            width: 20ch;
+            height: 5ch;
+            background-color:rgba(246, 139, 0, 0.917);
+            border-radius: 10px;
+            font-size: large;
+            cursor: pointer;
+            color:white;
+            border: none;
+        }
+        #month3 {
+            width: 20ch;
+            height: 5ch;
+            background-color: coral;
+            border-radius: 10px;
+            font-size: large;
+            cursor: pointer;
+            color:white;
+            border: none;
+        }
+        #month4 {
+            width: 20ch;
+            height: 5ch;
+            background-color:rgba(246, 139, 0, 0.917);
+            border-radius: 10px;
+            font-size: large;
+            cursor: pointer;
+            color:white;
+            border: none;
+        }
+        #section3>h3 {
+            font-size: 20px;
+        }
+
+        #btn_page{
+            margin: auto;
+        }
+        
+        #pre {
+            width: 15ch;
+            height: 5ch;
+            background-color: coral;
+            border-radius: 10px;
+            font-size: large;
+            cursor: pointer;
+            color:white;
+            border: none;
+            margin-right: 100px;
+            
+        }
+
+        #next{
+            width: 15ch;
+            height: 5ch;
+            background-color:rgba(246, 139, 0, 0.917);
+            border-radius: 10px;
+            font-size: large;
+            cursor: pointer;
+            color:white;
+            border: none;
+            margin-right: 100px;
+
+        }
+        
+        #price{
+            width: 900px;
+            height: 300px;
+            margin: auto;
+        }
+
+        #voucher_p{
+            font-size: 2em;
+        }
+
+        #option_p{
+            font-size: 2em;
+        }
+
+        #discount_p{
+            font-size: 2em;
+            color: red;
+
+        }
+
+        #total_p{
+            font-size: 2em;
+        }
+        
+        #v_price{
+            font-size: 2em;
+
+            padding-left: 50%;
+        }
+
+        #o_price{
+            font-size: 2em;
+            padding-left: 50%;
+        }
+
+        #d_price{
+            font-size: 2em;
+            padding-left: 50%;
+        }
+
+        #t_price{
+            font-size: 2em;
+            padding-left: 50%;
+        }
+        
+        
+
+    
+
+    /* 하단 */
+        #footer {
+            height: 15%;
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+        }
+
+        #footer>div {
+            float: left;
+            height: 85%;
+            margin-bottom: 7px;
+        }
+
+        #footer1 {
+            width: 30%;
+        }
+
+        #footer2 {
+            width: 40%;
+            font-size: small;
+            font-weight: bold;
+        }
+
+        #footer3 {
+            width: 30%;
+        }
+
+        #footer4{
+            width: 100%;
+            
+        }
+        #footer2> p {
+            font-weight: bold;
+            text-align: left;
+            font-size: small;
+        }
+
+        #footer3> p { 
+            font-weight: bold;
+            text-align: left;
+        }

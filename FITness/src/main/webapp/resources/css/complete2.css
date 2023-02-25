@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+@charset "UTF-8";
+
+       /* div {
+            border: solid;
+        } */
+        * {
+            font-family: 'GmarketSansMedium';
+        }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+        div {
+            /* border: 2px solid red; */
+            box-sizing: border-box;
+        }
+        .wrap{
+            width:1000px;
+            height:1200px;
+            margin:auto;
+        }
+        .logo {
+            line-height: 2;
+            color: yellowgreen;
+        }
+
+
+#section {
+            height: 50%;
+            font-family: 'GmarketSansMedium';
+            z-index:1;
+        }
+
+        #banner1{
+            background-color: black;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin: 11px 0 80px 0;
+        }
+        #bannerimg1 {
+            display: inline-block;
+            height: 300px;
+            width: 100%;
+        }
+        #banner2{
+            text-align: center;
+            position: relative;
+            margin: 80px 0 40px 0;
+            }
+            
+        #bannerimg2 {
+            display: inline-block;
+            width: 100%;
+        }
+            
+    /* 가이드(공지사항, 개인운동, 그룹운동, 상담문의) 구역 */
+        #contentguide{
+            background-color: rgb(52, 73, 94);
+            margin: 80px 0 80px 0;
+        }
+        #divguide{
+            width:  940px;
+            display: flex;
+            margin: 24px auto;
+            height: 290px;
+        }
+        .guide{
+            border-radius: 55px;
+            width: 25%;
+            height: 90%;
+            margin: 15px;
+            text-align: center;
+        }
+        #guide1{
+            background-color: rgb(243, 156, 18);
+        }
+        #guide2{
+            background-color: rgb(241, 196, 15);
+        }
+        #guide3{
+            background-color: rgb(241, 196, 15);
+        }
+        #guide4{
+            background-color: rgb(243, 156, 18);
+        }
+        .icon{
+            margin: 20px 10px 10px 10px;
+        }
+        .guide  h2 {
+            font-size: 23pt;
+            color: white;
+            margin: 0px;
+        }
+        .guide  h4 {
+            font-size: 15pt;
+            margin: 3px;
+        }
+        .guide  p {
+            font-size: 10pt;
+            font-weight:bold;
+            color: rgb(79, 79, 79);
+        }
+        
+    /* 가이드 버튼 */
+        #contentguide button {
+            background-color: rgb(94, 94, 94);
+            color: white;
+            border-radius: 5px;
+            width: 85px;
+            height: 35px;
+            border: none;
+        }
+        #contentguide button:hover{
+            background-color: white;
+            color: orange;
+        }
+
+        #img {
+            width: 80px;
+        }
+
+        
+
+        #com{
+            margin: auto;
+        }
+
+        #com2{
+            font-size: 30px;
+        }
+
+        #btn_2{
+            margin: auto;
+            align-items: center;
+        }
+        #btn_3{
+            margin: auto;
+            align-items: center;
+        }
+        #my_btn{
+            width: 20ch;
+            height: 5ch;
+            background-color: coral;
+            border-radius: 10px;
+            font-size: large;
+            cursor: pointer;
+            color:white;
+            border: none;
+            text-align: center;
+        }
+        #main_btn{
+            width: 20ch;
+            height: 5ch;
+            background-color:rgba(246, 139, 0, 0.917);
+            border-radius: 10px;
+            font-size: large;
+            cursor: pointer;
+            color:white;
+            border: none;
+        }
+        
+         #section2>p{
+            text-align: center;
+            font-size: 30px;
+            
+        }
+
+        #info{
+            height: 40px;
+        }

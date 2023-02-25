@@ -4,16 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.kh.mvc.common.jdbc.JDBCTemplate.close;
-import static com.kh.mvc.common.jdbc.JDBCTemplate.commit;
-import static com.kh.mvc.common.jdbc.JDBCTemplate.rollback;
 import static com.kh.mvc.common.jdbc.JDBCTemplate.getConnection;
-
 import com.kh.mvc.board.model.vo.Board;
-import com.kh.mvc.common.util.PageInfo;
 import com.kh.mvc.member.model.vo.Member;
 
 public class MemberDao {
@@ -231,8 +224,80 @@ public class MemberDao {
 		
 		return result;
 	}
-
 	
+	//회원정보 수정-륜
+	public int updateMember(Connection connection, Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE MEMBER SET PASSWORD=?, NAME=?,PHONE=?,EMAIL=?,ADDRESS=?,MODIFY_DATE=SYSDATE WHERE NO=?";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setString(1, member.getPassword());
+			pstmt.setString(2, member.getName());
+			pstmt.setString(3, member.getPhone());
+			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, member.getAddress());
+			pstmt.setInt(6, member.getNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public Member findMemberById(Connection connection, String userId) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		//String query = "SELECT * FROM MEMBER WHERE ID='admin2' AND STATUS='Y'";
+		//String query = "SELECT * FROM MEMBER WHERE ID='" + userId + "' AND STATUS='Y'";
+		String query = "SELECT * FROM MEMBER WHERE ID=? AND STATUS='Y'";
+		
+		try {
+			//Class.forName("oracle.jdbc.driver.OracleDriver");
+			//connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "WEB", "WEB");
+			//statement = connection.createStatement();
+			
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			
+//			resultSet = statement.executeQuery(query);
+			rs = pstmt.executeQuery();
+			
+			
+			while(rs.next()) {
+				member = new Member();
+				
+				member.setNo(rs.getInt("NO"));
+				member.setId(rs.getString("ID"));
+				member.setPassword(rs.getString("PASSWORD"));
+				member.setRole(rs.getString("ROLE"));
+				member.setName(rs.getString("NAME"));
+				member.setPhone(rs.getString("PHONE"));
+				member.setEmail(rs.getString("EMAIL"));
+				member.setAddress(rs.getString("ADDRESS"));
+				member.setStatus(rs.getString("STATUS"));
+				member.setEnrollDate(rs.getDate("ENROLL_DATE"));
+				member.setModifyDate(rs.getDate("MODIFY_DATE"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return member;
+	}
 	
 
 
@@ -291,15 +356,3 @@ public class MemberDao {
 //		return count;
 //	}
 	}
-	
-
-
-	
-	
-	
-	
-
-	
-
-	
-	

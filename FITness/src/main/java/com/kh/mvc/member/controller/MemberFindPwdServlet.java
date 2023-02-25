@@ -33,8 +33,16 @@ public class MemberFindPwdServlet extends HttpServlet {
 		Map<String, Object> map = new HashMap<>();
 		String id = request.getParameter("id");
 		
-		String password = new MemberService().findPwdbyId(id);
 		
+		String password1 = new MemberService().findPwdbyId(id);
+	      
+	      
+	      
+        String password = password1.substring(0,2) + "*****";
+     		
+	      
+      
+     
 		
 		
 			map.put("resultCode", 1);

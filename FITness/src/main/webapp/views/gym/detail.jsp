@@ -238,7 +238,7 @@ form {
 	                      		<input type="hidden" name="gymNo" value="${ gym.no }"><span style="color:red">  (${ favoriteCount })</span>	
 				    		</form>
 			    		</c:if></p>
-                    <form name="buy" id="buy"  method="POST" >
+                    <form name="buy" id="buy"  method="GET" >
                     		
                     	<!-- 	<span>이용권</span> -->
                           		<label for="opselect">이용권</label> <c:if test="${not empty gym.vouchers}" >    
@@ -275,7 +275,7 @@ form {
                             <input type="hidden" name="gymno" value="${ gym.no }">
                             <br> <br>
                             <input type="submit" class="dbtn" id="cart-btn" value="장바구니" formaction="${ path }/bucket/insert">
-                            <input type="submit" class="dbtn" id="buy-btn" value="바로구매" formaction="${ path }/test/buy">
+                            <input type="submit" class="dbtn" id="buy-btn" value="바로구매" formaction="${ path }/order/order1">
  
                      </form>
                     <br>

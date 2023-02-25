@@ -25,7 +25,7 @@ public class OptionServlet extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Gym gym = null;
-		int no = Integer.parseInt(request.getParameter("gym"));
+		int no = Integer.parseInt(request.getParameter("gymno"));
 		
 		gym = new GymService().getGymByNo(no);
 		

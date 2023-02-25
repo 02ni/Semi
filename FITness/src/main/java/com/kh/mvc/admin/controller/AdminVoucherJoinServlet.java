@@ -87,7 +87,7 @@ public class AdminVoucherJoinServlet extends HttpServlet {
 			request.setAttribute("location", "/admin/centerlist");
 		}else {
 			request.setAttribute("msg", "이용권 등록 실패");
-			request.setAttribute("location", "/admin/voucher");
+			request.setAttribute("location", "/admin/centerjoin");
 		}
 		
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
