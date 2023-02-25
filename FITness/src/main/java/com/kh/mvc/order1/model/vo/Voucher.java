@@ -1,21 +1,16 @@
-package com.kh.mvc.gym.model.vo;
+package com.kh.mvc.order1.model.vo;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Voucher {
 	private int voucherNo;
 	private int  gymNo;
 	private String cate;
-	private String Gym_name;
-	private String gym_name;
-	private String voucherName;
-	private int basketNo;
 	//1일권
 	private int price;
 	private int price3;
@@ -40,9 +35,5 @@ public class Voucher {
 		this.price6 = (int)(price * 6 * 0.90);
 		this.price12 = (int)(price * 12 * 0.85);
 		
-	}
-
-	public void setGym_name(String gym_name) {
-		Gym_name = gym_name;
 	}
 }

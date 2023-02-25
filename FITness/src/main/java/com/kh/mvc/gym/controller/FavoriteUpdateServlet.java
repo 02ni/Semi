@@ -1,6 +1,7 @@
 package com.kh.mvc.gym.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.mvc.gym.model.service.GymService;
-import com.kh.mvc.gym.model.vo.Review;
 import com.kh.mvc.member.model.vo.Member;
 
 @WebServlet(name = "favoriteUpdate", urlPatterns = { "/favorite/update" })

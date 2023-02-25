@@ -33,7 +33,7 @@ public class GymListServlet extends HttpServlet {
 		}
 		// 전체 센터 수 얻어오기
 		totalCount = new GymService().getGymCount();
-		pageInfo = new PageInfo(page, 1, totalCount, 12);
+		pageInfo = new PageInfo(page, 10, totalCount, 12);
 		
 		// 센터 정보 얻어오기
 		list = new GymService().getGymList(pageInfo);

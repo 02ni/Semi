@@ -58,6 +58,20 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        
+        a:hover {
+        color: #00FF00;
+        text-decoration : none;
+        font-size: 13px;
+        }
+       
+		 a{  
+        font-size:13px;
+        color: black;
+        text-decoration: none;
+        
+ 
+        }
 </style>
 <div id="section">
             <div id="content">
@@ -72,19 +86,21 @@
                                     <div class="login_search">
                                         <a class="link" href="${ path }/member/findid"> 아이디 찾기 </a> <span class="bar"></span> 
                                         <a class="link" href="${ path }/member/findpwd"> 비밀번호 찾기 </a>
-                                        
                                     </div>
                                 <div id="message"></div>
                                 </div>
                                 <div>
                                     <button type="submit" id="login_login">로그인</button>
                                 </div>
-                                </div>
                             </form>
-                          <button id="login_join" ><a href="${ path }/member/joinagree">회원 가입 </a> </button>
+                                </div>
+                          <button id="login_join" onclick="location.href='${ path }/member/joinagree'">회원 가입</button>
                 
                         </div>
                     </div>
             </div>
         </div>
+        
+        <br/><br/><br/><br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/><br/>
+        
 <jsp:include page="/views/common/footer.jsp" /> 

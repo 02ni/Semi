@@ -297,4 +297,21 @@ public class AdminService {
 		
 		return result;
 	}
+
+	public int saveqnaReply(QnaReply qnareply) {
+		int result = 0;
+		Connection connection = getConnection();
+		
+		result = new AdminDao().insertQnaReply(connection, qnareply);
+		
+		if(result > 0) {
+			commit(connection);
+		} else {
+			rollback(connection);
+		}
+		
+		close(connection);
+		
+		return result;
+	}
 }

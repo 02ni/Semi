@@ -84,10 +84,10 @@ public class AdminVoucherJoinServlet extends HttpServlet {
 		if(result > 0) {
 			request.setAttribute("msg", "이용권 등록 성공");
 		    result2 = new AdminService().updateGymStatus(no, "Y");	
-			request.setAttribute("location", "/");
+			request.setAttribute("location", "/admin/centerlist");
 		}else {
 			request.setAttribute("msg", "이용권 등록 실패");
-			request.setAttribute("location", "/admin/centerjoin");
+			request.setAttribute("location", "/admin/voucher");
 		}
 		
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);

@@ -7,7 +7,10 @@
 
 <link rel="stylesheet" href="${ path }/resources/css/join.css">
 
-
+	
+	
+	
+	
  <section id="content">
         <h2 align="center">회원 가입</h2><br><br>
         <div id="join_wrap">	 	
@@ -16,14 +19,14 @@
                     <tr>
                         <th width="25%">아이디</th>
                         <td>
-                            <input type="text" name="userId" id="userId" placeholder="6자 이상의 영문과 숫자를 조합하세요." required size="40">
+                            <input type="text" name="userId" id="userId" placeholder="6자 이상의 영문과 숫자를 조합하세요" required size="40">
                             <input type="button" id="checkId" value="중복확인">
                         </td> 			
                     </tr>
                     <tr>
                         <th>비밀번호</th>
                         <td>
-                            <input type="password" name="userPwd" id="userPwd" placeholder="비밀번호를 입력해주세요"  size="40">
+                            <input type="password" name="userPwd" id="userPwd" placeholder="영문자,숫자,특수문자가 포함된 6~20 범위로 입력하세요"  size="40">
                         </td> 			
                     </tr>
                     <tr>
@@ -48,7 +51,7 @@
                         <th>이메일</th>
                         <td>
                             <input type="email" placeholder="FITness@FITness.com" name="email" id="email"  size="40">	
-                            <input type="button" id="" value="중복확인">											
+                           											
                         </td> 			
                     </tr>
                     <tr>
@@ -87,20 +90,20 @@
 			
             
             if(!(/^[a-z][a-z\d]{5,19}$/.test(userId))) {
-                alert('아이디 형식이 맞지 않습니다.');
+                alert('아이디 형식이 맞지 않습니다');
                 $("#userId").focus();
                 return false;
             }
             
             if(!(/^[\w!@#$%^&*-]{6,20}$/.test(userPwd))) {
-                alert('비밀번호 형식이 맞지 않습니다.');
+                alert('비밀번호 형식이 맞지 않습니다');
                 $("#userPwd").focus();
                 return false;
             }
 
           
             if(userPwd !== userPwd2) {
-                alert("동일한 비밀번호 값을 입력하세요.")
+                alert("동일한 비밀번호 값을 입력하세요")
                 document.getElementById('userPwd2').value = '';
                 document.getElementById('userPwd2').focus();
 
@@ -108,13 +111,13 @@
             }
           
             if(!(/^[\w]+@[\w]+\.[A-Za-z\.]{2,6}$/.test(email))) {
-                alert('이메일 형식에 맞지 않습니다.');
+                alert('이메일 형식에 맞지 않습니다');
                 $("#email").focus();
                 return false;
             }
             
             if(!(/01[016789][^0][0-9]{2,3}[0-9]{3,4}$/.test(phone))) {
-            	alert("전화번호를 -없이 입력해주세요.");
+            	alert("전화번호를 -없이 입력해주세요");
             	return false;
             }
    		} 
@@ -136,9 +139,9 @@
         				console.log(obj);
         				
         				if(obj.isChecked){	
-        					alert("이미 사용중인 아이디 입니다.");
+        					alert("이미 사용중인 아이디 입니다");
         				} else {
-        					alert("사용 가능한 아이디 입니다.");
+        					alert("사용 가능한 아이디 입니다");
         				}
         			},
         			

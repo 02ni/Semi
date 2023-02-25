@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.kh.mvc.board.model.vo.Board;
 import com.kh.mvc.common.util.PageInfo;
 import com.kh.mvc.gym.model.vo.Gym;
@@ -520,7 +521,7 @@ public class AdminDao {
 	public int insertGym(Connection connection, Gym gym) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "INSERT INTO GYM VALUES(SEQ_UNO.NEXTVAL,?,?,?,NULL,NULL,DEFAULT,DEFAULT,?,'N',?,?)";
+		String query = "INSERT INTO GYM VALUES(SEQ_GYM.NEXTVAL,?,?,?,NULL,NULL,DEFAULT,DEFAULT,?,'N',?,?)";
 		
 		try {
 		
@@ -555,7 +556,7 @@ public class AdminDao {
 	public int insertVoucher(Connection connection, Voucher voucher) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "INSERT INTO VOUCHER VALUES(SEQ_UNO.NEXTVAL,?,?,?) ";
+		String query = "INSERT INTO VOUCHER VALUES(SEQ_VOUCHER.NEXTVAL,?,?,?) ";
 		
 		try {
 			
@@ -892,6 +893,29 @@ public class AdminDao {
 		return result;
 	}
 
+	public int insertQnaReply(Connection connection, QnaReply qnareply) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "INSERT INTO QNAREPLY VALUES(SEQ_REPLY_NO.NEXTVAL, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT) ";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setInt(1, qnareply.getBoardNo());
+			pstmt.setInt(2, qnareply.getWriterNo());
+			pstmt.setString(3, qnareply.getContent());
+			
+			
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }
 //	public List<Test> selectList(Connection connection) {
 //		List<Test> list = new ArrayList<>();

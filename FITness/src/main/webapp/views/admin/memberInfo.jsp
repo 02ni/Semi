@@ -250,7 +250,7 @@
     <div class="wrap">
         <div id="header">
             <div id="header1"> 
-            <h1 align="center">FITness Admin</h1>
+            <img src="${ path }/resources/images/logotext.png" height="100px" align="center">
             </div>
             
             <div id="header3">

@@ -38,7 +38,6 @@ public class AdminBoardQnaServlet extends HttpServlet {
 			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		}
 		
-		
 		int page = 0;
 		int listCount = 0;
 		int boardCount = 0; 

@@ -66,7 +66,7 @@ public class AdminCenterJoinServlet extends HttpServlet {
 		
 		if(result > 0) {
 			request.setAttribute("msg", "센터 등록 성공");
-			request.setAttribute("location", "/");
+			request.setAttribute("location", "/admin/centerlist");
 		}else {
 			request.setAttribute("msg", "센터  실패");
 			request.setAttribute("location", "/admin/centerjoin");

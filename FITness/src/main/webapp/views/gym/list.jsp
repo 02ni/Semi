@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
 
@@ -24,7 +24,8 @@
             width: 100%;
             height: 100%;
             padding: 0 15px;
-            background-color: rgb(216, 197, 197);
+            background-color: rgb(255,151,0);
+           	color : white;
         }
         /* 경기,서울 높이 같게 */
         #search_region1{
@@ -55,17 +56,17 @@
         #region1 {
             padding: 15px;
             height: 150x;
-            background-color: rgb(248, 248, 248);
+            border: 3px solid rgb(255,151,0);
         }
         
         #region2 {  
             padding: 15px;
-            background-color: rgb(248, 248, 248);
+             border: 3px solid rgb(255,151,0);
         } 
         
         #region3 {  
             padding: 15px;
-            background-color: rgb(248, 248, 248);
+            border: 3px solid rgb(255,151,0);
         }
 
         /* 카테고리선택 */
@@ -90,7 +91,7 @@
             padding: 15px;
             width: 100%;
             height: 130px;
-            background-color: rgb(248, 248, 248);
+           	border: 3px solid rgb(255,151,0);
         
         }
 
@@ -107,11 +108,12 @@
         }
         .none{
             width: 100%;
-            height: 20px;
+            height: 40px;
         }
         #sortarea{
             width: 100%;
             height: 60px;
+            background-color: rgb(255,151,0, 0.5);
         }
 
         /* 버튼 */
@@ -143,7 +145,7 @@
 
         .select>li:hover{
             
-            background-color: rgb(245, 218, 66);
+            background-color: #eaf818;
         }
 
         /* sorting ul */
@@ -176,9 +178,15 @@
         }
         /* 센터 목록 */
         #listarea{
-        
         margin: 25px;
         height: 100%;
+        width: 100%;
+        }
+        #container{
+        height: 100%;
+        
+        width: 100%;
+        margin: 25px;
         }
         .layout {
         width: 100%;
@@ -190,8 +198,16 @@
             width: 30%;
             height: 270px;
             float:left;
-            border: 2px solid rgb(255, 246, 246);
-            background-color: rgb(248, 237, 224);
+            border: 3px solid rgb(255,151,0);
+        }
+        .layout>div:hover{
+            padding: 20px;
+            margin: 10px;
+            width: 30%;
+            height: 270px;
+            float:left;
+            border: 3px solid rgb(255,151,0);
+            background-color: rgb(255,151,0, 0.7);
         }
         .listtbl{
             width: 100%;
@@ -199,14 +215,67 @@
         }
         .gymtitle{
             font-size: 15pt;
-            font-weight: 700;
+            font-weight: 900;
         }
         .cate{
-            color: red;
+            color: rgb(255,151,0);
             font-weight: 700;
         }
 		/*페이지바*/
-		div#pageBar{margin-top:10px; text-align:center; }
+		div#pageBar{margin-top:10px; text-align:center; height: 100px; }
+		div#pageBar>button{
+		 background: rgb(255,151,0);
+		border: none;
+		color: white;
+		}
+		
+	.bthsearch {
+	  background: rgb(255,151,0);
+	  border: none;
+	  z-index: 1;
+	  
+	   width: 130px;
+	  height: 40px;
+	  border-radius: 5px;
+	  padding: 10px 25px;
+	  font-weight: 800;
+	  cursor: pointer;
+	  transition: all 0.3s ease;
+	  position: relative;
+	  display: inline-block;
+	   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+	   7px 7px 20px 0px rgba(0,0,0,.1),
+	   4px 4px 5px 0px rgba(0,0,0,.1);
+	  outline: none;
+	}
+	.bthsearch:after {
+	  position: absolute;
+	  content: "";
+	  width: 100%;
+	  height: 0;
+	  top: 0;
+	  left: 0;
+	  z-index: -1;
+	  border-radius: 5px;
+	  background-color: #eaf818;
+	  background-image: linear-gradient(315deg, #eaf818 0%, #f6fc9c 74%);
+	  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5)
+	   7px 7px 20px 0px rgba(0,0,0,.1),
+	   4px 4px 5px 0px rgba(0,0,0,.1);
+	  transition: all 0.3s ease;
+	}
+	.bthsearch:hover {
+	  background-color: #eaf818;
+	  color: #ffffff;
+	}
+	.bthsearch:hover:after {
+	  top: auto;
+	  bottom: 0;
+	  height: 100%;
+	}
+	.bthsearch:active {
+	  top: 2px;
+	}
 </style>
 
 <section>
@@ -371,7 +440,7 @@
         
         <div id="btnarea" class="search">
 
-            <input type="submit" id="bthsearch" value="검색하기">
+            <input type="submit" id="bthsearch" class="bthsearch" value="검색하기">
         </div>
 			</form>
         <div class="none"></div>
@@ -393,12 +462,12 @@
                                     <td class="gymtitle" colspan="2">${ gym.gymName }</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">${ gym.address }</td>
+                                    <td colspan="2" style="color:rgb(150,150,150);">${ gym.address }</td>
                                 </tr>
                                 <tr>
-                                    <td>3개월이용권</td>
+                                    <td><p>FIT회원가</b><br><sub>3개월기준</sub></td>
                                     
-                                    <td style="font-size:15pt;">
+                                    <td style="font-size:15pt; color:red; font-weight:800; ">
                                     <fmt:parseNumber var="price" integerOnly="true" value="${ gym.price*3*0.95}" pattern="#,###"/>
                			 			<fmt:formatNumber value="${price}" pattern="#,###"/>원
                                     </td>
@@ -418,35 +487,40 @@
                 </c:if>
                 
             </div>
-        <div id="pageBar">
-			<!-- 맨 처음으로 -->
-			<button onclick="location.href='${ path }/gym/list?page=1'">&lt;&lt;</button>
 
-			<!-- 이전 페이지로 -->
-			<button onclick="location.href='${ path }/gym/list?page=${ pageInfo.prevPage }'">&lt;</button>
-
-			<!--  12개 페이지 목록 -->
-			<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-				<c:choose>
-					<c:when test="${ status.current == pageInfo.currentPage }">
-						<button disabled>${ status.current }</button>
-					</c:when>
-					<c:otherwise>
-						<button onclick="location.href='${ path }/gym/list?page=${ status.current }'">${ status.current }</button>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			
-      
-
-			<!-- 다음 페이지로 -->
-			<button onclick="location.href='${ path }/gym/list?page=${ pageInfo.nextPage }'">&gt;</button>
-
-			<!-- 맨 끝으로 -->
-			<button onclick="location.href='${ path }/gym/list?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
+  		</div>
+  	<div style="height: 500px; "></div>
+  <div style="height: 0px; ">
+		  <div id="pageBar" style="height: 10px;">
+		  <br><br> <br><br>
+					<!-- 맨 처음으로 -->
+					<button onclick="location.href='${ path }/gym/list?page=1'">&lt;&lt;</button>
+		
+					<!-- 이전 페이지로 -->
+					<button onclick="location.href='${ path }/gym/list?page=${ pageInfo.prevPage }'">&lt;</button>
+		
+					<!--  12개 페이지 목록 -->
+					<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
+						<c:choose>
+							<c:when test="${ status.current == pageInfo.currentPage }">
+								<button disabled>${ status.current }</button>
+							</c:when>
+							<c:otherwise>
+								<button onclick="location.href='${ path }/gym/list?page=${ status.current }'">${ status.current }</button>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					
+		
+					<!-- 다음 페이지로 -->
+					<button onclick="location.href='${ path }/gym/list?page=${ pageInfo.nextPage }'">&gt;</button>
+		
+					<!-- 맨 끝으로 -->
+					<button onclick="location.href='${ path }/gym/list?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
+				</div>
 		</div>
-  </div>
     </section>
+    <br/><br/><br/><br/>
      <script>
     $(function(){
    		/* 전체클릭 */
@@ -524,5 +598,5 @@
     	}
       
     </script>
-    
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/><br/>
 	<jsp:include page="/views/common/footer.jsp" />

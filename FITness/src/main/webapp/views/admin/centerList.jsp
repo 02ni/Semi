@@ -328,13 +328,25 @@
         color: white;  
         }
     
+    
+    	a {
+       	
+       	text-decoration : none;
+       	color : black;
+       	
+       	}
+       	
+       	a:hover {
+       		color : silver;
+       	}
+       	
     </style>
 </head>
 <body>
     <div class="wrap">
         <div id="header">
             <div id="header1"> 
-            <h1 align="center">FITness Admin</h1>
+            <img src="${ path }/resources/images/logotext.png" height="100px" align="center">
             </div>
             
             <div id="header3">
@@ -374,8 +386,8 @@
                     <td width="100">대표 연락처</td>
                     <td>대표 이메일</td>
                     <td>센터 주소</td>
-                    <td>판매 여부</td>
-                    <td>센터 등록일</td>
+                    <td width="70">판매 여부</td>
+                    <td>이용권 여부</td>
                     
                   
                 </tr>

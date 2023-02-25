@@ -341,6 +341,16 @@
         color: white;   
         }
 
+       	a {
+       	
+       	text-decoration : none;
+       	color : black;
+       	}
+       
+       a:hover {
+       		color : silver;
+       	}
+       
        
     </style>
 </head>
@@ -348,7 +358,8 @@
     <div class="wrap">
         <div id="header">
             <div id="header1"> 
-            <h1 align="center">FITness Admin &nbsp;&nbsp; <span><button onclick="location.href='${ path }'">관리자페이지나가기</button></span></h1>
+        <a href="${ path }/"><img src="${ path }/resources/images/logotext.png" height="100px" align="center"></a>
+
             </div>
             
             <div id="header3">

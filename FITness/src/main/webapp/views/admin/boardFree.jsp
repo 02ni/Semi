@@ -25,8 +25,8 @@
         body {
             font-family: 'Noto Sans', sans-serif;
         }
-        div * {
-          	 border: 2px solid red; 
+        div {
+          	 
             box-sizing: border-box;
         }
         .wrap{
@@ -515,21 +515,26 @@
      
      
     
-table> tbody >  tr {
+		table> tbody >  tr {
 			height : 30px;
-		
-		
 		}
      
-
-
+		a {
+       	text-decoration : none;
+       	color : black;
+       	}
+       	
+       	a:hover {
+       		color : silver;
+       	}
+       	
     </style>
 </head>
 <body>
     <div class="wrap">
         <div id="header">
             <div id="header1"> 
-            <h1 align="center">FITness Admin</h1>
+            <img src="${ path }/resources/images/logotext.png" height="100px" align="center">
             </div>
             
             <div id="header3">
@@ -600,7 +605,10 @@ table> tbody >  tr {
              <c:forEach var="board" items="${ list }">
                 <tr>
                     <td>${ board.no }</td>
-                    <td>${ board.title }</td>
+                    <td><a href="${ path }/board/view?no=${ board.no }">
+                    ${ board.title }</a>
+                    </td>
+                    
                     <td>${ board.writerName }</td>
                     <td>${ board.createDate }</td>
                     <td>${ board.readCount }</td>

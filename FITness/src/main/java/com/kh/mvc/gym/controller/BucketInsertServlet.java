@@ -27,6 +27,7 @@ public class BucketInsertServlet extends HttpServlet {
     	int result = 0;
     	int voucher = 0;
     	int memberNo = 0;
+    	int gymNo = 0;
     	//로그인체크
     	HttpSession session = request.getSession(false);
 		Member loginMember = (session == null) ? null : (Member) session.getAttribute("loginMember");
@@ -36,16 +37,16 @@ public class BucketInsertServlet extends HttpServlet {
 			
 			
 			memberNo = loginMember.getNo();
-			
+			gymNo = Integer.parseInt(request.getParameter("gymno"));
 				voucher = Integer.parseInt(request.getParameter("voucher"));
 				result = new GymService().saveCart(voucher, memberNo);
 				
 			if(result > 0) {
 				request.setAttribute("msg", "장바구니에 담겼습니다.");
-				request.setAttribute("location", "/gym/detail?gym=" + memberNo);
+				request.setAttribute("location", "/gym/detail?gym=" + gymNo);
 			} else {
 				request.setAttribute("msg", "다시 담아주세요.");
-				request.setAttribute("location", "/gym/detail?gym=" + memberNo);
+				request.setAttribute("location", "/gym/detail?gym=" + gymNo);
 			}
 		
 		

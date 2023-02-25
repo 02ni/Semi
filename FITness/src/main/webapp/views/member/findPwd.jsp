@@ -63,9 +63,12 @@ transform: translate(-50%);
                 <div class="write_form">
           
                     <div><h4>가입시 입력한 아이디를 입력하세요</h4></div>
+                    
                     <div class="write_view login_view">
                         <input type="text" name="id" id="id" size="20" placeholder="아이디를 입력해주세요." value="">
                     </div>
+                    
+                    
                     <div>
 <!--                     	<input type="email" name="email" id="email" size ="20" placeholder="이메일을 입력해주세요." value=""> -->
                     </div>
@@ -73,7 +76,9 @@ transform: translate(-50%);
                     <br><br>
                     <div id="password"> </div>
                       <button id="login_join">비밀번호 찾기</button>
+                   
                     </div>
+                    
                 </div>
                 
         </div>

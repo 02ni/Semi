@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.mvc.admin.model.service.AdminService;
-import com.kh.mvc.board.model.service.BoardService;
 import com.kh.mvc.member.model.vo.Member;
 import com.kh.mvc.qna.model.vo.QnaReply;
 
@@ -41,6 +40,7 @@ public class AdminQnaReplyServlet extends HttpServlet {
 		int qnaboardNo = Integer.parseInt(request.getParameter("qnaboardNo"));
 		
 		System.out.println(qnaboardNo);
+		
 		String content = request.getParameter("content");
 		
 		if(loginMember != null) {
@@ -50,7 +50,7 @@ public class AdminQnaReplyServlet extends HttpServlet {
 		qnareply.setWriterNo(loginMember.getNo());
 		qnareply.setContent(content);
 		
-		//result = new BoardService().saveqnaReply(qnareply);
+		result = new AdminService().saveqnaReply(qnareply);
 		
 		
 		System.out.println(result);
@@ -59,18 +59,24 @@ public class AdminQnaReplyServlet extends HttpServlet {
 		if(result > 0) {
 			request.setAttribute("msg", "댓글 등록 성공");
 			request.setAttribute("location", "/qna/view?no=" + qnaboardNo);
+			
 		} else {
 			request.setAttribute("msg", "댓글 등록 실패");
 			request.setAttribute("location", "/qna/view?no=" + qnaboardNo);
-		}
-		} else {
+		} 
+		
+		
+		}else {
 			request.setAttribute("msg", "로그인 후 작성해 주세요.");
 			request.setAttribute("location", "/member/login");			
-			
-		}
-		response.sendRedirect(request.getContextPath() + "/qna/view?no=" + qnaboardNo);
-	}
-
-}
 		
+	
+	}
+//		response.sendRedirect(request.getContextPath() + "/qna/view?no=" + qnaboardNo);
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+	}
+		
+}
+
+
 

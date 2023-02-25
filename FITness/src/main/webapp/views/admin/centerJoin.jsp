@@ -253,7 +253,7 @@
     <div class="wrap">
         <div id="header">
             <div id="header1"> 
-            <h1 align="center">FITness Admin</h1>
+            <img src="${ path }/resources/images/logotext.png" height="100px" align="center">
             </div>
             
             <div id="header3">
@@ -287,13 +287,7 @@
                         </td> 			
                     </tr>
 
-                    <tr>
-						
-						<th height="80">첨부파일</th>
-						<td>
-							<input type="file" name="upfile">
-						</td>
-					</tr>
+                 
 
                     <tr>
                         <th height="80">카테고리</th>
@@ -327,7 +321,7 @@
                     <tr>
                         <th>센터 연락처</th>
                         <td>
-                            <input type="tel" placeholder="FITness@FITness.com" name="gymPhone" id="gymPhone"  size="40">	
+                            <input type="tel" placeholder="-없이 입력해주세요" name="gymPhone" id="gymPhone"  size="40">	
                     
                         </td> 			
                     </tr>

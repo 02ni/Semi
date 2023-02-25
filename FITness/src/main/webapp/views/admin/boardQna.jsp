@@ -497,14 +497,23 @@
         color: white;   
         }
         
-    
+    		a {
+       	
+       	text-decoration : none;
+       	color : black;
+       	}
+       	
+       	a:hover {
+       		color : silver;
+       	}
+    	
     </style>
 </head>
 <body>
     <div class="wrap">
         <div id="header">
             <div id="header1"> 
-            <h1 align="center">FITness Admin</h1>
+            <img src="${ path }/resources/images/logotext.png" height="100px" align="center">
             </div>
             
             <div id="header3">
@@ -573,17 +582,20 @@
             <tbody>
             <c:if test="${ not empty list }">
              <c:forEach var="qnaboard" items="${ list }">
-                <tr>
+                <tr></tr>
                     <td>${qnaboard.no }</td>
-                    <td>${qnaboard.title }</td>
+                    <td><a href="${ path }/qna/view?no=${ qnaboard.no }">
+                    ${qnaboard.title }
+                    </a></td>
                     <td>${qnaboard.writerName }</td>
                     <td>${qnaboard.createDate }</td>
                     <td>${qnaboard.readCount }</td> 
                     <c:if test="${ qnaboard.secretCheck.equals('Y')}">
                     <td> <button id ="update" onclick="location.href='${ path }/qna/view?no=${qnaboard.no }'">답글 쓰기</button> </td>
                     </c:if>
-                    
-                   
+                    <c:if test="${ qnaboard.replyCount > 1}">
+                    <td> 답변 완료 </td>
+                  	</c:if>
                 
                   
                 </c:forEach> 

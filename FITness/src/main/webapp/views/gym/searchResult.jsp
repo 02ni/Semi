@@ -55,7 +55,6 @@
         }
         /* 센터 목록 */
         #listarea{
-        
         margin: 25px;
         height: 100%;
         }
@@ -69,8 +68,16 @@
             width: 30%;
             height: 270px;
             float:left;
-            border: 2px solid rgb(255, 246, 246);
-            background-color: rgb(248, 237, 224);
+            border: 3px solid rgb(255,151,0);
+        }
+        .layout>div:hover{
+            padding: 20px;
+            margin: 10px;
+            width: 30%;
+            height: 270px;
+            float:left;
+            border: 3px solid rgb(255,151,0);
+            background-color: rgb(255,151,0, 0.7);
         }
         .listtbl{
             width: 100%;
@@ -81,7 +88,7 @@
             font-weight: 700;
         }
         .cate{
-            color: red;
+            color: rgb(255,151,0);
             font-weight: 700;
         }
 </style>
@@ -98,29 +105,28 @@
             <span id="sortspan">검색된센터 ${ count }개</span>
         </div>
 
-        <div id="listarea" class="sort">
-            <div class="layout">
+             <div id="listarea" class="sort">
+            <div class="layout" id="container">
                 <c:if test="${ empty list }">
                     <p>조회된 목록이 없습니다.</p>
                 </c:if>
                 <c:if test="${ not empty list }">
-                    <c:forEach var="gym" items="${ list }">
-                        <div onclick="location.href ='${ path }/gym/detail?gym=${ gym.no }'" style="cursor:pointer;" >
+                    <c:forEach var="gym" items="${ list }" >
+                        <div class="item" onclick="location.href ='${ path }/gym/detail?gym=${ gym.no }'" style="cursor:pointer;" >
                             <table class="listtbl">
                                 <tr>
                                     <td class="gymtitle" colspan="2">${ gym.gymName }</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">${ gym.address }</td>
+                                    <td colspan="2" style="color:rgb(150,150,150);">${ gym.address }</td>
                                 </tr>
                                 <tr>
-                                    <td>3개월이용권</td>
+                                    <td><p>FIT회원가<br><sub>3개월기준</sub></td>
                                     
-                                    <td style="font-size:15pt;">
-                                    <fmt:parseNumber var="price" integerOnly="true" value="${ gym.price*3*0.95}" />
-               			 			<fmt:formatNumber value="${price}" pattern="#,###"/>원	
+                                    <td style="font-size:15pt; color:red; font-weight:800; ">
+                                    <fmt:parseNumber var="price" integerOnly="true" value="${ gym.price*3*0.95}" pattern="#,###"/>
+               			 			<fmt:formatNumber value="${price}" pattern="#,###"/>원
                                     </td>
-                                   
                                 </tr>
                                 <tr>
                                     <td colspan="2">
@@ -140,7 +146,8 @@
         </div>
 
     </section>
-     
-    
-    
-	<jsp:include page="/views/common/footer.jsp" />
+     </div> 
+     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/><br/>
+	
+    </body>
+</html>

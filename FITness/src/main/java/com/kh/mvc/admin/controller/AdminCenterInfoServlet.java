@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.mvc.admin.model.service.AdminService;
+import com.kh.mvc.gym.model.service.GymService;
 import com.kh.mvc.gym.model.vo.Gym;
 import com.kh.mvc.member.model.vo.Member;
 
@@ -32,6 +33,7 @@ public class AdminCenterInfoServlet extends HttpServlet {
 			request.setAttribute("location", "/member/login");
 			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		}
+		
 		
 		
 		

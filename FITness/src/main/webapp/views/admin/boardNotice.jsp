@@ -25,7 +25,7 @@
             font-family: 'Noto Sans', sans-serif;
         }
         div {
-             border: 2px solid red;
+          
             box-sizing: border-box;
         }
         .wrap{
@@ -487,6 +487,16 @@
 		
 		}
      
+     
+     		a {
+       	
+       	text-decoration : none;
+       	color : black;
+       	}
+       	
+       	a:hover {
+       		color : silver;
+       	}
     
     </style>
 </head>
@@ -494,7 +504,7 @@
     <div class="wrap">
         <div id="header">
             <div id="header1"> 
-            <h1 align="center">FITness Admin</h1>
+            <img src="${ path }/resources/images/logotext.png" height="100px" align="center">
             </div>
             
             <div id="header3">
@@ -542,7 +552,7 @@
                     </div>
                 </div>
                 <div id="content4_2">
-                    <h3>NOTICE &nbsp;&nbsp; <span><button id="update">게시글 작성</button></span>  &nbsp;&nbsp; <span>게시글 수 : &nbsp; ${ listCount }</span></h3>
+                    <h3>NOTICE &nbsp;&nbsp; <span><button id="update"onclick="location.href='${path}/notice/write'">게시글 작성</button></span>  &nbsp;&nbsp; <span>게시글 수 : &nbsp; ${ listCount }</span></h3>
                 </div>
             </div>
             <div id="content2">
@@ -564,7 +574,9 @@
              <c:forEach var="notice" items="${ list }">
                 <tr>
                     <td>${notice.no }</td>
-                    <td>${notice.title }</td>
+                    <td><a href="${ path }/notice/view?no=${ notice.no }">
+                    ${notice.title }
+                    </a></td>
                     <td>${notice.writerName }</td>
                     <td>${notice.createDate }</td>
                     <td>${notice.readCount }</td>

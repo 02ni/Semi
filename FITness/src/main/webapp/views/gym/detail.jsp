@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 <jsp:include page="/views/common/header.jsp" />
 <style>
@@ -29,7 +29,7 @@
 	float: left;
 	}
 	#gymbar{
-		background-color : #FFFAFA;
+		border: 6px solid rgb(255,151,0, 0.5);
 	    height: 80px;
 	    margin: 10px 0px 10px 0;
 	}
@@ -84,6 +84,13 @@
 	    text-align: center;
 	    width: 100%;
 	}
+	#btn-insert{
+	    background: rgb(255,151,0);
+		border: none;
+		color: white;
+		height: 40px;
+		width: 80px;
+	}
 	#riviewtext{
 		width: 900px;
 	}
@@ -91,7 +98,7 @@
 	    width: 450px;
 	}
 	.detail{
-		background-color: #FFFAFA;
+		border: 6px solid rgb(255,151,0, 0.5);
 		padding : 5px 30px;
 	}
 	a {
@@ -110,8 +117,10 @@
 		 clear:both; } 
 		       
     table#tbl-comment tr{background:white;}
-    table#tbl-comment input.btn-delete{display:none;}   
-    table#tbl-comment button.btn-update{display:none;}         
+    table#tbl-comment input.btn-delete{display:none;
+		 background: rgb(255,151,0);}   
+    table#tbl-comment button.btn-update{display:none;
+		 background: rgb(255,151,0);}         
     table#tbl-comment tr:hover {background:lightgray;}
     table#tbl-comment tr:hover input.btn-delete{display:inline;}
     table#tbl-comment tr:hover button.btn-update{display:inline;}
@@ -127,7 +136,7 @@
 }
 
 .dbtn {
-    width: 200px;
+    width: 190px;
     font-size: 16px;
     font-weight: 600;
     color: #fff;
@@ -165,11 +174,21 @@
     background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
     box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
 }
-#like-btn2 {
-   background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 51%, #ffecd2 100%);
-   color: red;
-   font-size: 20px;
-   width:80px;
+#like-btn2 {	
+ background-color: #e74c3c;
+  width: 100px;
+  font-weight: 600;
+  text-align: center;
+  height: 50px;
+  color: #FFF;
+  font-size: 15pt;
+  border-radius: 5px;
+   margin: 0px;
+   padding: 0px;
+   border: none;
+   
+}
+form {
 }
 </style>
 			
@@ -205,14 +224,25 @@
 					
                     <p>${ gym.address }</p>
                     <p>전화 ${ gym.gymPhone }</p>
-                    <p>좋아요 <span style="color: red">♥ (${ favoriteCount })</span></p>
-                   
+                    <p>좋아요 
+                   <c:if test="${ (empty loginMember) or (favorite == 0) }">
+	                        <form action="${ path }/favorite/update" method="POST" class="like-form">
+									&nbsp;&nbsp;<button type="submit"  id="like-btn2" >♡</button><span style="color:red">  (${ favoriteCount })</span>	
+				    				<input type="hidden" name="gymNo" value="${ gym.no }">
+				    		</form>
+                        </c:if>
+                        
+                        <c:if test="${ (not empty loginMember) and (favorite != 0) }">
+	                        <form action="${ path }/favorite/delete" method="POST" class="like-form">
+								&nbsp;&nbsp;<button type="submit"  id="like-btn2">♥</button>	    			
+	                      		<input type="hidden" name="gymNo" value="${ gym.no }"><span style="color:red">  (${ favoriteCount })</span>	
+				    		</form>
+			    		</c:if></p>
                     <form name="buy" id="buy"  method="POST" >
                     		
                     	<!-- 	<span>이용권</span> -->
-                          		<label for="opselect">이용권</label> <br>
-                          		<c:if test="${not empty gym.vouchers}" >    
-                             			<select name="voucher" id="opselect" onchange="create_Tag();" >
+                          		<label for="opselect">이용권</label> <c:if test="${not empty gym.vouchers}" >    
+                             			<select name="voucher" id="opselect" onchange="create_Tag();" style="width:400px; height: 30px;">
 	                                 <c:forEach var="opvoucher" items="${ gym.vouchers }">
 		                                <option value="${ opvoucher.voucherNo }">${ opvoucher.cate }</option>
                                 	</c:forEach>
@@ -243,32 +273,20 @@
                             <button id="btn-close" type="button" >X</button>
                             </div> -->
                             <input type="hidden" name="gymno" value="${ gym.no }">
-                            <br>
+                            <br> <br>
                             <input type="submit" class="dbtn" id="cart-btn" value="장바구니" formaction="${ path }/bucket/insert">
                             <input type="submit" class="dbtn" id="buy-btn" value="바로구매" formaction="${ path }/test/buy">
  
                      </form>
                     <br>
-                     	<c:if test="${ (empty loginMember) or (favorite == 0) }">
-	                        <form action="${ path }/favorite/update" method="POST" class="like-form">
-				    				<input type="hidden" name="gymNo" value="${ gym.no }">
-									<button type="submit"  class="dbtn" id="like-btn2" >♡</button>	    			
-				    		</form>
-                        </c:if>
-                        
-                        <c:if test="${ (not empty loginMember) and (favorite != 0) }">
-	                        <form action="${ path }/favorite/delete" method="POST" class="like-form">
-	                      		<input type="hidden" name="gymNo" value="${ gym.no }">
-								<button type="submit"  class="dbtn" id="like-btn2">♥</button>	    			
-				    		</form>
-			    		</c:if>
+                     	
                 </div>
             </div>
 
             <div id="gymbar">
                 <ul id="gymmenu">
                   <li><h2><a href="#detail1" style="line-height: 0px">이용권 정보</a></h2></li>
-                  <li><h2><a href="#detail4">위치</a></h2></li>
+                  <li> <h2><a href="#detail4">위치</a></h2></li>
                   <li><h2><a href="#detail5">리뷰(${ reviewCount })</a></h2></li>
                 </ul>
             </div>
@@ -317,6 +335,7 @@
                	</table>
                 
                 </c:forEach>
+                <br>
             </div>
             <div id="detail3" class="detail">
                 <h1>운영시간</h1>
@@ -341,7 +360,7 @@
                 <div id="comment-container">
                     
                         <form id="insert-review" action="${ path }/gym/review" method="POST" >
-                            <select name="grade" id="grade" style="color: rgba(236, 202, 4, 0.815)">
+                            <select name="grade" id="grade" style="color: rgba(236, 202, 4, 0.815);">
                                 <option value="5" selected>★★★★★</option>
                                 <option value="4">★★★★☆</option>
                                 <option value="3">★★★☆☆</option>
