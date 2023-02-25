@@ -40,4 +40,6 @@ public class Notice {
 	private String writerName;
 	
 	private String secretCheck;     // 비밀글 여부
+	
+	private String fix; 
 }

@@ -39,9 +39,6 @@ public class AdminBoardQnaServlet extends HttpServlet {
 		}
 		
 		
-		
-		
-		
 		int page = 0;
 		int listCount = 0;
 		int boardCount = 0; 

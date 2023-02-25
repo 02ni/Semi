@@ -37,11 +37,11 @@ public class NoticeDao {
 		return count;
 	}
 
-	public List<Notice> findAll(Connection connection, PageInfo pageInfo) {
+	public List<Notice> findAll(Connection connection, PageInfo pageInfo, int fix) {
 		List<Notice> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "SELECT RNUM, NO, TITLE, ID, CREATE_DATE, ORIGINAL_FILENAME, READCOUNT, STATUS, REPLYCOUNT, SECRET_CHECK "
+		String query = "SELECT RNUM, NO, TITLE, ID, CREATE_DATE, ORIGINAL_FILENAME, READCOUNT, STATUS, REPLYCOUNT, SECRET_CHECK, FIX "
 					 + "FROM ("
 					 +    "SELECT ROWNUM AS RNUM, "
 					 +           "NO, "
@@ -52,7 +52,8 @@ public class NoticeDao {
 					 +  		 "READCOUNT, "
 					 +     		 "STATUS, "
 					 +     		 "REPLYCOUNT, "
-					 +     		 "SECRET_CHECK "
+					 +     		 "SECRET_CHECK, "
+					 +     		 "FIX "
 					 + 	 "FROM ("
 					 + 	    "SELECT B.NO, "
 					 + 			   "B.TITLE, "
@@ -62,10 +63,11 @@ public class NoticeDao {
 					 + 			   "B.READCOUNT, "
 					 + 	   		   "B.STATUS, "
 					 +     		   "B.REPLYCOUNT, "
-					 +     		   "B.SECRET_CHECK "
+					 +     		   "B.SECRET_CHECK, "
+					 +     		   "B.FIX "
 					 + 		"FROM NOTICE B "
 					 + 		"JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
-					 + 		"WHERE B.STATUS = 'Y' ORDER BY B.NO DESC"
+					 + 		"WHERE B.STATUS = 'Y' ORDER BY b.fix desc, B.NO desc "
 					 + 	 ")"
 					 + ") WHERE RNUM BETWEEN ? and ?";
 		
@@ -90,6 +92,7 @@ public class NoticeDao {
 				notice.setStatus(rs.getString("STATUS"));
 				notice.setReplyCount(rs.getInt("REPLYCOUNT"));
 				notice.setSecretCheck(rs.getString("SECRET_CHECK"));
+				notice.setFix(rs.getString("FIX"));
 				
 				list.add(notice);
 			}
@@ -152,7 +155,7 @@ public class NoticeDao {
 	public int insertBoard(Connection connection, Notice notice) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "INSERT INTO NOTICE VALUES(SEQ_NOTICE_NO.NEXTVAL,?,?,?,?,?,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+		String query = "INSERT INTO NOTICE VALUES(SEQ_NOTICE_NO.NEXTVAL,?,?,?,?,?,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		
 		try {
 			pstmt = connection.prepareStatement(query);

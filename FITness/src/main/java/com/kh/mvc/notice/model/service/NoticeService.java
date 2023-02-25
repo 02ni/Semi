@@ -26,11 +26,11 @@ public class NoticeService {
 		return count;
 	}
 
-	public List<Notice> getBoardList(PageInfo pageInfo) {
+	public List<Notice> getBoardList(PageInfo pageInfo, int fix) {
 		List<Notice> list = null;
 		Connection connection = getConnection();
 		
-		list = new NoticeDao().findAll(connection, pageInfo);
+		list = new NoticeDao().findAll(connection, pageInfo, fix);
 		
 		close(connection);
 		
@@ -120,5 +120,7 @@ public class NoticeService {
 		
 		return NoticeBoard;
 	}
+	
+
 
 }

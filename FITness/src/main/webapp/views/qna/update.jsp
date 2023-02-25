@@ -43,8 +43,8 @@
 </style>
 <section id="content">
 	<div id='board-write-container'>
-		<h2>게시판 수정</h2>
-		<form action="${ path }/board/update" method="POST" enctype="multipart/form-data">
+		<h2>1:1 문의게시판 수정</h2>
+		<form action="${ path }/qna/update" method="POST" enctype="multipart/form-data">
 			<!-- 사용자에게 보이진 않지만, 같이 보내는 값 -->
 			<input type="hidden" name="no" value="${ board.no }">
 		

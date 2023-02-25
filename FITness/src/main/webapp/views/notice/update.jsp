@@ -5,6 +5,7 @@
 
 <jsp:include page="/views/common/header.jsp" />
 
+
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -30,74 +31,61 @@
   <script src="${pageContext.request.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
 
+<style>
+    h3 { text-align: center; }
+</style>
+
 
 <section id="content">
     <div class="formBox">
-	
-	<h1></h1>
-	
-        <h3>공지사항</h3>
-		<form action="${ path }/notice/write" method="POST" enctype="multipart/form-data">
+
+	<h2></h2>
+
+		<h3>공지사항 게시글 수정</h3>
+		<form action="${ path }/notice/update" method="POST" enctype="multipart/form-data">
+			<!-- 사용자에게 보이진 않지만, 같이 보내는 값 -->
+			<input type="hidden" name="no" value="${ board.no }">
+		
 			<table id='tbl-board'>
-				<colgroup>
-                    <col style="width:150px">
-                    <col style="width:850px">
-                </colgroup>
 				<tr>
 					<th>제목</th>
-					<td><input type="text" name="title" id="title" style="width:780px;"></td>
+					<td><input type="text" name="title" id="title"
+						value ="${ board.title }"></td>
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td>${ loginMember.id }</td>
+					<td>${ board.writerId }</td>
 				</tr>
 				<tr>
 					<th>첨부파일</th>
-					<td><input type="file" name="upfile"></td>
+					<td>
+						<input type="file" name="upfile">
+						<c:if test="${ not empty board.originalFileName }">
+							<span> ${ board.originalFileName }</span>
+						</c:if>
+					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><textarea name="content" cols="50" rows="15" class="summernote"></textarea></td>
+					<td><textarea name="content" id="summernote" cols="40" rows="15" >${ board.content }</textarea></td>
 				</tr>
 			</table>
-				<p>
-				<input type="checkbox" name="input_check" value='1' id="input_check" onchange="input_check(this)" value="${notice.fix}"/>
-				<label for="input_check">공지사항 상단고정</label>
-				</p>
-			
-            <div class="btns">
-                <input type="submit" value="등록" id="join">
-                <input type="reset" value="취소" id="cancel">
-            </div>
+				<tr>
+					<th colspan="2">
+						<input type="submit" value="수정">
+						<input type="button" onclick="location.replace('${path}/board/list')" value="목록으로">
+					</th>
+				</tr>
 		</form>
 	</div>
 
 </section>
 
-<style>.selected{text-decoration:line-through;font-weight:700;background-color:yellow}</style>
-
-<!-- 서머노트용 스크립트 -->
 <script>
-$('.summernote').summernote({
-	  height: 150,
+$('#summernote').summernote({
+	  height: 450,
 	  lang: "ko-KR"
 	});
-
-$(document).ready(function() {
-	$('#input_check').on('click', function() {
-	if ( $(this).prop('checked') ) {
-		$('{ notice.fix }').val('1');
-
-    	//$('#input_check').val(1);
-    	$(this).parent().addClass(1);
-        //location.replace('${ path }/notice/list');
-        
-      } else {
-        $(this).parent().removeClass("selected");
-      }
-    });
-    
-});
 </script>
 
-<jsp:include page="/views/common/footer.jsp" /> 
+<jsp:include page="/views/common/footer.jsp" />

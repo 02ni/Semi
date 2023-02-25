@@ -102,6 +102,20 @@
             color: rgb(79, 79, 79);
 
         }	
+        
+        
+     	#input_check {
+        height: 30px;
+/*      padding: 10px; */
+        box-sizing: border-box;
+        width: 100%;
+        /* margin-top: 10px; */
+        background-color: teal;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;  
 	
 	
 </style>
@@ -145,6 +159,7 @@
 		<table id="tbl-board" class="table table-hover table-striped text-center">
 			<tr>
 				<th>번호</th>
+				<th></th>
 				<th width = 50%>제목</th>
 				<th>작성자</th>
 				<th>작성일</th>
@@ -162,10 +177,10 @@
 				<c:forEach var="board" items="${ list }">
 					<tr>
 						<td>${ board.rowNum }</td>
+						<td><c:if test="${ board.fix != 0 }"><button id="input_check" class="selected">주요 공지</button></c:if></td>
 						<td>
-							
 							<a href="${ path }/notice/view?no=${ board.no }">
-								<span>[공지]</span> ${ board.title }
+								${ board.title }
 							</a> 
 						</td>
 						<td>${ board.writerId }</td>
@@ -215,8 +230,13 @@
 				 </ul>
 			</nav>
 		</div>
-	</div>
 		
+	</div>
+	
+	<!-- <style>.selected{font-weight:700;background-color:yellow}</style> -->
+	
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </section>

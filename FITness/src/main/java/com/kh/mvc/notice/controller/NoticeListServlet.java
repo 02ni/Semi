@@ -25,7 +25,9 @@ public class NoticeListServlet extends HttpServlet {
     	int page = 0;
 		int listCount = 0;
 		PageInfo pageInfo = null;
+		int fix = 0;
 		List<Notice> list = null;
+		
 		
 		try {
 			page = Integer.parseInt(request.getParameter("page"));
@@ -35,7 +37,7 @@ public class NoticeListServlet extends HttpServlet {
 		
 		listCount = new NoticeService().getBoardCount();
 		pageInfo = new PageInfo(page, 10, listCount, 10);
-		list = new NoticeService().getBoardList(pageInfo);
+		list = new NoticeService().getBoardList(pageInfo, fix);
 		
 		System.out.println(list);
 		
