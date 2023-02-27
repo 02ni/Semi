@@ -197,7 +197,7 @@
 			<nav aria-label="...">
   				<ul class="pagination justify-content-center">
     				<li class="page-item">
-      					<a class="page-link" href='${ path }/qna/list?page=${ pageInfo.prevPage }'>previous</a>
+      					<a class="page-link" href='${ path }/qna/list?no=${ loginMember.no }?page=${ pageInfo.prevPage }'>previous</a>
    					 </li>
    					 
    					 <!--  10개 페이지 목록 -->
@@ -210,7 +210,7 @@
 							</c:when>
 							<c:otherwise>
 								<li class="page-item">
-									<a class="page-link" href='${ path }/qna/list?page=${ status.current }'>${ status.current }</a>
+									<a class="page-link" href='${ path }/qna/list?no=${ loginMember.no }?page=${ status.current }'>${ status.current }</a>
 								</li>
 							</c:otherwise>
 						</c:choose>
@@ -218,7 +218,7 @@
 					
 					
     				<li class="page-item">
-      					<a class="page-link" href='${ path }/qna/list?page=${ pageInfo.nextPage }'>next</a>
+      					<a class="page-link" href='${ path }/qna/list?no=${ loginMember.no }?page=${ pageInfo.nextPage }'>next</a>
 				    </li>
 				 </ul>
 			</nav>

@@ -28,10 +28,10 @@ public class QnaUpdateServlet extends HttpServlet {
 		Member loginMember = (session == null) ? null : (Member) session.getAttribute("loginMember");
 		
 		if(loginMember != null) {
-			QnaBoard board = new QnaService().getBoardByNo(Integer.parseInt(request.getParameter("no")), true);
+			QnaBoard qnaboard = new QnaService().getBoardByNo(Integer.parseInt(request.getParameter("no")), true);
 			
-			if(board != null && loginMember.getId().equals(board.getWriterId())) {
-				request.setAttribute("board", board);
+			if(qnaboard != null && loginMember.getId().equals(qnaboard.getWriterId())) {
+				request.setAttribute("board", qnaboard);
 				request.getRequestDispatcher("/views/qna/update.jsp").forward(request, response);
 			} else {
 				request.setAttribute("msg", "잘못된 접근입니다.");
@@ -65,35 +65,35 @@ public class QnaUpdateServlet extends HttpServlet {
 //	    	MultipartRequest mr = new MultipartRequest(request, path, maxSize, encoding, new DefaultFileRenamePolicy());
 	    	MultipartRequest mr = new MultipartRequest(request, path, maxSize, encoding, new FileRename());
 	    	
-			QnaBoard board = new QnaService().getBoardByNo(Integer.parseInt(mr.getParameter("no")), true);
+			QnaBoard qnaboard = new QnaService().getBoardByNo(Integer.parseInt(mr.getParameter("no")), true);
 			
-			if(board != null && loginMember.getId().equals(board.getWriterId())) {
-	    		board.setTitle(mr.getParameter("title"));
-	    		board.setContent(mr.getParameter("content"));
+			if(qnaboard != null && loginMember.getId().equals(qnaboard.getWriterId())) {
+	    		qnaboard.setTitle(mr.getParameter("title"));
+	    		qnaboard.setContent(mr.getParameter("content"));
 	    		
 	    		String originalFileName = mr.getOriginalFileName("upfile");
 	    		String filesystemName = mr.getFilesystemName("upfile");
 	    		
 	    		if(originalFileName != null && filesystemName != null) {
 	    			// 기존에 업로드된 파일 삭제
-	    			File file = new File(path + "/" + board.getRenamedFileName());
+	    			File file = new File(path + "/" + qnaboard.getRenamedFileName());
 	    			
 	    			if(file.exists()) {
 	    				file.delete();
 	    			}
 	    			
-	    			board.setOriginalFileName(originalFileName);
-	    			board.setRenamedFileName(filesystemName);
+	    			qnaboard.setOriginalFileName(originalFileName);
+	    			qnaboard.setRenamedFileName(filesystemName);
 	    		}
 	    		
-	    		int result = new QnaService().save(board);
+	    		int result = new QnaService().save(qnaboard);
 	    		
 	    		if(result > 0) {
 	    			request.setAttribute("msg", "게시글 수정 성공");
-	    			request.setAttribute("location", "/qna/view?no=" + board.getNo());
+	    			request.setAttribute("location", "/qna/view?no=" + qnaboard.getNo());
 	    		} else {
 	    			request.setAttribute("msg", "게시글 수정 실패");
-	    			request.setAttribute("location", "/qna/update?no=" + board.getNo());	    			
+	    			request.setAttribute("location", "/qna/update?no=" + qnaboard.getNo());	    			
 	    		}
 	    	} else {
 				request.setAttribute("msg", "잘못된 접근입니다.");

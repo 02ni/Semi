@@ -29,7 +29,7 @@
             <div id="section2">
                 <table  id="btn_2">
                     <tr>
-                        <td><input type="button" onclick="location.href='${ path }/basket'" value="장바구니로 이동" id="my_btn"></td>
+                        <td><input type="button" onclick="location.href='${ path }/purchaseHistory'" value="구매내역으로 이동" id="my_btn"></td>
                     </tr>
                 </table>
             </div>

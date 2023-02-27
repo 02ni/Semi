@@ -55,7 +55,6 @@ public class QnaViewServlet extends HttpServlet {
     	}
     	
     	qnaboard = new QnaService().getBoardByNo(no, hasRead);
-    
     	qnaboard = new QnaService().getQnaBoardReplyByNo(no, hasRead);
 
     	System.out.println(qnaboard);

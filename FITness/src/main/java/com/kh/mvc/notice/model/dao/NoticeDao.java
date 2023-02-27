@@ -67,7 +67,7 @@ public class NoticeDao {
 					 +     		   "B.FIX "
 					 + 		"FROM NOTICE B "
 					 + 		"JOIN MEMBER M ON(B.WRITER_NO = M.NO) "
-					 + 		"WHERE B.STATUS = 'Y' ORDER BY b.fix desc, B.NO desc "
+					 + 		"WHERE B.STATUS = 'Y' ORDER BY b.FIX desc, B.NO desc "
 					 + 	 ")"
 					 + ") WHERE RNUM BETWEEN ? and ?";
 		

@@ -166,11 +166,11 @@
     outline: none;
 }
 
-#cart-btn {
+#cart-btn, #cart-btn2 {
     background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
     box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
 }
-#buy-btn {
+#buy-btn, #buy-btn2 {
     background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
     box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
 }
@@ -274,11 +274,16 @@ form {
                             </div> -->
                             <input type="hidden" name="gymno" value="${ gym.no }">
                             <br> <br>
+                           <c:if test="${ not empty loginMember}">
                             <input type="submit" class="dbtn" id="cart-btn" value="장바구니" formaction="${ path }/bucket/insert">
                             <input type="submit" class="dbtn" id="buy-btn" value="바로구매" formaction="${ path }/order/order1">
- 
+ 							</c:if>
                      </form>
-                    <br>
+                    <br><c:if test="${ empty loginMember}">
+                            <button class="dbtn" id="cart-btn2" >장바구니</button>
+                            <button class="dbtn" id="buy-btn2" >바로구매</button>
+ 							
+                           </c:if>
                      	
                 </div>
             </div>
@@ -416,6 +421,7 @@ form {
         </section>
 
 	<script>
+	$(document).ready(() => {
 			$('#reviewtext').on('focus', () => {
 				if(${ empty loginMember}) {
 					alert('로그인 후 이용해 주세요.')	;
@@ -423,8 +429,25 @@ form {
 					$('.mainlogin').focus();
 				}
 			});
+
+			$('#cart-btn2').on('click', () => {
+				if(${ empty loginMember}) {
+					alert('로그인 후 이용해 주세요.')	;
+					
+					$('.mainlogin').focus();
+				}
+			});
+			$('#buy-btn2').on('click', () => {
+				if(${ empty loginMember}) {
+					alert('로그인 후 이용해 주세요.')	;
+					 	
+					$('.mainlogin').focus();
+				}
+			});
 		 
-		 
+
+			
+	});
 	</script>
 		 
 <jsp:include page="/views/common/footer.jsp" />

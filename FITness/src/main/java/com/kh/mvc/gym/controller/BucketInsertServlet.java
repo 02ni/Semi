@@ -20,10 +20,6 @@ public class BucketInsertServlet extends HttpServlet {
     }
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
-	}
-    @Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	int result = 0;
     	int voucher = 0;
     	int memberNo = 0;
@@ -57,7 +53,10 @@ public class BucketInsertServlet extends HttpServlet {
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 		
-		
+	
 	}
-
+    @Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    }
 }

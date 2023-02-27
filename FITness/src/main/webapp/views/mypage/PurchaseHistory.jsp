@@ -89,7 +89,7 @@
 		<table id="tbl-board" class="table table-hover table-striped text-center">
 			<tr>
 				<th>품목</th>
-				<th width = 50%>업소명</th>
+				<th width = 50%>센터명</th>
 				<th>금액</th>
 				<th>결제방법</th>
 				<th>결제일</th>

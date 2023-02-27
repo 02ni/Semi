@@ -110,14 +110,14 @@
 		
 		
 		<table id="tbl-comment" class="se">
-	    	<c:forEach var="reply" items="${ board.replies }">
+	    	<c:forEach var="qnareply" items="${ qnaboard.replies }">
 	    
 	    	   	<tr class="level1">
 		    		<td>
-		    			<sub class="comment-writer">${ reply.writerId }</sub>
-		    			<sub class="comment-date">${ reply.createDate }</sub>
+		    			<sub class="comment-writer">${ qnareply.writerId }</sub>
+		    			<sub class="comment-date">${ qnareply.createDate }</sub>
 		    			<br>
-		    			<span>${ reply.content }</span>
+		    			<span>${ qnareply.content }</span>
 		    		</td>
 		    		<td>
 		    	

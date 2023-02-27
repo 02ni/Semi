@@ -55,19 +55,19 @@ public class QnaWriteServlet extends HttpServlet {
 //	    	MultipartRequest mr = new MultipartRequest(request, path, maxSize, encoding, new DefaultFileRenamePolicy());
 	    	MultipartRequest mr = new MultipartRequest(request, path, maxSize, encoding, new FileRename());
 	    	    	
-	    	QnaBoard board = new QnaBoard();
+	    	QnaBoard qnaboard = new QnaBoard();
 			
-	    	board.setWriterNo(loginMember.getNo());
+	    	qnaboard.setWriterNo(loginMember.getNo());
 			
-			board.setTitle(mr.getParameter("title"));
-			board.setContent(mr.getParameter("content"));
+			qnaboard.setTitle(mr.getParameter("title"));
+			qnaboard.setContent(mr.getParameter("content"));
 			
-			board.setRenamedFileName(mr.getFilesystemName("upfile"));
-			board.setOriginalFileName(mr.getOriginalFileName("upfile"));
+			qnaboard.setRenamedFileName(mr.getFilesystemName("upfile"));
+			qnaboard.setOriginalFileName(mr.getOriginalFileName("upfile"));
 			
-			System.out.println("rufufjfj"+board);
+			System.out.println("rufufjfj"+qnaboard);
 			
-			int result = new QnaService().save(board);
+			int result = new QnaService().save(qnaboard);
 			
 			if(result > 0) {
 				request.setAttribute("msg", "게시글 등록 성공");

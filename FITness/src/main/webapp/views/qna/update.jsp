@@ -46,17 +46,17 @@
 		<h2>1:1 문의게시판 수정</h2>
 		<form action="${ path }/qna/update" method="POST" enctype="multipart/form-data">
 			<!-- 사용자에게 보이진 않지만, 같이 보내는 값 -->
-			<input type="hidden" name="no" value="${ board.no }">
+			<input type="hidden" name="no" value="${ qnaboard.no }">
 		
 			<table id='tbl-board'>
 				<tr>
 					<th>제목</th>
 					<td><input type="text" name="title" id="title"
-						value ="${ board.title }"></td>
+						value ="${ qnaboard.title }"></td>
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td><input type="text" name="writer" value ="${ board.writerId }" readonly></td>
+					<td><input type="text" name="writer" value ="${ qnaboard.writerId }" readonly></td>
 				</tr>
 				<tr>
 					<th>첨부파일</th>
@@ -69,12 +69,12 @@
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><textarea name="content" cols="50" rows="15" >${ board.content }</textarea></td>
+					<td><textarea name="content" cols="50" rows="15" >${ qnaboard.content }</textarea></td>
 				</tr>
 				<tr>
 					<th colspan="2">
 						<input type="submit" value="수정">
-						<input type="button" onclick="location.replace('${path}/board/list')" value="목록으로">
+						<input type="button" onclick="location.replace('${path}/qna/list')" value="목록으로">
 					</th>
 				</tr>
 			</table>

@@ -37,7 +37,7 @@
 	<h1></h1>
 	
         <h3>공지사항</h3>
-		<form action="${ path }/notice/write" method="POST" enctype="multipart/form-data">
+		<form name="f" action="${ path }/notice/write" method="POST" enctype="multipart/form-data">
 			<table id='tbl-board'>
 				<colgroup>
                     <col style="width:150px">
@@ -60,10 +60,8 @@
 					<td><textarea name="content" cols="50" rows="15" class="summernote"></textarea></td>
 				</tr>
 			</table>
-				<p>
-				<input type="checkbox" name="input_check" value='1' id="input_check" onchange="input_check(this)" value="${notice.fix}"/>
-				<label for="input_check">공지사항 상단고정</label>
-				</p>
+					<input type="checkbox" id="fix" name="fix" value="1" onclick="checkboxclick();"/>
+					<label for="fix">공지사항 상단고정</label>
 			
             <div class="btns">
                 <input type="submit" value="등록" id="join">
@@ -74,7 +72,9 @@
 
 </section>
 
+<!-- 
 <style>.selected{text-decoration:line-through;font-weight:700;background-color:yellow}</style>
+  -->
 
 <!-- 서머노트용 스크립트 -->
 <script>
@@ -84,20 +84,22 @@ $('.summernote').summernote({
 	});
 
 $(document).ready(function() {
-	$('#input_check').on('click', function() {
-	if ( $(this).prop('checked') ) {
-		$('{ notice.fix }').val('1');
+		var response = "";
+		$.ajax({
+			type: 'POST',
+			url: '${ path }/notice/write',
+			dataType: 'json',
+			data: {
+				fix
+			},
+            	success: if ( $(this).prop('checked') )  {
+                	response = '1';
+            }
+        });
 
-    	//$('#input_check').val(1);
-    	$(this).parent().addClass(1);
-        //location.replace('${ path }/notice/list');
-        
-      } else {
-        $(this).parent().removeClass("selected");
-      }
+        alert(response);
     });
-    
-});
+	
 </script>
 
 <jsp:include page="/views/common/footer.jsp" /> 

@@ -48,12 +48,12 @@ public class QnaListServlet extends HttpServlet {
 			
 			listCount = new QnaService().getBoardCount();
 			pageInfo = new PageInfo(page, 10, listCount, 10);
-			
 			list = new QnaService().getBoardList(pageInfo, no);
 			
-			System.out.println("용" + list);
+			System.out.println("용" + pageInfo);
 			
-			request.setAttribute("pageInfo요", pageInfo);
+			request.setAttribute("pageInfo", pageInfo);
+			request.setAttribute("no", no);
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("/views/qna/list.jsp").forward(request, response);
 		} else {
